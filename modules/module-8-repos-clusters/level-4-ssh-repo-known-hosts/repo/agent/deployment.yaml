@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fleet-agent
+  labels: {app: fleet-agent}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: fleet-agent}
+  template:
+    metadata:
+      labels: {app: fleet-agent}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: web
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=fleet-agent v5.0", "-listen=:5678"]
+        ports:
+        - containerPort: 5678
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fleet-agent
+spec:
+  selector: {app: fleet-agent}
+  ports:
+  - port: 80
+    targetPort: 5678

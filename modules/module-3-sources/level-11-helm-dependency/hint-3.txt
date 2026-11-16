@@ -1,0 +1,3 @@
+Make `repository: file://...` in `charts/notify/Chart.yaml` resolve to the directory that holds the
+`notify-common` library chart (or rename that directory). Push, refresh, sync.
+Do not copy the helper templates into `notify`: the shared chart exists so teams do not do that.

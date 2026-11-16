@@ -1,0 +1,5 @@
+Key: resource.customizations.ignoreDifferences.apps_Deployment  (<group>_<Kind>, `all` for every kind)
+Value: a YAML string with `jsonPointers:` (or `jqPathExpressions:`, or `managedFieldsManagers:`).
+A `/` inside a label name is written `~1` in a JSON pointer: /metadata/labels/complyd.argomissions.io~1scan
+Change argocd-cm with kubectl, then refresh the applications (argocd app get X --refresh); do not touch the
+Applications, and do not ignore more than you have to.

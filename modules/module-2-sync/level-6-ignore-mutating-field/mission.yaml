@@ -1,0 +1,17 @@
+name: "The Webhook's Signature"
+description: |
+  Application `profile-svc` (namespace `profiles`, repo `platform/profile-svc`, a clone is in your workspace) has
+  automated sync, nobody has touched it, and still `argocd app get profile-svc` is `OutOfSync` all day long: a
+  sync clears it and a few seconds later it is back. `argocd app diff profile-svc` shows one thing, the
+  `cost-center` label of the Deployment, which Git sets to `unassigned` while the live object carries something
+  like `cc-1763300000` that keeps changing. The finance platform's controller `cost-stamper` (namespace
+  `profiles-finops`, a stand-in for the mutating webhook or allocation operator that does this in real clusters)
+  stamps every Deployment it knows, and finance needs it to keep doing so.
+objective: |
+  Application `profile-svc` is Synced and Healthy at the current head of `main` and stays Synced while
+  `cost-stamper` keeps rewriting the label on the live Deployment. The controller still runs, and Service
+  `profile-svc` in namespace `profiles` answers `profile-svc v2.3`.
+xp: 200
+difficulty: intermediate
+expected_time: 15m
+concepts: [ignoreDifferences, jsonPointers, jqPathExpressions, managedFieldsManagers, mutating controllers]

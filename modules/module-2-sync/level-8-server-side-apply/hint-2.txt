@@ -1,0 +1,4 @@
+A client-side apply (kubectl apply, and Argo CD's default way of applying) stores the whole manifest in the
+`kubectl.kubernetes.io/last-applied-configuration` annotation. Annotations are limited to 256 KiB in total,
+so a ConfigMap this big cannot be applied that way. Shrinking the export is not an option here.
+Argo CD can apply with a different mechanism that keeps no such annotation. Look at `argocd app set --help`.

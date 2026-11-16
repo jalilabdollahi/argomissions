@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notifier
+  labels: {app: notifier}
+spec:
+  replicas: 1
+  progressDeadlineSeconds: 30
+  selector:
+    matchLabels: {app: notifier}
+  template:
+    metadata:
+      labels: {app: notifier}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: gateway
+        image: hashicorp/http-echo:1.O
+        imagePullPolicy: IfNotPresent
+        args: ["-text=notifier v2.0", "-listen=:5678"]
+        ports:
+        - containerPort: 5678
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

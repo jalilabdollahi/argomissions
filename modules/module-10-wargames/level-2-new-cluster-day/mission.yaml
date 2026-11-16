@@ -1,0 +1,24 @@
+name: "First Day On The New Cluster"
+description: |
+  PAGER, Monday 08:00 — Tidewater payments moved to a new cluster over the weekend. The old one is gone; Argo CD
+  on the new one is installed and completely empty: `argocd app list` shows nothing, `argocd proj list` only
+  `default`. Everything that ran before is described in the Gitea repo `platform/tidewater-gitops` (its README
+  has the new-cluster runbook: one root Application from `bootstrap/`, then the root manages `platform/`:
+  the AppProject `tidewater` and the three components `tidewater-ledger`, `tidewater-batch`,
+  `tidewater-gateway`). Since the security review the repo is private. Platform left a handoff note in
+  your workspace (`handoff.md`) with the read-only machine user for Argo CD.
+  On-call already tried: reading the README, applying the root from `bootstrap/` ("it says Unknown"), and
+  creating one namespace by hand to see if that helps. A clone of the repo is in your workspace.
+objective: |
+  Application `tidewater-root` (namespace `argocd`) reads `platform/tidewater-gitops`, is Synced and Healthy at
+  the current head of `main`, and manages AppProject `tidewater` and Applications `tidewater-ledger`,
+  `tidewater-batch` and `tidewater-gateway`, all Synced and Healthy at head. Service `tidewater-ledger` in namespace
+  `tidewater-ledger` answers `tidewater-ledger v3.1`, `tidewater-batch` in `tidewater-jobs` answers
+  `tidewater-batch v1.8`, `tidewater-gateway` in `tidewater-edge` answers `tidewater-gateway v2.0`. The repo stays
+  private, Argo CD reads it as the read-only machine user (never as `player`), project `tidewater` stays a
+  boundary (no wildcard namespace), and the namespaces come from Git: this cluster must be rebuildable from the
+  repository alone.
+xp: 400
+difficulty: expert
+expected_time: 30m
+concepts: [bootstrap, app of apps, repository credentials, CreateNamespace, AppProject destinations, GitOps rebuild]

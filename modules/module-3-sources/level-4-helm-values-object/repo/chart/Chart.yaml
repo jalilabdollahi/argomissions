@@ -1,0 +1,6 @@
+apiVersion: v2
+name: search-suggest
+description: Query suggestion service
+type: application
+version: 0.7.0
+appVersion: "4.1"

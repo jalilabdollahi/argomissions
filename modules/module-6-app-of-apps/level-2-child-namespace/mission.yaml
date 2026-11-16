@@ -1,0 +1,16 @@
+name: "Children In The Wrong Namespace"
+description: |
+  Root Application `billing-root` deploys the folder `apps/` of the Gitea repo `platform/billing-gitops`, which holds
+  one Application manifest per billing service (`invoice-api`, `dunning-worker`). The sync of the root succeeded and
+  the root is `Synced` and `Healthy`, and its resource list shows two `Application` objects created. Yet
+  `argocd app list` shows only the root, nothing runs in namespaces `billing-invoice` and `billing-dunning`, and the
+  children have no sync status at all. A clone of the repo is in your workspace.
+objective: |
+  Application `billing-root` is Synced and Healthy at the current head of `main` and maintains the child Applications
+  `invoice-api` and `dunning-worker` in namespace `argocd`; no Application object is left in any other namespace.
+  Both children are Synced and Healthy at head, Service `invoice-api` in `billing-invoice` answers `invoice-api v3.2`
+  and Service `dunning-worker` in `billing-dunning` answers `dunning-worker v1.8`.
+xp: 200
+difficulty: intermediate
+expected_time: 15m
+concepts: [app of apps, Application namespace, destination namespace, prune]

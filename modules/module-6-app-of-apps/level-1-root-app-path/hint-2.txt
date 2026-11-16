@@ -1,0 +1,3 @@
+The root reads folder `apps/` of the repo. That folder contains no Kubernetes manifest at all, so an empty
+set of manifests is exactly what Git says: the root is Synced with nothing to apply. The Application manifests of the
+two services are committed somewhere else in the repo.

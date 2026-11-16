@@ -1,0 +1,4 @@
+Read the status of the ApplicationSet and count what the matrix produces:
+  kubectl -n argocd get applicationset mesh -o jsonpath='{.status.conditions[0].message}'
+Two services times two environments is four parameter sets. How many different Application names does the
+template make out of them?

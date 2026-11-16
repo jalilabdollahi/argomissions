@@ -1,0 +1,4 @@
+You need one template with one exception: only the element with `env: prod` gets `syncPolicy.automated`.
+ApplicationSet has a field for exactly that kind of per-element difference (it needs `goTemplate: true`, which
+this set already has): `kubectl explain applicationset.spec.templatePatch`.
+Changing the generated `lumen-prod` Application by hand will not stick.

@@ -1,0 +1,4 @@
+Resources in an Application have actions: the Deployment context menu in the UI offers them, and the CLI
+lists them with
+  argocd app actions list tollbooth --kind Deployment --resource-name tollbooth
+One of the built-in actions replaces the pods the way `kubectl rollout restart` does, without Git changes.

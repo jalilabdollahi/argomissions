@@ -1,0 +1,3 @@
+Argo CD auto-detects the tool from the files in the path: a Chart.yaml means Helm, a kustomization.yaml means
+Kustomize, otherwise plain YAML. `deploy/` contains a Chart.yaml left over from an old experiment, so Argo CD
+runs Helm, and a chart without a `templates/` folder renders nothing.

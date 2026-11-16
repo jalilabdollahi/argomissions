@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: parcel-hub-eu
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/parcel-hub.git
+    targetRevision: main
+    path: eu
+  destination:
+    name: regional
+    namespace: parcel-eu
+  syncPolicy:
+    automated: {}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: parcel-hub-us
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/parcel-hub.git
+    targetRevision: main
+    path: us
+  destination:
+    name: regional
+    namespace: parcel-us
+  syncPolicy:
+    automated: {}

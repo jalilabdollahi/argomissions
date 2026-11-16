@@ -1,0 +1,16 @@
+name: "Undo Without Rewriting History"
+description: |
+  Yesterday a colleague pushed "tune worker flags" to repo `platform/reports` (folder `deploy/`, branch `main`),
+  and Application `reports` was synced. Since then the report worker in namespace `reports` is not answering and
+  `argocd app get reports` shows `Synced` but `Degraded`; the pod restarts over and over. The nightly reports
+  are late, other teams already pulled `main`, and the audit log must keep showing what happened. A clone of the
+  repo is in your workspace.
+objective: |
+  The previous behaviour is live again: Service `report-worker` in namespace `reports` answers `reports v1.0`.
+  Application `reports` (project `default`) is Synced and Healthy at the current head of `main`. The commit
+  "tune worker flags" is still part of the history of `main` (no rewritten history), and its change is undone
+  at the head.
+xp: 200
+difficulty: intermediate
+expected_time: 20m
+concepts: [git revert, rollback, history, force push, Degraded]

@@ -1,0 +1,3 @@
+Argo CD applies the manifests from Git, and none of them is a Namespace. By default it does not create the
+destination namespace for you. Creating it by hand fixes today's cluster, but not a new one: the goal is an
+Application that can bootstrap itself. Look at `argocd app set --help`, there is a `--sync-option` flag.

@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: media-gateway
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/media-gateway.git
+    targetRevision: main
+    path: chart
+    helm:
+      parameters:
+        - name: release.version
+          value: 1.9.1-hotfix
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: media
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true

@@ -1,0 +1,15 @@
+name: "The Base Is Not An Environment"
+description: |
+  The `inventory-sync` service has a Kustomize layout in the Gitea repo `platform/inventory-sync`:
+  `kustomize/base` plus an overlay per environment. The Application `inventory-sync` was created for
+  production, and it is Synced and Healthy. But namespace `inventory` runs one pod and the service answers
+  `inventory-sync base`, while the production overlay is supposed to run three replicas with its own settings.
+  A clone of the repo is in your workspace.
+objective: |
+  Application `inventory-sync` is Synced and Healthy at the current head of `main` and deploys the production
+  environment to namespace `inventory`: Deployment `inventory-sync` has 3 ready replicas and Service
+  `inventory-sync` answers `inventory-sync prod`. The shared base stays a neutral base.
+xp: 150
+difficulty: beginner
+expected_time: 10m
+concepts: [Kustomize, base, overlay, source path, kubectl kustomize]

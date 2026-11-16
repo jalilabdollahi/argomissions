@@ -1,0 +1,4 @@
+Find out what changed and what the root did about it:
+  git log --stat      (in the repo clone)
+  argocd app list
+The service was not deleted by hand: the accident is in Git. The fix for the service is in Git too.

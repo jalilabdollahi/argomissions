@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: payout-worker
+spec:
+  selector:
+    app: payout-worker
+  ports:
+    - port: 0
+      targetPort: 5678

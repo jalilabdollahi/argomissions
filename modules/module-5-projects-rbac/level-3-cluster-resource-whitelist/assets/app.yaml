@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: radar-agent
+  namespace: argocd
+spec:
+  project: radar
+  source:
+    repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/radar-agent.git
+    targetRevision: main
+    path: deploy
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: radar

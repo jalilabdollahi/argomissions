@@ -1,0 +1,3 @@
+Both children track `targetRevision: main`, so production moves with every merge. The child Applications are
+files in the repo meterhub-gitops, owned by the roots with self-heal: `argocd app set` on a child gets reverted.
+The release is a Git tag in meterhub-service: `git ls-remote --tags` shows it.

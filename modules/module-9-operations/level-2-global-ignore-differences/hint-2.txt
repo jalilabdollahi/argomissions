@@ -1,0 +1,4 @@
+One controller rewrites one label on every Deployment in the cluster. Argo CD can be told to ignore a field
+per Application (spec.ignoreDifferences), but you would have to repeat that for every present and future
+Application. The same setting exists once for the whole Argo CD installation, in the argocd-cm ConfigMap,
+under keys that start with `resource.customizations.ignoreDifferences.` (operator manual, "Diffing Customization").

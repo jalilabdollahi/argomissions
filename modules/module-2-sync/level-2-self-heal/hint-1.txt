@@ -1,0 +1,4 @@
+Find out what differs and what the sync policy does about it:
+  argocd app get pricing-api
+  argocd app diff pricing-api
+Automated sync is on, so why does the drift stay?

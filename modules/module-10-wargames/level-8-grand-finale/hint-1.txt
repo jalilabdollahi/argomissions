@@ -1,0 +1,7 @@
+Start from the top and go down, one layer at a time:
+  argocd app get meridian-root ; argocd app manifests meridian-root
+  kubectl -n argocd get appproject,applicationset,applications
+  kubectl -n argocd describe applicationset meridian-edge
+  argocd app get meridian-core
+Compare what `bootstrap/` contains in Git with what the root actually created.
+Fixes uncover the next fault: after each push, look again at all four objects.

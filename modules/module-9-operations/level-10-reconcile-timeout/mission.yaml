@@ -1,0 +1,16 @@
+name: "Why So Slow?"
+description: |
+  Someone set `timeout.reconciliation: 24h` in `argocd-cm` "to save CPU", and the controller and repo-server were
+  restarted so it is live. The lobby display board (Application `lobby-board`, Gitea repo `platform/lobby-board`,
+  automated sync, namespace `lobby`) shows Synced and Healthy and still answers `lobby-board v1.0`, yet release
+  v1.1 was pushed to `main` a while ago and Argo CD has not noticed. Pressing Refresh makes it appear, but
+  nobody wants to press Refresh after every push. A clone of the repo is in your workspace.
+objective: |
+  Argo CD polls Git again on a sane schedule: `timeout.reconciliation` in `argocd-cm` is between 30 seconds and
+  10 minutes (or unset), and both the application controller and the repo-server are actually running with that
+  value. `lobby-board` is Synced and Healthy at the current head of `main`, its last sync deployed that commit,
+  and the Service `lobby-board` in namespace `lobby` answers `lobby-board v1.1`.
+xp: 150
+difficulty: intermediate
+expected_time: 10m
+concepts: [timeout.reconciliation, argocd-cm, polling, webhook, component restart]

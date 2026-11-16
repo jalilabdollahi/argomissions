@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: metrics-collector
+  labels: {app: metrics-collector}
+spec:
+  replicas: 2
+  selector:
+    matchLabels: {app: metrics-collector}
+  template:
+    metadata:
+      labels: {app: metrics-collector}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: collector
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=metrics-collector v5.0", "-listen=:5678"]
+        ports:
+        - containerPort: 5678
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

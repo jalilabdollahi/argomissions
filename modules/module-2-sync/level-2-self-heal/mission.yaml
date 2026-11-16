@@ -1,0 +1,15 @@
+name: "The Drift That Stays"
+description: |
+  During last night's incident an engineer edited the live `pricing-api` objects in namespace `pricing` by hand:
+  the Deployment was scaled up and the discount cap in ConfigMap `pricing-rules` was raised. The Application
+  `pricing-api` has automated sync enabled, yet this morning `argocd app get pricing-api` still shows `OutOfSync`
+  and `argocd app diff pricing-api` lists the manual edits, which nobody reverted. Finance is not amused: the
+  repo `platform/pricing-api` (a clone is in your workspace) says what production must look like.
+objective: |
+  Application `pricing-api` is Synced and Healthy at the current head of `main`, the live Deployment and ConfigMap
+  `pricing-rules` match what Git says (the manifests in Git stay as they are), and the Application undoes such
+  manual edits by itself from now on. Service `pricing-api` in namespace `pricing` answers `pricing-api v2.0`.
+xp: 150
+difficulty: beginner
+expected_time: 10m
+concepts: [selfHeal, drift, automated sync]

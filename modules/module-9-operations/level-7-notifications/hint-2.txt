@@ -1,0 +1,5 @@
+In argocd-notifications-cm you need:
+  service.webhook.<name>   the receiver's URL (in-cluster DNS name of the Service)
+  template.<name>          what to send (a `webhook:` block with method, path and body)
+  trigger.<name>           when to send (a condition on the app's operationState) and which templates
+The Application is then subscribed with an annotation `notifications.argoproj.io/subscribe.<trigger>.<service>`.

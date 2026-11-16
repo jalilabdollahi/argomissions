@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: meridian-core
+  namespace: argocd
+spec:
+  project: meridian-core
+  source:
+    repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/meridian-platform.git
+    targetRevision: main
+    path: core
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: meridian-core
+  syncPolicy:
+    automated: {}

@@ -1,0 +1,3 @@
+Under Go templates the same values are `{{.path.basename}}` and `{{.path.path}}`. Fix every placeholder in
+the template (name and source path), then `kubectl apply -f harbor-appset.yaml`. Keeping the old syntax and
+dropping `goTemplate` altogether would also work, but pick one syntax and use it everywhere.

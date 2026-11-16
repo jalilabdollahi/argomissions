@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: claims-intake
+  namespace: argocd
+spec:
+  project: claims
+  source:
+    repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/intake-gateway.git
+    targetRevision: main
+    path: deploy
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: claims
+  syncPolicy:
+    automated: {}

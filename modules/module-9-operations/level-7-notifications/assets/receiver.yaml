@@ -1,0 +1,74 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ops-hooks
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: chat-hook-nginx
+  namespace: ops-hooks
+data:
+  default.conf: |
+    log_format hook escape=json '$time_iso8601 $request_method $request_uri $status body=$request_body';
+    server {
+      listen 80;
+      access_log /dev/stdout hook;
+      location / {
+        proxy_pass http://127.0.0.1:8081;
+      }
+    }
+    server {
+      listen 8081;
+      access_log off;
+      location / {
+        default_type application/json;
+        return 200 '{"ok":true}';
+      }
+    }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chat-hook
+  namespace: ops-hooks
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chat-hook
+  template:
+    metadata:
+      labels:
+        app: chat-hook
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+        - name: nginx
+          image: nginx:1.27-alpine
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: conf
+              mountPath: /etc/nginx/conf.d
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+      volumes:
+        - name: conf
+          configMap:
+            name: chat-hook-nginx
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: chat-hook
+  namespace: ops-hooks
+spec:
+  selector:
+    app: chat-hook
+  ports:
+    - port: 80
+      targetPort: 80

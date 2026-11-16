@@ -1,0 +1,4 @@
+The migration Job is an ordinary resource. Argo CD applies ordinary resources in one phase, in one wave,
+and only checks health afterwards, so the Job and the new Deployment start together.
+Argo CD can run a resource in a different phase of the sync (hooks), or in an earlier wave, and it waits for
+that step to finish before it goes on.

@@ -1,0 +1,15 @@
+name: "Inline Values, Ignored"
+description: |
+  The search team keeps production settings inside the Argo CD Application `search-suggest` (the `valuesObject`
+  field) and leaves `chart/values.yaml` of the Gitea repo `platform/search-suggest` as development defaults.
+  The Application is Synced and Healthy, there is no error anywhere, and still namespace `search` runs a single
+  pod and the service answers `search-suggest dev defaults`: the production values are silently not used.
+  A clone of the repo is in your workspace.
+objective: |
+  Application `search-suggest` is Synced and Healthy at the current head of `main` and keeps the production
+  settings inline in the Application (the chart defaults in Git stay as they are). Deployment `search-suggest`
+  in namespace `search` runs 3 ready replicas and Service `search-suggest` answers `search-suggest prod 4.1`.
+xp: 150
+difficulty: intermediate
+expected_time: 10m
+concepts: [Helm, valuesObject, values nesting, argocd app manifests]

@@ -1,0 +1,3 @@
+`courier-routing` is itself a resource of `courier-fleet`, which self-heals: the child's spec has to match the file in
+the repo `courier-fleet`, so a hand edit of the child's `targetRevision` is drift and is reverted within seconds.
+Changing the root's behaviour is not the way out. Look at `apps/api.yaml` in your clone.

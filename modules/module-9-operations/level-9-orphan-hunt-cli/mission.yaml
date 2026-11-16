@@ -1,0 +1,16 @@
+name: "Forensics With The CLI"
+description: |
+  Since this week's releases, partner shops report that the `rates-service` API quotes prices in the wrong
+  currency: `fx-rates v1.2 currency=USD source=ecb`, where it should say `currency=EUR`. Nothing is red:
+  the Application `rates-service` (Gitea repo `platform/rates-service`, folder `deploy/`, namespace `fx-rates`,
+  automated sync) is Synced and Healthy. Five releases have gone out in the last days and nobody remembers which
+  change touched the currency. A clone of the repo is in your workspace.
+objective: |
+  Application `rates-service` is Synced and Healthy at the current head of `main`, deployed by Argo CD, and
+  the Service `rates-service` in namespace `fx-rates` answers `fx-rates v1.2 currency=EUR source=ecb` with
+  2 ready pods. The v1.2 release and the later cache TTL change (`CACHE_TTL=600`) must still be in Git, and the
+  Git history must keep every commit that was released.
+xp: 200
+difficulty: intermediate
+expected_time: 15m
+concepts: [argocd app history, app manifests --revision, app diff --revision, fix forward]

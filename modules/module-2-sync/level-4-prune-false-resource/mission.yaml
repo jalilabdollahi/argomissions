@@ -1,0 +1,17 @@
+name: "Keep The Data"
+description: |
+  Application `media-store` (auto-sync with prune, namespace `media`) serves customer photos and keeps them on
+  PersistentVolumeClaim `uploads`, which is declared in `deploy/pvc.yaml` of the Gitea repo `platform/media-store`
+  (a clone is in your workspace). The platform team is moving all storage to a separate `storage` application
+  that will adopt the existing claim next week, so `pvc.yaml` has to leave this repository today. The storage
+  audit recorded the claim's UID in ConfigMap `storage-audit`; a claim that is deleted and re-created cannot get
+  its volume, and the photos, back. There is no undo: if the claim is deleted, restart the mission.
+objective: |
+  The `uploads` PersistentVolumeClaim manifest is gone from the `media-store` repo (the Deployment and Service
+  stay) and the Application still has auto-prune enabled, yet in namespace `media` the live claim `uploads` is
+  still the original one (same UID as in `storage-audit`, Bound, not being deleted). Application `media-store`
+  is Synced and Healthy at the current head of `main` and Service `media-store` answers `media-store v1.4`.
+xp: 200
+difficulty: intermediate
+expected_time: 20m
+concepts: [prune, Prune=false, IgnoreExtraneous, sync-options, resource annotations]

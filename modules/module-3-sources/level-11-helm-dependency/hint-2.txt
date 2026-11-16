@@ -1,0 +1,3 @@
+Argo CD runs `helm dependency build` for charts that declare dependencies. A `file://` repository is a path
+relative to the chart directory (`charts/notify`). The path in `Chart.yaml` does not match the directory name
+of the library chart. You can reproduce it locally: `helm dependency build notify-platform/charts/notify`.

@@ -1,0 +1,3 @@
+Make the Application and the repo agree on one file name. Either point the Application at the file that
+exists (argocd app set --help, look at the Helm flags) or give the file the name the Application expects.
+Beware: a setting that merely hides the missing file will turn the Application green with the wrong values.

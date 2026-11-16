@@ -1,0 +1,17 @@
+name: "Staging Before Prod"
+description: |
+  MeterHub has one root Application per environment, both reading the repo `platform/meterhub-gitops`:
+  `meterhub-env-staging` (folder `envs/staging/`) and `meterhub-env-prod` (folder `envs/prod/`). Each creates one
+  child, `meterhub-staging` and `meterhub-prod`, which deploy the service repo `platform/meterhub-service`. The
+  policy is: staging follows `main`, production runs released tags only, and the last release is `v1.2.0`. This
+  morning a customer reports the new, unfinished metering code in production: Service `meterhub` in namespace
+  `meterhub-prod` answers `meterhub v1.3.0-rc1`. A clone of the gitops repo is in your workspace.
+objective: |
+  Production runs the release again, deployed through Git and the existing roots: Service `meterhub` in
+  `meterhub-prod` answers `meterhub v1.2.0`, and `meterhub-prod` is Synced and Healthy at the commit that tag
+  `v1.2.0` points to. Staging keeps following `main` of the service repo and still answers `meterhub v1.3.0-rc1`.
+  Both roots and both children are Synced and Healthy, the children are owned by their roots.
+xp: 200
+difficulty: intermediate
+expected_time: 15m
+concepts: [app of apps, environments, targetRevision, Git tags, promotion]

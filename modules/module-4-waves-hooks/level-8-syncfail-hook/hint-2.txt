@@ -1,0 +1,2 @@
+The cleanup Job is a PostSync hook, and PostSync only runs after a sync succeeded. A sync that fails in an
+earlier phase never reaches it. Argo CD has a hook phase that runs exactly when a sync operation fails.

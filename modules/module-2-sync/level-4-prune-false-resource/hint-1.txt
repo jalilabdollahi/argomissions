@@ -1,0 +1,4 @@
+Before touching Git, find out what auto-prune would do when the manifest disappears:
+  kubectl -n media get pvc uploads -o yaml | head -30
+  argocd app get media-store
+Argo CD tracks the claim (look for the tracking-id annotation) and prune deletes tracked objects absent from Git.

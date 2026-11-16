@@ -1,0 +1,16 @@
+name: "Selector Is Immutable"
+description: |
+  The platform team asked every service to carry the labels `team: ledger` and `cost-center: cc-4711`. A
+  colleague added them to the Kustomize package in `platform/ledger-api` (folder `deploy/`, branch `main`)
+  and synced Application `ledger-api` from the UI. The sync failed: the operation message ends in
+  `Deployment.apps "ledger-api" is invalid: spec.selector: Invalid value: {...}: field is immutable`.
+  The old pods are still serving, the Application is OutOfSync, and a clone of the repo is in your workspace.
+objective: |
+  Application `ledger-api` is Synced and Healthy at the current head of `main`. The pods of Deployment
+  `ledger-api` in namespace `ledger` carry the labels `team=ledger` and `cost-center=cc-4711`, the Deployment's
+  selector is still only `app: ledger-api` (the Deployment is not deleted and re-created with a wider selector),
+  and Service `ledger-api` answers `ledger-api v2.2`.
+xp: 200
+difficulty: intermediate
+expected_time: 15m
+concepts: [Kustomize, commonLabels, labels, includeSelectors, immutable fields]

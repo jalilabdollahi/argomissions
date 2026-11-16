@@ -1,0 +1,5 @@
+Look at the whole error and at what the Application is configured to do about failures:
+  argocd app get sensor-hub
+  kubectl -n argocd get application sensor-hub -o jsonpath='{.spec.syncPolicy}'
+  kubectl get crd | grep argomissions
+Who installs the CRD, and how long does that take compared with how long Argo CD keeps trying?

@@ -1,0 +1,19 @@
+name: "Migration Job Forbidden"
+description: |
+  Release v4.1 of `payroll-engine` (Gitea repo `platform/payroll-engine`, folder `deploy/`, namespace `payroll`)
+  ships a schema migration (Job `ledger-migrate`, a PreSync hook running as ServiceAccount `migrator`) and, in the same
+  commit, a Role change that lets `migrator` create ConfigMaps. The sync fails with `one or more synchronization tasks
+  completed unsuccessfully`; the hook says `Job has reached the specified backoff limit` and its log ends with
+  `configmaps is forbidden: User "system:serviceaccount:payroll:migrator" cannot create resource "configmaps" in API
+  group "" in the namespace "payroll"`. Yet the permission is right there in Git. A clone of the repo is in your
+  workspace.
+objective: |
+  Application `payroll-engine` is Synced and Healthy at the current head of `main`, deployed by a Succeeded sync of
+  that head: the migration completed (ConfigMap `schema-version` in `payroll` records `v4.1`) and Service
+  `payroll-engine` answers `payroll-engine v4.1`. The fix is in Git, so that it works on any cluster and any future
+  release: in the repository the `migrator` Role and RoleBinding are applied strictly before the migration Job runs,
+  and the Deployment rolls out strictly after the migration finished.
+xp: 250
+difficulty: advanced
+expected_time: 20m
+concepts: [sync phases, sync waves, hook ordering, RBAC, PreSync]

@@ -1,0 +1,19 @@
+name: "Drift Storm"
+description: |
+  PAGE 02:10 - the stormwatch platform (Gitea repo `platform/stormwatch`: `apps/` is read by the root Application
+  `stormwatch-root`, which creates `sw-ingest` and `sw-alerts`; namespace `stormwatch`) has been "flapping" all
+  night. `argocd app list` shows the root and `sw-ingest` OutOfSync, `sw-ingest` has not been Synced for longer than
+  a minute since the mesh team's controller went live, and the rain sensors answer `sw-ingest v2.1-debug`: someone
+  debugged the Deployment in place. `sw-alerts` still serves `sw-alerts v1.0` although release v1.1 has been in
+  Git since the evening: during the storm somebody rolled it back with `argocd app set`. Nobody remembers who or
+  when, and the root, which is synced by hand, never undid it. A clone of the repo is in your workspace.
+objective: |
+  `stormwatch-root`, `sw-ingest` and `sw-alerts` are Synced and Healthy at the current head of `main`, the children
+  are managed by the root and `sw-alerts` follows `main` again. Hand edits are undone automatically from now on
+  (self-heal on the root and on both children, in Git and live). The mesh team's controller `mesh-stamper`
+  (namespace `stormwatch-mesh`) keeps stamping `sw-ingest` and Argo CD does not mind. ConfigMap `thresholds` has one
+  owner in Git and holds `rain_mm: "40"` and `wind_kmh: "90"`. Services answer `sw-ingest v2.1` and `sw-alerts v1.1`.
+xp: 400
+difficulty: expert
+expected_time: 30m
+concepts: [app-of-apps, self-heal, ignoreDifferences, shared resource, drift, multi-fault incident]

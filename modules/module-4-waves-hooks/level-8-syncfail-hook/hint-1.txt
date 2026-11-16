@@ -1,0 +1,4 @@
+Look at what the failed sync did and did not run:
+  argocd app get booking-portal --show-operation     # HOOK column: which hooks ran, which phase?
+  kubectl -n bookings get jobs
+Then read the annotations on the cleanup Job in booking-portal/deploy/.

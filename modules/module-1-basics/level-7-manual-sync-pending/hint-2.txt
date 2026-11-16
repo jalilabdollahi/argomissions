@@ -1,0 +1,3 @@
+The Application has no automated sync policy: Argo CD notices new commits and reports OutOfSync, but only
+changes the cluster when somebody asks it to. The diff shows exactly what a sync would change.
+Changing the live Deployment by hand is not shipping the release: the history of the Application stays at v2.2.

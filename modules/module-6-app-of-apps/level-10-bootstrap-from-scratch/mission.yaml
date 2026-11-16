@@ -1,0 +1,21 @@
+name: "Rebuild The Platform"
+description: |
+  The Lighthouse platform cluster was lost and rebuilt: Argo CD is up, nothing else is. Everything that ran there
+  is described in the Gitea repo `platform/lighthouse-gitops`: AppProjects in `platform/projects/`, one child
+  Application per component in `platform/apps/` (with sync-waves), and the workloads in `workloads/`. The README
+  says the platform is brought up by one root Application named `lighthouse-bootstrap`, but its manifest was never
+  committed, and neither the projects nor the children exist yet (`argocd app list` is empty). The folder
+  `platform/apps/_archive/` holds a retired component that must stay retired. A clone of the repo is in your
+  workspace.
+objective: |
+  Application `lighthouse-bootstrap` (namespace `argocd`) reads `platform/lighthouse-gitops` and is Synced and Healthy
+  at the current head of `main`, deployed by a Succeeded sync of that head. Through it, and only through it, the
+  AppProjects `infra` and `services` and the Applications `lighthouse-cache`, `lighthouse-gateway` and
+  `lighthouse-catalog` exist; all are Synced and Healthy. The root manages Applications and AppProjects only (not
+  the workloads themselves), the retired `lighthouse-billing-legacy` is not deployed, and the Services answer
+  `lighthouse-cache v7.2` (namespace `lighthouse-infra`), `lighthouse-gateway v1.4` (`lighthouse-edge`) and
+  `lighthouse-catalog v5.0` (`lighthouse-core`).
+xp: 300
+difficulty: advanced
+expected_time: 25m
+concepts: [app of apps, bootstrap, directory recurse, exclude, AppProject, sync waves]

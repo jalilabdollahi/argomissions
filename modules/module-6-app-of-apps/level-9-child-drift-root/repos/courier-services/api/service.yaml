@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: courier-routing
+spec:
+  selector: {app: courier-routing}
+  ports:
+  - port: 80
+    targetPort: 5678

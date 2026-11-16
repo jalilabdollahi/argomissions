@@ -1,0 +1,4 @@
+Argo CD's repo-server runs inside the cluster. It cannot reach http://localhost:3300 — that is your laptop.
+Inside the cluster the same repo is:
+  http://gitea.gitea.svc.cluster.local:3000/platform/status-page.git
+The in-cluster destination is https://kubernetes.default.svc (name: in-cluster).

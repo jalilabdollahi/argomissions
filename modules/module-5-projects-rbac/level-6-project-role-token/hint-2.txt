@@ -1,0 +1,4 @@
+You need three things: a role `deployer` in project `settlements`, policies on it that allow `get` and `sync` on
+`applications` (nothing broader), and a token for that role. The token is only shown once.
+Mind the object argument of `argocd proj role add-policy`: look at what it stores in the project afterwards
+(`kubectl -n argocd get appproject settlements -o yaml`).

@@ -1,0 +1,4 @@
+See who changes the Deployment and what Argo CD thinks of it:
+  argocd app diff quote-api
+  kubectl -n quotes get deploy quote-api --show-managed-fields -o yaml | grep -B2 -A6 'manager:'
+Two controllers want to own the same field.

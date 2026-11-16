@@ -1,0 +1,3 @@
+Add `finalizers: [resources-finalizer.argocd.argoproj.io]` to the child Application manifests in Git, so the
+next retirement cascades. For the workload that is already orphaned: either bring its Application back in Git (with the
+finalizer) and retire it again, or delete the leftovers yourself. Do not recreate it permanently.

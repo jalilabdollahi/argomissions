@@ -1,0 +1,4 @@
+Argo CD can be told to ignore whole kinds of resources, for every Application: the `resource.exclusions` key of
+the `argocd-cm` ConfigMap (operator manual, "Resource Exclusion/Inclusion"). Somebody added a rule there that
+also swallows a kind your application needs. Look at what is configured:
+  kubectl -n argocd get cm argocd-cm -o yaml

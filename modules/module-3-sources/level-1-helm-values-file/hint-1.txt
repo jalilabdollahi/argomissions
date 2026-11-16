@@ -1,0 +1,4 @@
+Read the error in full, and compare it with what is really in the chart folder:
+  argocd app get weather-api
+  ls weather-api/chart
+Helm resolves value files relative to the source path of the Application.

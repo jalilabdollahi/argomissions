@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sw-ingest
+  labels: {app: sw-ingest}
+  annotations:
+    mesh.argomissions.io/epoch: "unstamped"
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: sw-ingest}
+  template:
+    metadata:
+      labels: {app: sw-ingest}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: web
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=sw-ingest v2.1", "-listen=:5678"]
+        ports:
+        - containerPort: 5678
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sw-ingest
+spec:
+  selector: {app: sw-ingest}
+  ports:
+  - port: 80
+    targetPort: 5678

@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pulse-web
+  labels: {app: pulse-web}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: pulse-web}
+  template:
+    metadata:
+      labels: {app: pulse-web}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: web
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=pulse-web main", "-listen=:5678"]
+        ports:
+        - containerPort: 5678
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

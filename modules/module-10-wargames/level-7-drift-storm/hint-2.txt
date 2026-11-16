@@ -1,0 +1,6 @@
+Four independent faults:
+  1. sw-alerts was pinned to an old commit by hand (an edit of the child Application) and the root does not heal it
+  2. nothing heals drift: the root is synced by hand and sw-ingest has no self-heal, so the in-place debug edit of the Deployment stays
+  3. the mesh controller rewrites an annotation that Git also sets, so sw-ingest never stays Synced
+  4. once sw-alerts runs the new release it will share ConfigMap `thresholds` with sw-ingest
+Fixing 1 reveals 4. Turning self-heal on reveals what a live-only fix of 3 is worth.

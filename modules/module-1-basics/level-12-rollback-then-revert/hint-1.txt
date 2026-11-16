@@ -1,0 +1,4 @@
+Look at the history from both sides, Git's and Argo CD's:
+  git -C reports log --oneline
+  argocd app history reports
+  kubectl -n reports logs deploy/report-worker

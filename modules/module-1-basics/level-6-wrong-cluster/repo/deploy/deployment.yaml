@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: telemetry
+  labels: {app: telemetry}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: telemetry}
+  template:
+    metadata:
+      labels: {app: telemetry}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: web
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=telemetry v1.7", "-listen=:5678"]
+        ports:
+        - containerPort: 5678
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

@@ -1,0 +1,4 @@
+Read what the ApplicationSet says before touching anything:
+  kubectl -n argocd get applicationset tenant-portals -o jsonpath='{.status.conditions[0].message}'
+  argocd appset get tenant-portals
+The error names a key the template wants. Where do the values of that key come from?

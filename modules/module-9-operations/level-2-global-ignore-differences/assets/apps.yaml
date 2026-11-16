@@ -1,0 +1,50 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tallyline-ingest
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/tallyline.git
+    targetRevision: main
+    path: ingest
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: tallyline-ingest
+  syncPolicy:
+    automated: {}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tallyline-rollup
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/tallyline.git
+    targetRevision: main
+    path: rollup
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: tallyline-rollup
+  syncPolicy:
+    automated: {}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tallyline-gateway
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/tallyline.git
+    targetRevision: main
+    path: gateway
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: tallyline-gateway
+  syncPolicy:
+    automated: {}

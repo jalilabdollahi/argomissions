@@ -1,0 +1,3 @@
+`ClusterRole` and `ClusterRoleBinding` are cluster-scoped: no namespace can contain them. An AppProject lets its
+Applications create cluster-scoped kinds only if they are in `clusterResourceWhitelist`, and the list is empty.
+Both kinds in the message need to be allowed. The group of both is `rbac.authorization.k8s.io`.

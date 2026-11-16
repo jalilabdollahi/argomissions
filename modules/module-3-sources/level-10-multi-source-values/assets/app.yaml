@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: pricing
+  namespace: argocd
+spec:
+  project: default
+  sources:
+  - repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/pricing-charts.git
+    targetRevision: main
+    path: charts/pricing
+    helm:
+      valueFiles:
+      - $values/prod/values.yaml
+  - repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/pricing-env.git
+    targetRevision: main
+    ref: env
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: pricing

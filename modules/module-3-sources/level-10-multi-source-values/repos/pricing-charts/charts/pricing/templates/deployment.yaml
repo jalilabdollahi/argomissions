@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pricing-quote
+  labels: {app: pricing-quote}
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels: {app: pricing-quote}
+  template:
+    metadata:
+      labels: {app: pricing-quote}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: api
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text={{ .Values.text }}", "-listen=:5678"]
+        ports:
+        - containerPort: 5678
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

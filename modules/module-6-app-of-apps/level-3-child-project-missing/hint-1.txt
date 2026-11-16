@@ -1,0 +1,4 @@
+The root is green, the children are not. Read what the children complain about and what projects exist:
+  argocd app get trace-collector
+  kubectl -n argocd get appprojects
+  cat README.md   (in the repo clone)

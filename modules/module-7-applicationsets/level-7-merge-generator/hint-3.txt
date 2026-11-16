@@ -1,0 +1,3 @@
+The base elements are keyed by `env`, and `mergeKeys` says `env`. The override element is keyed by something else,
+so it never meets its base element. Fix the override list (not the generated Applications: the ApplicationSet
+would take your change back), apply the manifest and wait for `parcel-api-prod` to sync.

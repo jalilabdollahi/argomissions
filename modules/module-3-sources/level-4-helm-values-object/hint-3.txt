@@ -1,0 +1,2 @@
+`valuesObject` is the content of a values file: its top-level keys must be exactly the chart's keys. Remove the
+extra level, then sync. The field is edited with `kubectl edit application` or in the UI (App Details, Parameters).

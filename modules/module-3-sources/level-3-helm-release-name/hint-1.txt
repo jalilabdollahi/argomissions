@@ -1,0 +1,4 @@
+Compare the names in the cluster with the names the chart can produce:
+  kubectl -n fleet get svc,deploy
+  helm template fleet-tracker fleet-tracker/chart | grep -n name:
+  grep -rn Release fleet-tracker/chart/templates

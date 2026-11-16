@@ -1,0 +1,17 @@
+name: "Delete The Set, Lose The Fleet"
+description: |
+  The ApplicationSet `kiosk-apps` (namespace `argocd`) runs the in-store kiosk web app in three regions:
+  Applications `kiosk-north`, `kiosk-south` and `kiosk-east`, deploying `platform/kiosk-web` to namespaces
+  `kiosk-<region>`. The platform team's new naming convention is `<team>-fleet`, so the ApplicationSet has to be
+  replaced by `kiosk-fleet` (same generator, same template, new name — the manifest is in your workspace as
+  `kiosk-fleet-appset.yaml`). The stores are open: the kiosks must not blink. Nobody dares to type
+  `kubectl delete applicationset kiosk-apps` — the last time someone did that on another fleet, the kiosks went dark.
+objective: |
+  ApplicationSet `kiosk-fleet` exists and generates `kiosk-north`, `kiosk-south` and `kiosk-east` (owned by it, Synced
+  and Healthy at the head of `main`); the ApplicationSet `kiosk-apps` is gone. The workloads never went away:
+  the Deployments and Services in `kiosk-north`, `kiosk-south` and `kiosk-east` are the very same objects (same
+  UIDs) that were running when the mission started, and each Service still answers `kiosk-web v2.4`.
+xp: 250
+difficulty: advanced
+expected_time: 20m
+concepts: [ApplicationSet, preserveResourcesOnDeletion, cascade delete, resources-finalizer, ownerReferences]

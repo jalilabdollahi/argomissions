@@ -1,0 +1,16 @@
+name: "Everyone Is Admin"
+description: |
+  A new hire on the claims team, `bob`, wanted to tidy the Argo CD UI and clicked **Delete** on an Application
+  that was not his. It worked. Digging into why, the platform team found that `policy.default: role:admin` in
+  `argocd-rbac-cm` has been there since a demo: every local account that has no policy of its own is a full
+  administrator. Two people have accounts: `alice` (platform lead, must stay an administrator) and `bob`
+  (claims developer). Passwords: `alice-pw-4821` and `bob-pw-4821`.
+objective: |
+  `bob` can look at everything (`get` on applications, projects and clusters) but cannot sync, update, create,
+  override or delete anything. `alice` can still do everything, including deleting Applications and creating
+  projects. The `admin` account and Application `claims-portal` are untouched and `claims-portal` is still
+  Synced and Healthy.
+xp: 200
+difficulty: intermediate
+expected_time: 15m
+concepts: [argocd-rbac-cm, policy.default, role:readonly, role:admin, local accounts, argocd account can-i]

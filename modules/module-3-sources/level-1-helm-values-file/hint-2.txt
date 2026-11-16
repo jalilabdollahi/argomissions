@@ -1,0 +1,3 @@
+The Application asks Helm for a values file that does not exist in `chart/`. The production values are in
+the repo, under a different file name. You can reproduce the problem on your laptop:
+  helm template weather-api weather-api/chart -f weather-api/chart/values-prod.yaml

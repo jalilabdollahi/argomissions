@@ -1,0 +1,3 @@
+The smoke test calls a port that the Service does not expose. Make the test call the Service's real port (do not
+delete the test or make it unable to fail), commit and push, then sync:
+  argocd app sync booking-web --refresh

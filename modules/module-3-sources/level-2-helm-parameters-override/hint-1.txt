@@ -1,0 +1,4 @@
+Argo CD says everything is fine, so compare what it was told with what Git says:
+  argocd app get media-gateway
+  kubectl -n argocd get application media-gateway -o yaml
+Look at the whole `spec.source` block, not just the repo and the path.

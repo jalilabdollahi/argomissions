@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: lighthouse-catalog
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  project: services
+  source:
+    repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/lighthouse-gitops.git
+    targetRevision: main
+    path: workloads/lighthouse-catalog
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: lighthouse-core
+  syncPolicy:
+    automated: {}
+    syncOptions:
+    - CreateNamespace=true

@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: notify
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/notify-platform.git
+    targetRevision: main
+    path: charts/notify
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: notifications

@@ -1,0 +1,12 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: claims
+  namespace: argocd
+spec:
+  description: Claims platform team
+  sourceRepos:
+  - http://gitea.gitea.svc.cluster.local:3000/platform/claims-*
+  destinations:
+  - server: https://kubernetes.default.svc
+    namespace: claims

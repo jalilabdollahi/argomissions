@@ -1,0 +1,4 @@
+Ask Argo CD what it thinks is different, and which resources it is unhappy about:
+  argocd app get media
+  argocd app diff media
+Pay attention to the *sync status* of each resource and to the message of the last sync.

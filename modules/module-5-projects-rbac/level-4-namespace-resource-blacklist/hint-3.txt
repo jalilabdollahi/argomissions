@@ -1,0 +1,4 @@
+1. Provide the Secret outside Argo CD (the value is in the repo's current secret.yaml, base64):
+     kubectl -n mailroom create secret generic relay-credentials --from-literal=token=<value>
+2. Remove deploy/secret.yaml from the repo and push.
+3. argocd app sync mail-relay    (and rotate the token in real life: it is in Git history now)

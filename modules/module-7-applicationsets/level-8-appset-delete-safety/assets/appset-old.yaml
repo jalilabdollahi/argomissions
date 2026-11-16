@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: kiosk-apps
+  namespace: argocd
+spec:
+  goTemplate: true
+  generators:
+  - list:
+      elements:
+      - region: north
+      - region: south
+      - region: east
+  template:
+    metadata:
+      name: 'kiosk-{{.region}}'
+    spec:
+      project: default
+      source:
+        repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/kiosk-web.git
+        targetRevision: main
+        path: deploy
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: 'kiosk-{{.region}}'
+      syncPolicy:
+        automated: {}
+        syncOptions:
+        - CreateNamespace=true

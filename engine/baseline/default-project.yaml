@@ -1,0 +1,14 @@
+# The stock `default` AppProject, restored before every level.
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: default
+  namespace: argocd
+spec:
+  sourceRepos: ["*"]
+  destinations:
+  - namespace: "*"
+    server: "*"
+  clusterResourceWhitelist:
+  - group: "*"
+    kind: "*"

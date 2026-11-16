@@ -1,0 +1,5 @@
+Compare what the two Applications manage and what exists on the cluster:
+  argocd app get sensor-hub
+  argocd app get sensor-crds
+  kubectl get crd | grep argomissions
+The error is about an API group version that the cluster does not know.

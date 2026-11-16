@@ -1,0 +1,3 @@
+Give the cluster secret the label the selector asks for:
+  kubectl -n argocd label secret cluster-staging env=staging
+Do not widen the selector: that would select `in-cluster` too.

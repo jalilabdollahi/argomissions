@@ -1,0 +1,18 @@
+name: "The Hotfix That Flips Back"
+description: |
+  Incident on the Courier platform: `courier-routing` v2.4.0 sends parcels to the wrong depot. The fix, v2.4.1, is on
+  branch `hotfix-routing` of the repo `platform/courier-services` and is not merged yet. The on-call engineer ran
+  `argocd app set courier-routing --revision hotfix-routing` and watched the fixed version go live. Minutes later the
+  service answered `courier-routing v2.4.0` again, and every time it is pointed at the hotfix it flips back. The child
+  Applications come from root Application `courier-fleet` (repo `platform/courier-fleet`, folder `apps/`). A clone of
+  `courier-fleet` is in your workspace.
+objective: |
+  `courier-routing` runs the hotfix and stays on it: it is deployed from branch `hotfix-routing` of `courier-services`
+  (Synced and Healthy at its head) and Service `courier-routing` in namespace `courier-routing` answers `courier-routing v2.4.1`.
+  `courier-tracking` is untouched: it still follows `main` and answers `courier-tracking v1.9.0`. The change is made the way the
+  platform is operated: `courier-fleet` is Synced at the current head of `main` of `courier-fleet`, still with
+  self-heal on, and owns both children.
+xp: 200
+difficulty: intermediate
+expected_time: 15m
+concepts: [app of apps, self-heal, drift, targetRevision, argocd app set]

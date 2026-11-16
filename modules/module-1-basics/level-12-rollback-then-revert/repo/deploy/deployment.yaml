@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: report-worker
+  labels: {app: report-worker}
+spec:
+  replicas: 1
+  progressDeadlineSeconds: 30
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels: {app: report-worker}
+  template:
+    metadata:
+      labels: {app: report-worker}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: worker
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=reports v1.0", "-listen=:5678"]
+        ports:
+        - containerPort: 5678
+        readinessProbe:
+          httpGet: {path: /, port: 5678}
+          periodSeconds: 2
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

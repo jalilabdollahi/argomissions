@@ -1,0 +1,4 @@
+Look at the repo layout and compare what each directory renders:
+  find inventory-sync/kustomize -name kustomization.yaml
+  kubectl kustomize inventory-sync/kustomize/base | grep -E "replicas|text"
+  argocd app get inventory-sync        # which Path is the Application using?

@@ -1,0 +1,17 @@
+name: "Missing Subchart"
+description: |
+  The notifications team split shared Helm templates into a library chart, `charts/notify-common`, and made
+  `charts/notify` depend on it with a local `file://` dependency, all in the Gitea repo
+  `platform/notify-platform` (branch `main`). Application `notify` (path `charts/notify`, namespace
+  `notifications`) has never deployed: Sync Status is Unknown and the condition reads "Failed to load target
+  state ... error building helm chart dependencies ... `helm dependency build` failed exit status 1: Error:
+  directory ../notify-commons not found". A clone of the repo is in your workspace.
+objective: |
+  Application `notify` is Synced and Healthy at the current head of `main`, and chart `notify` still gets its
+  shared templates from the `notify-common` library chart through a `file://` dependency (the templates are not
+  copied into `notify`). Service `notify` in namespace `notifications` answers `notify v4.7 (email)` from
+  2 replicas.
+xp: 200
+difficulty: intermediate
+expected_time: 15m
+concepts: [Helm dependencies, library chart, file:// repository, helm dependency build]

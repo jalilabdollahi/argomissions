@@ -1,0 +1,4 @@
+Either point the root at the folder that really holds the child Application manifests
+  argocd app set shopfront-root --path <folder>
+or move the manifests to the folder the root reads and push. A directory source does not look into
+subfolders unless `directory.recurse` is set, so name the folder that directly contains the files.

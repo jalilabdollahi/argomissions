@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: profile-svc
+spec:
+  selector: {app: profile-svc}
+  ports:
+  - port: 80
+    targetPort: 5678

@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tollbooth
+  labels: {app: tollbooth}
+spec:
+  replicas: 2
+  selector:
+    matchLabels: {app: tollbooth}
+  template:
+    metadata:
+      labels: {app: tollbooth}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: web
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=$(RATE_CARD)", "-listen=:5678"]
+        env:
+        - name: RATE_CARD
+          valueFrom:
+            configMapKeyRef:
+              name: tollbooth-rates
+              key: RATE_CARD
+        ports:
+        - containerPort: 5678
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

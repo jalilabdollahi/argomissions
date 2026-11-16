@@ -1,0 +1,18 @@
+name: "The Leaked Password"
+description: |
+  The security scanner flagged ticket SEC-2291: the Gitea repo `platform/smtp-gateway` contains a Secret manifest,
+  `deploy/secret.yaml`, with the real SMTP password in clear text, and Argo CD has been deploying it into
+  namespace `smtp-gw` since the first commit. Application `smtp-gateway` is Synced and Healthy and the mail relay
+  works, which is exactly why nobody noticed. Everyone who ever cloned the repo has the password. Security wants the
+  credentials out of Git without losing the audit trail of what happened, and the gateway must keep running.
+objective: |
+  No file at the head of `main` in `smtp-gateway` contains the leaked password or any other Secret data, and the
+  commit history is untouched (the original leaking commit is still there). Secret `smtp-credentials` in
+  namespace `smtp-gw` exists with `username` and a new password (never committed to Git, not the leaked one) and
+  is not managed by Argo CD. The pods of Deployment `smtp-gateway` run with the new value. Application
+  `smtp-gateway` is Synced and Healthy at the current head of `main`, and Service `smtp-gateway` answers
+  `smtp-gateway v1.4`.
+xp: 250
+difficulty: advanced
+expected_time: 20m
+concepts: [secrets, GitOps, prune, tracking annotation, credential rotation, pod restart]

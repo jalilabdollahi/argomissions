@@ -1,0 +1,2 @@
+The git directory generator emits one parameter set for every directory that matches `apps/*`, and it cannot
+know that `apps/shared` is not a service. Deleting the Application does not help: the set generates it again.

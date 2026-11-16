@@ -1,0 +1,4 @@
+`tokenRef.key` must be the name of a key that exists in the Secret (`token`). Either correct the ApplicationSet or
+add the expected key to the Secret; do not remove the `repositoryMatch` filter (`wiki-notes` is not a service) and
+do not create the Applications by hand. After a change to the Secret (the ApplicationSet controller does not watch it) the set retries only after a growing back-off;
+the annotation argocd.argoproj.io/application-set-refresh=true on the ApplicationSet forces a refresh.

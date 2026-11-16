@@ -1,0 +1,3 @@
+Kubernetes does not allow changing spec.selector of an existing Deployment, no matter how it is sent
+(patch, apply or replace). The only way to a new selector is a different Deployment object.
+Look at what `argocd app sync --help` offers for objects that cannot be updated in place.

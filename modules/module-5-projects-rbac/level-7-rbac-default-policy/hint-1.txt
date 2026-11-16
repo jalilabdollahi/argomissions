@@ -1,0 +1,4 @@
+Argo CD decides what a user may do from argocd-rbac-cm. See what is configured and what each person is allowed:
+  kubectl -n argocd get cm argocd-rbac-cm -o yaml
+  argocd login ... --username bob  (use a separate --config file so you keep your admin session)
+  argocd account can-i delete applications '*/*'

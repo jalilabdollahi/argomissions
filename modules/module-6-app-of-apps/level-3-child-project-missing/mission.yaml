@@ -1,0 +1,19 @@
+name: "Orphaned Children"
+description: |
+  The tracing team rebuilt their cluster. Root Application `tracing-root` (repo `platform/tracing-gitops`, folder
+  `apps/`) is `Synced` and `Healthy` and created the two child Applications `trace-collector` and `trace-query`.
+  But both children are stuck: their status is `Unknown`, nothing runs in `tracing-collector` and `tracing-query`, and
+  the condition says `InvalidSpecError: Application referencing project tracing-team which does not exist`.
+  `argocd app sync trace-collector` answers `app is not allowed in project "tracing-team", or the project does not
+  exist`. The team's README describes what the project may do. A clone of the repo is in your workspace.
+objective: |
+  AppProject `tracing-team` exists and is maintained by `tracing-root` from the repo (not created by hand). It allows
+  only the tracing-gitops repository and the namespaces `tracing-collector` and `tracing-query`, and in Git it is
+  applied strictly before the Applications that use it, so a fresh bootstrap works first time. `tracing-root`,
+  `trace-collector` and `trace-query` are Synced and Healthy at the current head of `main`, the children still belong
+  to `tracing-team`, Service `trace-collector` in `tracing-collector` answers `trace-collector v5.1` and Service
+  `trace-query` in `tracing-query` answers `trace-query v2.0`.
+xp: 200
+difficulty: intermediate
+expected_time: 15m
+concepts: [app of apps, AppProject, sync waves, InvalidSpecError]

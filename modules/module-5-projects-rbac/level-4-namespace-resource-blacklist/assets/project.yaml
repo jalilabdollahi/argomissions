@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: mailroom
+  namespace: argocd
+  annotations:
+    security.example.com/policy: "SEC-114: Secret objects are provided by the platform team, never rendered from Git"
+spec:
+  description: Mailroom team (SEC-114 applies)
+  sourceRepos:
+  - http://gitea.gitea.svc.cluster.local:3000/platform/mail-relay.git
+  destinations:
+  - server: https://kubernetes.default.svc
+    namespace: mailroom
+  namespaceResourceBlacklist:
+  - group: ""
+    kind: Secret

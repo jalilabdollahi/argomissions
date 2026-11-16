@@ -1,0 +1,5 @@
+Look at the delivery from both ends:
+  Gitea UI: platform/catalog-api -> Settings -> Webhooks -> Recent Deliveries (response code and body)
+  kubectl -n argocd logs deploy/argocd-server | grep -i webhook
+  kubectl -n argocd get secret argocd-secret -o json | jq -r '.data | keys[]' | grep webhook
+Which of those keys does Argo CD actually compare Gitea's signature with?

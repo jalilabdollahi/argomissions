@@ -1,0 +1,2 @@
+The namespace already includes the environment (`{{.path.basename}}-{{.env}}`) but the Application name does not.
+Give the name the same two parts, then `kubectl apply -f mesh-appset.yaml`.

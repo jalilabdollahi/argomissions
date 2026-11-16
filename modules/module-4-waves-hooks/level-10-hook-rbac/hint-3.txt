@@ -1,0 +1,3 @@
+The Role and the RoleBinding must exist before the Job runs. Either make them hooks of an earlier phase/wave than the
+Job (PreSync with a lower sync-wave, delete policy BeforeHookCreation so they persist), or move the Job after them with
+waves. Keep the Deployment rolling out after the migration. Push, then sync the new head.

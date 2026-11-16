@@ -1,0 +1,5 @@
+Work through the findings one by one, and test each as the identity it is about:
+  kubectl -n argocd get cm argocd-rbac-cm -o yaml ; argocd account list ; argocd repo list ; argocd repocreds list
+  argocd proj get custody ; git -C custody-api log -p --stat
+Log in as the accounts from audit-notes.md (use a separate --config file) and try `argocd account can-i ...`.
+Fixing a finding can break something that quietly depended on it: re-check the platform after each one.

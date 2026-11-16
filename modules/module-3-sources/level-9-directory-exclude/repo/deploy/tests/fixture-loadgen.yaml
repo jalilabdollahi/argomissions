@@ -1,0 +1,22 @@
+# CI fixture: synthetic load generator for the scratch cluster. Never meant for production.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fixture-loadgen
+  labels: {app: fixture-loadgen}
+spec:
+  replicas: 3
+  selector:
+    matchLabels: {app: fixture-loadgen}
+  template:
+    metadata:
+      labels: {app: fixture-loadgen}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: loadgen
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=FIXTURE loadgen", "-listen=:5678"]
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

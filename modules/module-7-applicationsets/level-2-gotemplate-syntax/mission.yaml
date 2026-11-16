@@ -1,0 +1,17 @@
+name: "Template Mismatch"
+description: |
+  The shipping platform keeps one folder per service under `services/` in the Gitea repo `platform/harbor-services`
+  (`dock-api`, `dock-tracker`, `dock-notify`). A colleague wrote the ApplicationSet `harbor` to turn every folder
+  into an Application, switching on `goTemplate: true` "because it is the modern syntax". Since then
+  `argocd app list` is empty, namespace `harbor` does not exist, and the ApplicationSet is Degraded with
+  "failed to parse template {{path.basename}}: template: base:1: function \"path\" not defined".
+  A copy of the manifest is in your workspace (`harbor-appset.yaml`).
+objective: |
+  The ApplicationSet `harbor` generates one Application per folder of `services/`, named after the folder
+  (`dock-api`, `dock-tracker`, `dock-notify`), each owned by the ApplicationSet, deploying that folder to namespace
+  `harbor`. All three are Synced and Healthy, and Service `<name>` in `harbor` answers `<name> v1`
+  (for example `dock-api v1`).
+xp: 200
+difficulty: intermediate
+expected_time: 15m
+concepts: [ApplicationSet, goTemplate, fasttemplate, git directory generator, template syntax]

@@ -1,0 +1,16 @@
+name: "Expired Credentials"
+description: |
+  Mailroom v3.1 was deployed from the private repo `platform/mailroom` and ran fine for weeks. Today the team
+  pushed v3.2 to `main` and nothing happened: the `mailroom` Application is stuck at the old revision and shows
+  `ComparisonError: ... failed to list refs: authentication required: Failed to authenticate user`.
+  The repository Secret `repo-mailroom` in `argocd` has not been touched,
+  but the Gitea access token it holds was revoked during a security clean-up. Details of the machine user are in
+  `workspace/handoff.md`.
+objective: |
+  Application `mailroom` (namespace `argocd`) is Synced and Healthy at the current head of `main` (the v3.2 commit),
+  and Service `mailroom` in namespace `mailroom` answers `mailroom v3.2`. Argo CD still reads the repository as the
+  read-only machine user `argo-reader` (not `player`), and the repository stays private.
+xp: 150
+difficulty: intermediate
+expected_time: 10m
+concepts: [repository secret, access token, credential rotation, 401]

@@ -1,0 +1,15 @@
+name: "Field Is Immutable"
+description: |
+  The help-desk team shipped release v1.1 of `ticket-desk` (repo `platform/ticket-desk`, folder `deploy/`, namespace
+  `helpdesk`). One commit also moved every label to the `app.kubernetes.io/name` convention, including the
+  Deployment's pod selector. Syncing the `ticket-desk` Application now fails: Argo CD reports
+  `Deployment.apps "ticket-desk" is invalid: spec.selector: Invalid value: {"matchLabels":{"app.kubernetes.io/name":"ticket-desk"}}: field is immutable`.
+  The Application stays OutOfSync, and the Service no longer finds its pods. A clone of the repo is in your workspace.
+objective: |
+  Application `ticket-desk` is Synced and Healthy at the current head of `main`. Git keeps the new
+  `app.kubernetes.io/name` selector, the live Deployment `ticket-desk` in `helpdesk` uses it, two pods are ready,
+  and Service `ticket-desk` answers `ticket-desk v1.1`.
+xp: 200
+difficulty: intermediate
+expected_time: 15m
+concepts: [immutable field, Replace, Force, sync options, selector]

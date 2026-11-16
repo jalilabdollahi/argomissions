@@ -1,0 +1,16 @@
+name: "The Hook That Never Ran"
+description: |
+  Release v3.1 of `ticket-desk` (Gitea repo `platform/ticket-desk`, folder `deploy/`, namespace `helpdesk`)
+  was synced through Argo CD: the Application is Synced and Healthy and the Service answers `ticket-desk v3.1`.
+  But the helpdesk agents report that search shows stale tickets. The release added a `reindex-tickets` Job
+  that must finish before the new version rolls out, and the sync result shows no sign of it:
+  `kubectl -n helpdesk get jobs` says `No resources found`, and the Job is not in the Application's resource
+  list at all. A clone of the repo is in your workspace.
+objective: |
+  Application `ticket-desk` is Synced and Healthy at the current head of `main`, and the last sync of that
+  head ran Job `reindex-tickets` as a hook that finishes before the rollout (the Job completed and logged
+  `index rebuilt`). Service `ticket-desk` in namespace `helpdesk` still answers `ticket-desk v3.1`.
+xp: 150
+difficulty: intermediate
+expected_time: 10m
+concepts: [resource hooks, PreSync, hook annotation, sync result]

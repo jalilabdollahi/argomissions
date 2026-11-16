@@ -1,0 +1,3 @@
+An object can be tracked by one Application only (the tracking-id annotation names it). Both folders in Git declare
+the same ConfigMap with different content, so neither Application can ever be fully in sync with the cluster.
+Decide on one owner. Remember that both services need their flag in the result.

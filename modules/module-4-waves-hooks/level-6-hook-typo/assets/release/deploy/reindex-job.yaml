@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: reindex-tickets
+  annotations:
+    argocd.argoproj.io/hook: PreSynk
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: reindex
+        image: busybox:1.36
+        imagePullPolicy: IfNotPresent
+        command: ["sh", "-c", "echo 'reindexing ticket search index'; sleep 3; echo 'index rebuilt: 18204 tickets'"]
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

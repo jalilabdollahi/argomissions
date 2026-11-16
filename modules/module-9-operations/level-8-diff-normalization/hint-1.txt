@@ -1,0 +1,4 @@
+Look at exactly what Argo CD thinks differs, then at the same panel in Git and in the CRD:
+  argocd app diff ops-statusboard
+  grep -n -B2 -A2 refresh statusboard-config/deploy/statusboard.yaml
+  kubectl get crd statusboards.argomissions.io -o yaml | grep -B3 -A3 default

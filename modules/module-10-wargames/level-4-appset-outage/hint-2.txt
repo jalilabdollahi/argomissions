@@ -1,0 +1,6 @@
+Independent faults, revealed in this order:
+1. The tidy-up commit changed the git generator's path so it matches no folder: an empty generator deletes
+   every Application it generated, and the Applications' finalizer deletes their workloads. Rewriting history is not allowed.
+2. On-call switched off the automated sync of `orbit-control`: a change merged to Git does not reach the cluster.
+3. Project `orbit` no longer allows the repository the services are read from.
+4. Nothing protects the fleet against the next deletion: the generated Applications carry the resources finalizer.

@@ -1,0 +1,4 @@
+The commit "cleanup: drop unused manifests" removed apps/api.yaml. The root has prune enabled and the child has the
+finalizer, so deleting the manifest meant deleting the workloads. Bring the manifest back with a new commit (do not
+rewrite history). Then ask what should stop this from happening again: a sync option on the child Application itself
+(argocd.argoproj.io/sync-options) can tell the root not to prune it, and another can keep it when the root is deleted.

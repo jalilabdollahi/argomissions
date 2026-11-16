@@ -1,0 +1,3 @@
+Review the diff (it should show the version string only), then deploy the commit:
+  argocd app sync search-api
+  argocd app wait search-api --health

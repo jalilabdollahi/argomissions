@@ -1,0 +1,3 @@
+Walk the history from the oldest entry forward and find the first revision whose rendered Deployment
+has `BASE_CURRENCY` = USD. `argocd app diff rates-service --revision <sha>` shows what differs between the
+live state and that revision. `git show <sha>` in your clone shows the commit that did it.

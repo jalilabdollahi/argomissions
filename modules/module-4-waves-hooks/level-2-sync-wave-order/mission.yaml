@@ -1,0 +1,15 @@
+name: "Config Before Code"
+description: |
+  The new `shipping-ui` was added to Argo CD through the Gitea repo `platform/shipping-ui` (folder `deploy/`,
+  branch `main`, namespace `shipping`). The first sync never finishes: the operation stays `Running` with the message
+  `waiting for healthy state of apps/Deployment/shipping-ui`, and the Application is `Progressing`. The pod
+  says `CreateContainerConfigError`, and `kubectl describe pod` shows `configmap "shipping-ui-config" not found`
+  although that ConfigMap is in the repo. A clone of the repo is in your workspace.
+objective: |
+  Application `shipping-ui` (namespace `argocd`) is Synced and Healthy at the current head of `main`, its last
+  sync operation Succeeded at that commit, and Service `shipping-ui` in namespace `shipping` answers
+  `shipping-ui carrier=dhl`.
+xp: 150
+difficulty: intermediate
+expected_time: 10m
+concepts: [sync waves, sync-wave annotation, wave health gating, ConfigMap]

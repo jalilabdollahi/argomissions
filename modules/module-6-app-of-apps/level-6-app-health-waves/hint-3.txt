@@ -1,0 +1,4 @@
+Add key `resource.customizations.health.argoproj.io_Application` to ConfigMap `argocd-cm` (namespace argocd) with a
+Lua script that returns the Application's own `obj.status.health.status` (Progressing while it is not set yet).
+Waves only matter while a sync runs, so afterwards the platform has to be brought up once more from the root:
+delete the children and sync `beacon-root`.

@@ -1,0 +1,15 @@
+name: "Repo Not Permitted"
+description: |
+  The claims team's `claims-intake` Application (project `claims`, repo `intake-gateway`, folder `deploy/`)
+  was created this morning, but nothing runs in namespace `claims`. `argocd app get claims-intake` shows
+  Sync Status `Unknown` and the condition
+  `InvalidSpecError: application repo http://gitea.gitea.svc.cluster.local:3000/platform/intake-gateway.git is not permitted in project 'claims'`.
+  The platform team created the `claims` project so the team can only deploy from its own repositories.
+objective: |
+  Application `claims-intake` stays in project `claims` and is Synced and Healthy at the current head of
+  `intake-gateway/main`; Service `claims-intake` in namespace `claims` answers `claims-intake v2.3`.
+  The project must still refuse repositories it has no business with (for example `platform/payroll-secrets`).
+xp: 150
+difficulty: intermediate
+expected_time: 10m
+concepts: [AppProject, sourceRepos, InvalidSpecError, project boundaries]

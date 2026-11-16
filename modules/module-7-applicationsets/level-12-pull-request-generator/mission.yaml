@@ -1,0 +1,18 @@
+name: "Preview Environments"
+description: |
+  The web team wants a preview environment for every open pull request of `platform/pulse-web` that carries the
+  Gitea label `deploy-preview`: an Application `pulse-pr-<number>` in namespace `pulse-pr-<number>`, built from the
+  head of the PR branch and removed again when the PR is closed. The ApplicationSet `pulse-previews`
+  (namespace `argocd`) uses the pull request generator for Gitea and a token from the Secret `gitea-pr-token`.
+  There are three PRs: one open and labelled, one labelled but already closed, one open without the label.
+  Nothing happens: the ApplicationSet reports no error and no preview Application exists. A copy of the manifest is
+  in your workspace (`pulse-previews-appset.yaml`).
+objective: |
+  ApplicationSet `pulse-previews` generates exactly one Application: `pulse-pr-<n>` for the open pull request
+  labelled `deploy-preview` (branch `checkout-redesign`), owned by the set, deploying `deploy/` at the head commit of
+  that branch to namespace `pulse-pr-<n>`. It is Synced and Healthy and its Service `pulse-web` answers
+  `pulse-web checkout-redesign`. The closed PR and the unlabelled open PR have no Application and no namespace.
+xp: 300
+difficulty: expert
+expected_time: 25m
+concepts: [ApplicationSet, pull request generator, Gitea labels, head_sha, preview environments]

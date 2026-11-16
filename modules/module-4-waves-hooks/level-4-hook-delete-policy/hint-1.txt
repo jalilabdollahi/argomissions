@@ -1,0 +1,4 @@
+Read the failed operation and look at the hook as it is described in Git:
+  argocd app get helpdesk-api
+  cat helpdesk-api/deploy/migrate-job.yaml
+  git -C helpdesk-api log -p -- deploy/migrate-job.yaml

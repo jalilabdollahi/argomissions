@@ -1,0 +1,4 @@
+Add the exact repository to the project (not `*`):
+  argocd proj add-source claims http://gitea.gitea.svc.cluster.local:3000/platform/intake-gateway.git
+or edit `spec.sourceRepos` with `kubectl -n argocd edit appproject claims`.
+Then refresh: argocd app get claims-intake --hard-refresh

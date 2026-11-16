@@ -1,0 +1,33 @@
+# Schema migration 0007: weekend rota policies. Bumps `schema-version` to v7.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: rota-migrate
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/hook-delete-policy: HookFailed
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      serviceAccountName: rota-migrator
+      restartPolicy: Never
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: migrate
+        image: curlimages/curl:8.10.1
+        imagePullPolicy: IfNotPresent
+        command:
+        - sh
+        - -c
+        - |
+          SA=/var/run/secrets/kubernetes.io/serviceaccount
+          code=$(curl -s -o /tmp/out -w '%{http_code}' --cacert $SA/ca.crt \
+            -H "Authorization: Bearer $(cat $SA/token)" -H 'Content-Type: application/merge-patch+json' -X PATCH \
+            -d '{"data":{"version":"v7"}}' \
+            https://kubernetes.default.svc/api/v1/namespaces/shiftboard/configmaps/schema-version)
+          cat /tmp/out; echo
+          echo "migration 0007: HTTP $code"
+          [ "$code" = 200 ]
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

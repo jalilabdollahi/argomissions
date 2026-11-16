@@ -1,0 +1,3 @@
+With several sources, a source that only supplies files gets a `ref` name, and another source reads
+those files through `$<ref>/path` in `helm.valueFiles`. The chart source says `$values/...`, but the
+repo source is exposed under another name. The two names must match exactly.

@@ -1,0 +1,4 @@
+The set is healthy, so look at what it was asked to match and what it found:
+  kubectl -n argocd get applicationset quota-fleet -o yaml     # generators[].clusters.selector
+  argocd cluster list
+  kubectl -n argocd get secrets -l argocd.argoproj.io/secret-type=cluster --show-labels

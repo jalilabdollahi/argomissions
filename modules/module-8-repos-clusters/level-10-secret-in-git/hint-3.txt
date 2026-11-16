@@ -1,0 +1,7 @@
+One way through:
+  git rm deploy/secret.yaml && git commit && git push
+  argocd app sync smtp-gateway --prune          # deletes the Secret Argo CD owned
+  kubectl -n smtp-gw create secret generic smtp-credentials --from-literal=username=mailer --from-literal=password="$(openssl rand -hex 12)"
+  kubectl -n smtp-gw rollout restart deploy/smtp-gateway
+Or keep the live Secret: change its password in place and drop its `argocd.argoproj.io/tracking-id` annotation
+after the commit.

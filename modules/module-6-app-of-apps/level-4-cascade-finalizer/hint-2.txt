@@ -1,0 +1,3 @@
+When an Application is deleted, Argo CD only deletes the resources it deployed if the Application carries the
+finalizer `resources-finalizer.argocd.argoproj.io` (metadata.finalizers). The child manifests have none, so the root's
+prune removed only the Application object. The workload is now an orphan that no Application tracks.

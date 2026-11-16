@@ -1,0 +1,17 @@
+name: "Waiting For The Poll"
+description: |
+  The catalog team pushes to `platform/catalog-api` and then waits up to a minute for Argo CD to notice: the
+  Application `catalog-api` only reacts to the periodic Git poll. The SCM team did add a Gitea webhook on the repo
+  (push events, JSON, to `http://argocd-server.argocd.svc.cluster.local/api/webhook`), yet Gitea's "Recent
+  Deliveries" for it are red: HTTP 400 `Webhook processing failed`, and the Argo CD server logs `Gogs webhook HMAC
+  verification failed` / `Webhook processing failed: HMAC verification failed`. `argocd-secret` already contains a
+  `webhook.gitea.secret` with the hook's secret. Notes from the SCM team are in `WEBHOOK-NOTES.md`.
+objective: |
+  Gitea's deliveries for the webhook of `catalog-api` are accepted by Argo CD (a test delivery from Gitea is logged as
+  a received push event), while a push event signed with any other secret is still refused, so the endpoint stays
+  authenticated. The webhook stays active and keeps sending JSON push events to Argo CD. Application `catalog-api`
+  is Synced and Healthy at the current head of `main`.
+xp: 200
+difficulty: intermediate
+expected_time: 15m
+concepts: [webhook, Gitea, argocd-secret, HMAC, refresh, poll interval]

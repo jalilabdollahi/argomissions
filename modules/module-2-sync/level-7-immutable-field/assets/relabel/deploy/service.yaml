@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ticket-desk
+  labels: {app.kubernetes.io/name: ticket-desk}
+spec:
+  selector: {app.kubernetes.io/name: ticket-desk}
+  ports:
+  - port: 80
+    targetPort: 5678

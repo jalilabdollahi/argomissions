@@ -1,0 +1,3 @@
+Fix the probe port in deploy/api.yaml and push. But the running operation keeps the revision it started
+with: it will not pick up your commit. Stop it first (argocd app terminate-op fleet-tracker), refresh, then
+start a new sync of the new head.

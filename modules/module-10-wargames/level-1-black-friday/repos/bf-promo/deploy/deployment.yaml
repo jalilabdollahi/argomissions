@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bf-promo
+  labels: {app: bf-promo}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: bf-promo}
+  template:
+    metadata:
+      labels: {app: bf-promo}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: web
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=bf-promo v4.0 sale-banner", "-listen=:5678"]
+        ports:
+        - containerPort: 5678
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

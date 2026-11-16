@@ -1,0 +1,18 @@
+name: "The Invisible Kind"
+description: |
+  Application `lexicon-site` (repo `platform/lexicon-site`, folder `deploy/`, namespace `lexicon`) is Synced, yet
+  its health stays Progressing and the site never comes up: the pod sits in ContainerCreating with
+  `MountVolume.SetUp failed for volume "pages" : configmap "lexicon-pages" not found`. The ConfigMap is in Git,
+  next to the Deployment, but `kubectl -n lexicon get cm` does not have it and `argocd app get lexicon-site`
+  lists only two resources and a condition `ExcludedResourceWarning: Resource /ConfigMap lexicon-pages is
+  excluded in the settings`. A few weeks ago the platform team trimmed Argo CD's `resource.exclusions` to
+  save controller memory; nothing else on the platform needs to change.
+objective: |
+  Application `lexicon-site` is Synced and Healthy at the current head of `main`, ConfigMap `lexicon-pages` in
+  namespace `lexicon` exists and is managed by Argo CD, the application has no `ExcludedResourceWarning`, and
+  Service `lexicon-site` in `lexicon` answers `lexicon-site v3.1`. The ConfigMap must not simply be applied by
+  hand. Argo CD must not be told to watch everything: noisy kinds such as EndpointSlices stay out of its sight.
+xp: 200
+difficulty: advanced
+expected_time: 15m
+concepts: [resource.exclusions, argocd-cm, ExcludedResourceWarning, cluster cache]

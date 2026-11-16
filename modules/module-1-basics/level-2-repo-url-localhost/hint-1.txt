@@ -1,0 +1,4 @@
+Ask Argo CD what is wrong with the Application, and where it is trying to read from:
+  argocd app get orders
+  argocd app get orders -o yaml | grep -A4 source
+The error names an address and says what happened when something tried to connect to it.

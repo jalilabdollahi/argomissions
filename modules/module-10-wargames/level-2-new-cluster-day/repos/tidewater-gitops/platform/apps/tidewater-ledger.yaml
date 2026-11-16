@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tidewater-ledger
+  namespace: argocd
+spec:
+  project: tidewater
+  source:
+    repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/tidewater-gitops.git
+    targetRevision: main
+    path: workloads/ledger
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: tidewater-ledger
+  syncPolicy:
+    automated:
+      selfHeal: true

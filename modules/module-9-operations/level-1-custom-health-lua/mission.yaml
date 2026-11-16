@@ -1,0 +1,18 @@
+name: "Green Dashboard, Red Backups"
+description: |
+  Application `vaultline` (repo `platform/vaultline-backups`, namespace `vaultline`) deploys three `Backup`
+  custom resources of the CRD `backups.vaultline.argomissions.io`. The Argo CD dashboard has shown the
+  application as Synced and Healthy for weeks, yet the on-call engineer just found out that last night's
+  ledger backup failed: `kubectl -n vaultline get backups` lists `nightly-ledger` with phase `Failed`, and
+  `weekly-archive` with `Done`, `hourly-journal` with `Running`. In `argocd app get vaultline` the HEALTH column
+  of all three Backups is empty. Argo CD never raised an alarm. The vaultline operator owns the `.status` of
+  these objects; nobody is supposed to touch it.
+objective: |
+  Argo CD reports the real health of the Backups of Application `vaultline`: `nightly-ledger` (phase Failed) is
+  Degraded, `weekly-archive` (phase Done) is Healthy and `hourly-journal` (phase Running) is Progressing,
+  so the application itself is no longer Healthy. The application stays Synced at the current head of `main`,
+  and the Backups still carry exactly the status the operator wrote.
+xp: 250
+difficulty: advanced
+expected_time: 20m
+concepts: [custom health check, resource.customizations, Lua, argocd-cm, CRD health]

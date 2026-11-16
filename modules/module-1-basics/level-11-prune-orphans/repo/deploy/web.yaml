@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: media-web
+  labels: {app: media-web}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: media-web}
+  template:
+    metadata:
+      labels: {app: media-web}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: web
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=media v4.0", "-listen=:5678"]
+        ports:
+        - containerPort: 5678
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: media-web
+spec:
+  selector: {app: media-web}
+  ports:
+  - port: 80
+    targetPort: 5678

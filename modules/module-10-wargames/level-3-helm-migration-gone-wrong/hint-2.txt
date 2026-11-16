@@ -1,0 +1,6 @@
+Four independent faults:
+1. The Application points at a values file that does not exist under that name.
+2. The release name defaults to the Application name, so every object is renamed (consumers call the old names).
+3. The chart's default claim name differs from the existing claim: a sync would start the database on a new,
+   empty volume, and a pruning sync would delete the one that holds the data.
+4. An old incident parameter on the Application still overrides a value from the values file.

@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rates-service
+  labels:
+    app: rates-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: rates-service
+  template:
+    metadata:
+      labels:
+        app: rates-service
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+        - name: app
+          image: hashicorp/http-echo:1.0
+          imagePullPolicy: IfNotPresent
+          args: ["-text=fx-rates $(APP_VERSION) currency=$(BASE_CURRENCY) source=$(RATE_SOURCE)", "-listen=:5678"]
+          env:
+            - name: APP_VERSION
+              value: "v1.2"
+            - name: RATE_SOURCE
+              value: "ecb"
+            - name: BASE_CURRENCY
+              value: "USD"
+            - name: LOG_LEVEL
+              value: "debug"
+            - name: CACHE_TTL
+              value: "600"
+          ports:
+            - containerPort: 5678
+          resources:
+            requests:
+              cpu: 10m
+              memory: 16Mi

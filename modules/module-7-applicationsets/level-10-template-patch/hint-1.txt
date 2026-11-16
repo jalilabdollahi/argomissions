@@ -1,0 +1,4 @@
+See what the ApplicationSet generates for the sync policy:
+  argocd app get lumen-prod | grep -i 'sync policy'
+  kubectl -n argocd get applicationset lumen-gateway -o yaml
+The template has one `syncPolicy` shared by all three environments.

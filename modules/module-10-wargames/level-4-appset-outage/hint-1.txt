@@ -1,0 +1,5 @@
+Work backwards from the audit trail: `git log` in your orbit-control clone and `git show` of the last commit, then
+`argocd app get orbit-control` and `kubectl -n argocd get applicationset orbit-fleet -o yaml`. Compare what the
+generator is told to look for with the folders that exist in orbit-services.
+Do not edit the ApplicationSet in the cluster: orbit-control has self-heal and will put Git's version back.
+After the set generates again, look at every Application it creates: another problem may be waiting there.

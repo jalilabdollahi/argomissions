@@ -1,0 +1,5 @@
+Ask Argo CD how it rendered the app, and look at the plugin side:
+  argocd app get label-printer -o json | jq '.status.sourceType'
+  kubectl -n argocd get pods -l app.kubernetes.io/name=argocd-repo-server
+  kubectl -n argocd logs deploy/argocd-repo-server -c kv-render-cmp
+  kubectl -n argocd get configmap kv-render-plugin -o yaml

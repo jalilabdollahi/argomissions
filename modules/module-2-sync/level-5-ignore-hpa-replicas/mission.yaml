@@ -1,0 +1,17 @@
+name: "Fighting The Autoscaler"
+description: |
+  Application `quote-api` (namespace `quotes`, repo `platform/quote-api`, a clone is in your workspace) has
+  automated sync with self-heal, and the manifest in Git pins `replicas: 2`. Under load the platform's
+  autoscaler, the controller `load-scaler` in namespace `quotes-scaler` (it does what an HPA does; the cluster has
+  no metrics-server, so it is a small stand-in), keeps raising the Deployment to 4 replicas. Since then
+  `kubectl -n quotes get deploy quote-api -w` shows the replica count jumping between 2 and 4, pods starting and
+  dying, and `argocd app get quote-api` is `OutOfSync` with an `Automated` operation that keeps running again
+  and again. The autoscaler belongs to another team and must keep working.
+objective: |
+  Application `quote-api` is Synced and Healthy at the current head of `main`, with self-heal still enabled.
+  Deployment `quote-api` in `quotes` holds the 4 replicas the autoscaler wants, with nobody rewriting its spec
+  back and forth. The `load-scaler` controller still runs, and Service `quote-api` answers `quote-api v5.0`.
+xp: 200
+difficulty: intermediate
+expected_time: 15m
+concepts: [ignoreDifferences, RespectIgnoreDifferences, selfHeal, HPA, field ownership]

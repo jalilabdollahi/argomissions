@@ -1,0 +1,6 @@
+Commit 1 (keep the manifest, add to the claim's metadata):
+  annotations:
+    argocd.argoproj.io/sync-options: Prune=false
+    argocd.argoproj.io/compare-options: IgnoreExtraneous
+Let Argo CD sync it, check with kubectl that the live claim has both annotations,
+then Commit 2: git rm deploy/pvc.yaml

@@ -1,0 +1,3 @@
+By default every sync applies every resource of the Application, in-sync or not. ignoreDifferences only hides a field from the
+comparison; the apply still sends the Git value (count: "0"). There is a sync option that restricts a sync to the resources that
+are OutOfSync. Careful with the order: a plain sync, even one, resets the counter again.

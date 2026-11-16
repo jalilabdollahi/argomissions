@@ -1,0 +1,13 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: blackfriday
+  namespace: argocd
+spec:
+  description: Black Friday storefront
+  sourceRepos:
+  - http://gitea.gitea.svc.cluster.local:3000/platform/bf-cart.git
+  - http://gitea.gitea.svc.cluster.local:3000/platform/bf-promo.git
+  destinations:
+  - server: https://kubernetes.default.svc
+    namespace: bf-cart

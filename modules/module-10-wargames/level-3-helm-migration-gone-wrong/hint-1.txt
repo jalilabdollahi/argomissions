@@ -1,0 +1,4 @@
+Read before you press anything. `argocd app get stockroom-db-v2` for the error and the Helm settings, then
+`argocd app diff stockroom-db-v2` as soon as the app can render: it lists what a sync would create and what it
+would PRUNE. `helm template` in your clone shows what the chart produces for the values you pass.
+Faults hide each other here: the first error stops Argo CD from showing you the rest.

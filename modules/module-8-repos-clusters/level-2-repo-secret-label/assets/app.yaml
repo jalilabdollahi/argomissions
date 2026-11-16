@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: parcel-tracker
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/parcel-tracker.git
+    targetRevision: main
+    path: manifests
+  destination:
+    name: in-cluster
+    namespace: parcels
+  syncPolicy:
+    automated: {}

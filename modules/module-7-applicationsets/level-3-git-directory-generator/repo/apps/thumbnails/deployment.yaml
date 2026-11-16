@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: thumbnails
+  labels: {app: thumbnails}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: thumbnails}
+  template:
+    metadata:
+      labels: {app: thumbnails}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: web
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=studio thumbnails v1", "-listen=:5678"]
+        ports:
+        - containerPort: 5678
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

@@ -1,0 +1,2 @@
+The Application itself carries a Helm override for `release.version`. Overrides set on the Application are
+applied after every values file, so they beat whatever Git says. Changing `values.yaml` again will not help.

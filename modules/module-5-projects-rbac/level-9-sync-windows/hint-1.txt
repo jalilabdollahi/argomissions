@@ -1,0 +1,3 @@
+The block comes from the project, not from the Application. Look at what applies to the app and at the windows:
+  argocd app get statement-api        (see the SyncWindow lines)
+  argocd proj windows list billing-core

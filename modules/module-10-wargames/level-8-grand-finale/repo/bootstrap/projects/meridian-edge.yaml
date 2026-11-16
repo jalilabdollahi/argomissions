@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: meridian-edge
+  namespace: argocd
+spec:
+  description: Meridian transit signage - edge
+  sourceRepos:
+  - http://gitea.gitea.svc.cluster.local:3000/platform/meridian-platform.git
+  destinations:
+  - server: https://kubernetes.default.svc
+    namespace: meridian-north
+  - server: https://kubernetes.default.svc
+    namespace: meridian-south
+  clusterResourceWhitelist:
+  - group: ""
+    kind: Namespace

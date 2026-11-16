@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: tidewater
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+spec:
+  description: Tidewater payments platform
+  sourceRepos:
+  - http://gitea.gitea.svc.cluster.local:3000/platform/tidewater-gitops.git
+  destinations:
+  - server: https://kubernetes.default.svc
+    namespace: tidewater-ledger
+  - server: https://kubernetes.default.svc
+    namespace: tidewater-edge
+  clusterResourceWhitelist:
+  - group: ""
+    kind: Namespace

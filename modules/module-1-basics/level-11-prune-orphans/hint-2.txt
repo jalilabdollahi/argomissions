@@ -1,0 +1,3 @@
+`legacy-worker` is live but no longer in Git: Argo CD calls that a resource that "requires pruning".
+By default a sync only creates and updates; it never deletes objects that left Git unless you ask for it.
+  argocd app sync --help | grep -i prune

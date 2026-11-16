@@ -1,0 +1,6 @@
+Triage in the order the release runs: PreSync hooks, then the sync phase (waves), then PostSync hooks. Each failed
+sync stops at the first thing that breaks, so expect to meet the faults one after another.
+  argocd app get shiftboard --show-operation
+  kubectl -n shiftboard get job,events; kubectl -n shiftboard logs job/<name>
+  argocd app list; argocd app diff rota-crds
+Also read `git log` and `git show HEAD`: what exactly did release v7 change?

@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quote-api
+  labels: {app: quote-api}
+spec:
+  replicas: 2
+  selector:
+    matchLabels: {app: quote-api}
+  template:
+    metadata:
+      labels: {app: quote-api}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: api
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=quote-api v5.0", "-listen=:5678"]
+        ports:
+        - containerPort: 5678
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

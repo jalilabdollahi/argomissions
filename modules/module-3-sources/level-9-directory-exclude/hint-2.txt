@@ -1,0 +1,3 @@
+The Application recurses into `deploy/`, so it renders the CI fixtures under `deploy/tests/` too,
+and automated sync deploys everything it renders. The fixtures must stay in Git, so the fix belongs in
+the Application's directory settings (see `argocd app set --help | grep directory`).

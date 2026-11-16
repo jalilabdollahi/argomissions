@@ -1,0 +1,4 @@
+The newest commit has no signature at all, so the project's rule (`signatureKeys`) refuses it. Argo CD checks the
+signature of the commit it is asked to deploy (the tip of `main`), not of every ancestor.
+Do not loosen the project or trust another key: the point is that the release key signs what gets deployed.
+Git in `treasury-core` is already configured to use the release key (`gpg.program`).

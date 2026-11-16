@@ -1,0 +1,4 @@
+Use server-side apply for this application, then sync:
+  argocd app set host-registry --sync-option ServerSideApply=true
+  argocd app sync host-registry
+(Alternatively annotate only the ConfigMap in Git with argocd.argoproj.io/sync-options: ServerSideApply=true.)

@@ -1,0 +1,10 @@
+Application spec:
+  ignoreDifferences:
+  - group: apps
+    kind: Deployment
+    jsonPointers:
+    - /spec/replicas
+  syncPolicy:
+    syncOptions:
+    - RespectIgnoreDifferences=true
+Alternative: delete the `replicas:` line from deploy/deployment.yaml in Git.

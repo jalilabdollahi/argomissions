@@ -1,0 +1,4 @@
+Look at what Argo CD is waiting for, and at the pod:
+  argocd app get shipping-ui          # the operation message and the sync phase/wave of each resource
+  kubectl -n shipping describe pod
+Then check which sync-wave each manifest in your clone carries.

@@ -1,0 +1,16 @@
+name: "Who Owns This?"
+description: |
+  Namespace `search` is managed by the Application `query-service` (project `search-platform`) and Argo CD
+  reports it Synced and Healthy. A cost review nevertheless found a running workload in the namespace that
+  nobody can explain, and the security team reminds everybody that the TLS Secret `search-tls-manual` is
+  issued by hand, is documented in runbook SEC-114 and must never be deleted. Argo CD itself has said nothing
+  about either of them: `argocd app get query-service` has no warnings.
+objective: |
+  Project `search-platform` has orphaned-resource monitoring enabled, and Application `query-service` reports no
+  orphaned resources. The unowned workload `legacy-indexer` is gone from namespace `search`. Secret
+  `search-tls-manual` still exists, and it is excluded from the orphan report by a specific rule on the project
+  (not by hiding everything). `query-service` stays Synced and Healthy.
+xp: 200
+difficulty: intermediate
+expected_time: 15m
+concepts: [AppProject, orphanedResources, warn, ignore, unmanaged resources]

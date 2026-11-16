@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: booking-web-smoke-test
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+spec:
+  backoffLimit: 0
+  template:
+    metadata:
+      labels: {app: booking-web-smoke-test}
+    spec:
+      restartPolicy: Never
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: smoke
+        image: curlimages/curl:8.10.1
+        imagePullPolicy: IfNotPresent
+        command: ["sh", "-c", "curl -fsS --max-time 5 http://booking-web:8080/ | grep -q 'booking-web'"]
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

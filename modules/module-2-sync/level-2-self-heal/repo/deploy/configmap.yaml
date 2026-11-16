@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pricing-rules
+data:
+  max-discount-percent: "5"
+  currency: "EUR"

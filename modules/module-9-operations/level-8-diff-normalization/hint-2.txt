@@ -1,0 +1,4 @@
+The CRD gives `refresh` the default `30s`. One panel in Git has the key `refresh:` with nothing after it,
+which YAML reads as null: the API server replaces it with the default, so the live panel says `refresh: 30s`
+and the one in Git says nothing. Argo CD compares the `panels` array as a whole, so that panel never converges.
+Two honest ways out: make Git say what the server stores, or tell Argo CD this one field is not worth comparing.

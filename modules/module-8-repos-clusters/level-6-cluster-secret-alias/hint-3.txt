@@ -1,0 +1,4 @@
+Add the CA next to the token in the cluster Secret's `config`:
+  {"bearerToken": "<unchanged>", "tlsClientConfig": {"insecure": false, "caData": "<ca.crt, still base64>"}}
+`kubectl -n boarding-stg get secret argocd-deployer-token -o jsonpath='{.data.ca\.crt}'` prints the value in
+exactly that form. Edit `cluster-staging` (kubectl edit / patch with stringData), then refresh the Application.

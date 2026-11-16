@@ -1,0 +1,3 @@
+The `claims` project only lists repositories matching `claims-*`, and the Application reads `intake-gateway`.
+The project is the policy. The Application is just asking for something the policy does not cover.
+Moving the Application to another project would dodge the policy instead of changing it.

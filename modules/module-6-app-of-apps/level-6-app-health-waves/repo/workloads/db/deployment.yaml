@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: beacon-db
+  labels: {app: beacon-db}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: beacon-db}
+  template:
+    metadata:
+      labels: {app: beacon-db}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: db
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=beacon-db v3.1", "-listen=:5678"]
+        ports:
+        - containerPort: 5678
+        # the engine replays its write-ahead log before it accepts connections
+        readinessProbe:
+          httpGet: {path: /, port: 5678}
+          initialDelaySeconds: 25
+          periodSeconds: 3
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

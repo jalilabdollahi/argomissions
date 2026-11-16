@@ -1,0 +1,15 @@
+name: "Half The Manifests"
+description: |
+  The warehouse team keeps the `inventory` service in the Gitea repo `platform/inventory-stack`: a web tier in
+  `deploy/web/` and a database stub in `deploy/db/`. Argo CD Application `inventory` (path `deploy`, branch
+  `main`, namespace `inventory`) looks perfect in the UI: Synced, Healthy, a green tick. Yet `kubectl get all -n
+  inventory` is empty and the web service does not exist. A clone of the repo is in your workspace.
+objective: |
+  Application `inventory` is Synced and Healthy at the current head of `main` and manages both tiers:
+  Deployments `stock-web` and `stock-db` and their Services run in namespace `inventory`, and Service
+  `stock-web` answers `stock-web v3.1`. The folder layout of the repo stays as it is (`deploy/web`,
+  `deploy/db`).
+xp: 150
+difficulty: beginner
+expected_time: 10m
+concepts: [directory source, directory.recurse, tool detection]

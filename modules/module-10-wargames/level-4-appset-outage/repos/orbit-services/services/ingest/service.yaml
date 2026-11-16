@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: orbit-ingest
+  labels: {app: orbit-ingest}
+spec:
+  selector: {app: orbit-ingest}
+  ports:
+  - port: 80
+    targetPort: 5678

@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lexicon-site
+  labels: {app: lexicon-site}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: lexicon-site}
+  template:
+    metadata:
+      labels: {app: lexicon-site}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: web
+        image: nginx:1.27-alpine
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - {name: pages, mountPath: /usr/share/nginx/html}
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}
+      volumes:
+      - name: pages
+        configMap:
+          name: lexicon-pages

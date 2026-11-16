@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shipping-ui
+  labels: {app: shipping-ui}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: shipping-ui}
+  template:
+    metadata:
+      labels: {app: shipping-ui}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: web
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=shipping-ui carrier=$(CARRIER)", "-listen=:5678"]
+        env:
+        - name: CARRIER
+          valueFrom:
+            configMapKeyRef: {name: shipping-ui-config, key: carrier}
+        ports:
+        - containerPort: 5678
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

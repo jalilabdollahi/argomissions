@@ -1,0 +1,3 @@
+Helm only reads keys that the chart's templates look up (`.Values.replicaCount`, `.Values.banner`). The
+Application nests the settings one level deeper, under a key the chart never reads, so they are ignored.
+`helm template x search-suggest/chart -f` with the same layout shows it.

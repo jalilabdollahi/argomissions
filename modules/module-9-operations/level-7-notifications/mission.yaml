@@ -1,0 +1,18 @@
+name: "Tell Me When It Breaks"
+description: |
+  The Application `payout-worker` (Gitea repo `platform/payout-worker`, folder `deploy/`, namespace `payouts`)
+  has been failing its syncs since a bad release (`Service "payout-worker" is invalid: spec.ports[0].port:
+  Invalid value: 0: must be between 1 and 65535, inclusive`), and nobody noticed for two days: Argo CD only tells
+  people who look at it. The on-call chat bridge is already running in the cluster as Service `chat-hook` in namespace
+  `ops-hooks` and accepts JSON `POST` requests on `/hooks/deploys`; it records every request it receives.
+  `argocd-notifications-controller` is running, but `argocd-notifications-cm` is empty. A clone of the repo is
+  in your workspace.
+objective: |
+  Argo CD notifies `chat-hook` when a sync of `payout-worker` fails: the receiver has logged a `POST` to
+  `/hooks/deploys` whose body names the application and says the sync failed. The configuration lives in
+  Argo CD's notifications ConfigMap (a webhook service for the receiver, a template, a trigger) and
+  `payout-worker` is subscribed to it. Fixing the release itself is not part of this mission.
+xp: 250
+difficulty: advanced
+expected_time: 20m
+concepts: [argocd-notifications-cm, webhook service, template, trigger, subscription annotation]

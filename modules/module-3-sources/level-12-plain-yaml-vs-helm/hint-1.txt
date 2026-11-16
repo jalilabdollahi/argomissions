@@ -1,0 +1,4 @@
+Ask Argo CD what it thinks the folder is, and what it rendered:
+  argocd app get docs-portal       (look at the source / tool)
+  argocd app manifests docs-portal
+Then list the files in your clone's deploy/ folder.

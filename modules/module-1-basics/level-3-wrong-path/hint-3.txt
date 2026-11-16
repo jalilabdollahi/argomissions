@@ -1,0 +1,4 @@
+The manifests moved, so the Application must follow them:
+  argocd app set catalog --path deploy/catalog
+  argocd app sync catalog
+The repo itself does not need a change.

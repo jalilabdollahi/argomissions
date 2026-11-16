@@ -1,0 +1,4 @@
+Ask the ApplicationSet why it generated nothing:
+  kubectl -n argocd get applicationset harbor -o yaml     # status.conditions
+  argocd appset get harbor
+Read the error message word by word: it quotes the exact text it could not parse.

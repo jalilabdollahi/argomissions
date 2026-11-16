@@ -1,0 +1,6 @@
+A single object can opt out of pruning with an annotation on itself:
+  argocd.argoproj.io/sync-options: Prune=false
+Argo CD reads that annotation from the LIVE object when it decides what to prune, so it must be on the claim
+(applied by a sync) before the manifest is removed, not in the same commit that removes it.
+After removal the Application will report a leftover; read `argocd app get media-store` and look up the
+`argocd.argoproj.io/compare-options` annotation.

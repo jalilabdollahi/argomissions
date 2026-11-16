@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inventory-sync
+  labels:
+    app: inventory-sync
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: inventory-sync
+  template:
+    metadata:
+      labels:
+        app: inventory-sync
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: sync
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=inventory-sync base", "-listen=:5678"]
+        ports:
+        - containerPort: 5678
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

@@ -1,0 +1,4 @@
+Compare the creation times of the two children with the moment beacon-db became available:
+  kubectl -n argocd get applications -o custom-columns=NAME:.metadata.name,CREATED:.metadata.creationTimestamp
+  kubectl -n beacon-data get deploy beacon-db -o jsonpath='{.status.conditions}'
+Then look at what the root reports for its resources: `argocd app get beacon-root`.

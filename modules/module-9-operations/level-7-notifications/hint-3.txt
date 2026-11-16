@@ -1,0 +1,7 @@
+A trigger for failed syncs is:
+  - when: app.status.operationState.phase in ['Error', 'Failed']
+    send: [<your-template>]
+The webhook template needs `method: POST`, `path: /hooks/deploys` and a JSON `body` using
+`{{.app.metadata.name}}` and `{{.app.status.operationState.phase}}`.
+Subscribe with: kubectl -n argocd annotate application payout-worker notifications.argoproj.io/subscribe.<trigger>.<service>=""
+Then run a sync of the (still failing) app to see the request arrive.

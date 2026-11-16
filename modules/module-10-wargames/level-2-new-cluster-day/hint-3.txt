@@ -1,0 +1,6 @@
+Credentials: `argocd repo add <in-cluster URL> --username tidewater-reader --password ...` (or a repository Secret).
+Root: `kubectl apply -f bootstrap/root.yaml` from your clone, then refresh it.
+Git changes in your clone, then push: the sync option `CreateNamespace=true` on tidewater-ledger, and a destination
+entry for namespace tidewater-jobs in platform/projects/tidewater.yaml. Do not widen the project to `*`.
+A sync operation that is still retrying keeps the parameters it started with (`argocd app get` shows it as Running):
+terminate it (`argocd app terminate-op`) once the Git fix is in, and the next automated sync uses the new spec.

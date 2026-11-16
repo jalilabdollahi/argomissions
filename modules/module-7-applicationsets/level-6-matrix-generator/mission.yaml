@@ -1,0 +1,16 @@
+name: "Every Service In Every Env"
+description: |
+  The mesh team wants every service in `services/` of the Gitea repo `platform/mesh-services` (`invoicer`, `mailer`)
+  deployed once per environment (`staging` and `prod`). The ApplicationSet `mesh` combines a git directory
+  generator with a list of environments in a matrix, but nothing is deployed: `argocd app list` is empty and the
+  ApplicationSet is Degraded with "ApplicationSet mesh contains applications with duplicate name: mailer (and 1 more)".
+  A copy of the manifest is in your workspace (`mesh-appset.yaml`).
+objective: |
+  The ApplicationSet `mesh` generates four Applications, `invoicer-staging`, `invoicer-prod`, `mailer-staging` and
+  `mailer-prod`, each owned by the ApplicationSet, deploying its service folder to namespace `<service>-<env>`
+  with Helm parameter `env=<env>`. All four are Synced and Healthy, and Service `<service>` in each namespace
+  answers `<service> <env>` (for example `invoicer prod`).
+xp: 250
+difficulty: advanced
+expected_time: 20m
+concepts: [ApplicationSet, matrix generator, git directory generator, list generator, template names]

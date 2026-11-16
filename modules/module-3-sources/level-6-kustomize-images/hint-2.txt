@@ -1,0 +1,3 @@
+Kustomize can replace an image at build time (`kustomize edit set image NAME=NEWNAME:TAG`). Argo CD exposes it as
+`spec.source.kustomize.images` on the Application, applied after the overlay is built. The alias in the base is
+`ticket-desk-web`; the image to promote is the one staging uses.

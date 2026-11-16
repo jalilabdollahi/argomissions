@@ -1,0 +1,17 @@
+name: "Restart Without kubectl"
+description: |
+  Finance shipped the new rate card: the ConfigMap `tollbooth-rates` in repo `platform/tollbooth` now says
+  `tollbooth rates 2025-Q4`, Argo CD synced it, and `kubectl -n tollbooth get cm tollbooth-rates -o yaml` shows
+  the new value. Application `tollbooth` is Synced and Healthy. Yet Service `tollbooth` in namespace
+  `tollbooth` still answers `tollbooth rates 2025-Q3`: the pods read the value from the environment when
+  they started. The pods must be restarted, but the on-call engineer has only Argo CD access for this
+  cluster, no kubectl rights in production, and nothing in Git needs to change.
+objective: |
+  Every pod of Deployment `tollbooth` in namespace `tollbooth` was created after the mission started and
+  Service `tollbooth` answers `tollbooth rates 2025-Q4`. The restart went through Argo CD (the application's
+  resource action, as the UI offers it), the Git repo is unchanged, and Application `tollbooth` is still Synced
+  and Healthy at the current head of `main`.
+xp: 150
+difficulty: intermediate
+expected_time: 10m
+concepts: [resource actions, restart, argocd app actions, Deployment]

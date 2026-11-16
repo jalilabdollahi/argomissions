@@ -1,0 +1,2 @@
+A list generator produces exactly one set of parameters per element, and the template turns each into one
+Application. No element for `eu-west` means no Application for `eu-west`: nothing is broken, it was never asked for.

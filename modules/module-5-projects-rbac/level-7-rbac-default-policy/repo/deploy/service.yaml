@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: claims-portal
+spec:
+  selector: {app: claims-portal}
+  ports:
+  - port: 80
+    targetPort: 5678

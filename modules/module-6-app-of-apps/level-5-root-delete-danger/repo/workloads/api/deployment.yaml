@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stock-api
+  labels: {app: stock-api}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: stock-api}
+  template:
+    metadata:
+      labels: {app: stock-api}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: web
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=stock-api v6.2", "-listen=:5678"]
+        ports:
+        - containerPort: 5678
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

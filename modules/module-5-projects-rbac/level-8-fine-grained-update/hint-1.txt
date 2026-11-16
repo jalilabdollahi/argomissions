@@ -1,0 +1,4 @@
+Log in as mira (a separate --config file keeps your admin session) and try the restart action:
+  argocd app actions run rewards-engine restart --kind Deployment --resource-name rewards-engine --group apps
+Then read the RBAC documentation of Argo CD 3.x about what `update` and `delete` on applications cover now,
+and look at how the `resource` part of a policy can be written for sub-resources and actions.

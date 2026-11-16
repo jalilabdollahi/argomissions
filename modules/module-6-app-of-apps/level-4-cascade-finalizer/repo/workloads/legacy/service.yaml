@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tariff-legacy
+spec:
+  selector: {app: tariff-legacy}
+  ports:
+  - port: 80
+    targetPort: 5678

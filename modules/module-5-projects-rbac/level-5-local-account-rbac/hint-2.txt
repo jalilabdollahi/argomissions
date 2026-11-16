@@ -1,0 +1,5 @@
+Authentication (the account in argocd-cm) and authorization (argocd-rbac-cm) are separate. The RBAC ConfigMap is
+empty, so a signed-in ci-bot can do nothing. Policy lines look like
+  p, <subject-or-role>, <resource>, <action>, <project>/<application>, allow
+Resource is `applications`; actions needed are `get` and `sync`; the object pattern limits it to project `shop`.
+Roles are assigned with `g, <account>, <role>`.

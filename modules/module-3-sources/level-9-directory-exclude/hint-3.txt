@@ -1,0 +1,3 @@
+`directory.exclude` takes a glob matched against file paths relative to the source path, for example
+`tests/*` (a bare folder name does not match files). Alternatively `directory.include` can name only
+what should be deployed. With pruning on, Argo CD removes the leftovers itself once they are no longer rendered.

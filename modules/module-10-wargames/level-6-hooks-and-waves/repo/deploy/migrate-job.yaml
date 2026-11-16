@@ -1,0 +1,33 @@
+# Schema migration 0006: records the schema version in ConfigMap `schema-version`.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: rota-migrate
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/hook-delete-policy: HookFailed
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      serviceAccountName: rota-migrator
+      restartPolicy: Never
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: migrate
+        image: curlimages/curl:8.10.1
+        imagePullPolicy: IfNotPresent
+        command:
+        - sh
+        - -c
+        - |
+          SA=/var/run/secrets/kubernetes.io/serviceaccount
+          code=$(curl -s -o /tmp/out -w '%{http_code}' --cacert $SA/ca.crt \
+            -H "Authorization: Bearer $(cat $SA/token)" -H 'Content-Type: application/json' -X POST \
+            -d '{"apiVersion":"v1","kind":"ConfigMap","metadata":{"name":"schema-version"},"data":{"version":"v6"}}' \
+            https://kubernetes.default.svc/api/v1/namespaces/shiftboard/configmaps)
+          cat /tmp/out; echo
+          echo "migration 0006: HTTP $code"
+          [ "$code" = 201 ] || [ "$code" = 409 ]
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

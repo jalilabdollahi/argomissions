@@ -1,0 +1,4 @@
+resource.exclusions is a YAML list of rules (apiGroups, kinds, clusters). Remove or narrow the rule that hides
+ConfigMaps; leave the rules for noisy kinds (Endpoints, EndpointSlice, Lease) alone. The controller reloads
+argocd-cm live. Then refresh the application: it will show the ConfigMap as OutOfSync/Missing, and a sync
+(argocd app sync lexicon-site) creates it. Do not kubectl apply the ConfigMap yourself.

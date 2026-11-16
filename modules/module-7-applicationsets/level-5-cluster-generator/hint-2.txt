@@ -1,0 +1,2 @@
+The cluster generator makes one parameter set per registered cluster, optionally filtered by labels. The labels
+it looks at are the labels of the cluster Secret. Compare the selector with the labels of the `staging` secret.

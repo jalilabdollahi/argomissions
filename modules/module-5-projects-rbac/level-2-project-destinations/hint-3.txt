@@ -1,0 +1,4 @@
+Add the destination to the project:
+  argocd proj add-destination clinic https://kubernetes.default.svc pharmacy
+or edit `spec.destinations` with `kubectl -n argocd edit appproject clinic`.
+Then: argocd app get rx-dispatch --hard-refresh

@@ -1,0 +1,13 @@
+name: "The Commit Nobody Shipped"
+description: |
+  The release manager merged "release v2.3" of `search-api` into `main` of the Gitea repo `platform/search-api`
+  and told the team it is live. But customers still get the old behaviour: Service `search-api` in namespace
+  `search` answers `search-api v2.2`, and the Argo CD Application `search-api` is `OutOfSync`. The Application
+  was synced once, at v2.2, and nothing has happened since. A clone of the repo is in your workspace.
+objective: |
+  Application `search-api` (namespace `argocd`) is Synced and Healthy at the current head of `main`, the release
+  reached the cluster through Argo CD, and Service `search-api` in namespace `search` answers `search-api v2.3`.
+xp: 150
+difficulty: beginner
+expected_time: 10m
+concepts: [manual sync, OutOfSync, argocd app diff, sync policy]

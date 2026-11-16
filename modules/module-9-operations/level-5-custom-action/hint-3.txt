@@ -1,0 +1,6 @@
+Add `mergeBuiltinActions: true` at the top of the value, otherwise your definitions REPLACE the built-in
+restart/scale/pause actions of Deployments.
+discovery.lua: read obj.metadata.annotations["ferry.argomissions.io/maintenance"] and disable the action that
+would change nothing. Apply with kubectl patch/edit on argocd-cm (live, no restart), check the list, then run:
+  argocd app actions run ferry-booking maintenance-on --kind Deployment --resource-name ferry-booking
+Do not commit the annotation to Git and do not kubectl annotate.

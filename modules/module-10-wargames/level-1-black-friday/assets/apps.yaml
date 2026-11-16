@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: bf-cart
+  namespace: argocd
+spec:
+  project: blackfriday
+  source:
+    repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/bf-cart.git
+    targetRevision: main
+    path: deploy
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: bf-cart
+  syncPolicy:
+    automated:
+      selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: bf-promo
+  namespace: argocd
+spec:
+  project: blackfriday
+  source:
+    repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/bf-promo.git
+    targetRevision: main
+    path: deploy
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: bf-promo
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true

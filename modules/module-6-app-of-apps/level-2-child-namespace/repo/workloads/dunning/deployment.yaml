@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dunning-worker
+  labels: {app: dunning-worker}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: dunning-worker}
+  template:
+    metadata:
+      labels: {app: dunning-worker}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: web
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=dunning-worker v1.8", "-listen=:5678"]
+        ports:
+        - containerPort: 5678
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

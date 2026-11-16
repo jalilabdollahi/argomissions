@@ -1,0 +1,16 @@
+name: "Label Me In"
+description: |
+  The platform team registered a second destination, `staging`, in Argo CD (it is an alias of this cluster's own
+  API server: `argocd cluster list` shows it next to `in-cluster`). The ApplicationSet `quota-fleet` should deploy
+  the `quota-api` service from the Gitea repo `platform/quota-service` to every cluster that is labelled
+  `env: staging`. The ApplicationSet reports "All applications have been generated successfully", yet
+  `argocd app list` is empty and namespace `quota` does not exist.
+objective: |
+  The ApplicationSet `quota-fleet` generates exactly one Application, `quota-staging`, owned by the ApplicationSet,
+  deploying folder `deploy` to namespace `quota` of the `staging` cluster, and nothing for `in-cluster`. It is
+  Synced and Healthy, and Service `quota-api` in `quota` answers `quota-api v3`. The `staging` cluster stays
+  registered under that name.
+xp: 250
+difficulty: advanced
+expected_time: 20m
+concepts: [ApplicationSet, cluster generator, cluster secret, labels, selector]

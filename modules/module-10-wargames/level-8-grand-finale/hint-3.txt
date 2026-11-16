@@ -1,0 +1,8 @@
+Near-fixes that are NOT enough:
+  * `kubectl apply` of projects or of a corrected ApplicationSet: the root heals the ApplicationSet back and does
+    not own the projects (and a fresh cluster would be broken again)
+  * `destinations: namespace: '*'` to get harbor in
+  * `|| true` in the smoke test
+  * projects in the right folder but in the same wave as the Application and ApplicationSet that use them:
+    works on a good day, races on a fresh bootstrap
+With goTemplate the variables are `{{.district}}`.

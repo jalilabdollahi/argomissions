@@ -1,0 +1,4 @@
+Notifications are four pieces in one ConfigMap plus a subscription:
+  kubectl -n argocd get configmap argocd-notifications-cm -o yaml
+  argocd admin notifications --help          # service / template / trigger commands
+  kubectl -n ops-hooks logs deploy/chat-hook # what the receiver has seen

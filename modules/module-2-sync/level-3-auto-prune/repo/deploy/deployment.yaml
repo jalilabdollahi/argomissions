@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gallery-web
+  labels: {app: gallery-web}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: gallery-web}
+  template:
+    metadata:
+      labels: {app: gallery-web}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: web
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=gallery-web v3.1", "-listen=:5678"]
+        ports:
+        - containerPort: 5678
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

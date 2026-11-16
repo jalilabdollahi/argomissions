@@ -1,0 +1,4 @@
+Find out what deleting an ApplicationSet does to its children before you do it:
+  kubectl -n argocd get application kiosk-north -o yaml     # look at metadata.finalizers and ownerReferences
+  kubectl explain applicationset.spec.syncPolicy
+Remember the UIDs: `kubectl -n kiosk-north get deploy kiosk-web -o jsonpath='{.metadata.uid}'`.

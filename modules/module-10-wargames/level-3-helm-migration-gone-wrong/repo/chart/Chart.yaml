@@ -1,0 +1,5 @@
+apiVersion: v2
+name: stockroom-db
+description: Inventory database service
+version: 3.0.0
+appVersion: "3.0"

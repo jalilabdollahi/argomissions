@@ -1,0 +1,4 @@
+Compare what Git contains with what the last sync actually did:
+  cat ticket-desk/deploy/reindex-job.yaml
+  argocd app get ticket-desk          # is the Job in the list? what is in the HOOK column?
+  argocd app history ticket-desk

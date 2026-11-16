@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tallyline-gateway
+spec:
+  selector: {app: tallyline-gateway}
+  ports:
+  - port: 80
+    targetPort: 5678

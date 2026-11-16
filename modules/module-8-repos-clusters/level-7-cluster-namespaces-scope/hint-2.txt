@@ -1,0 +1,4 @@
+A cluster Secret can carry a `namespaces` field: a comma separated list of the only namespaces Argo CD may
+manage through that cluster. `parcel-us` is not in it, so any Application aimed at it is refused before
+anything is applied. The ServiceAccount already has rights in both namespaces (Roles in parcel-eu and parcel-us).
+Taking the field away is not an option: this ServiceAccount cannot list cluster-wide resources.

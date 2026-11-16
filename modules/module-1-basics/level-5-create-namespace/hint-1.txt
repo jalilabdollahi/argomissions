@@ -1,0 +1,3 @@
+See what the failed sync reports and which objects were affected:
+  argocd app get ledger
+  kubectl get namespaces

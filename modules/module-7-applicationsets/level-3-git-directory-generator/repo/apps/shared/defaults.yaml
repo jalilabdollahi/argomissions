@@ -1,0 +1,8 @@
+# Build-time defaults read by the studio CI pipeline (not a service).
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: studio-defaults
+data:
+  logLevel: info
+  retentionDays: "14"

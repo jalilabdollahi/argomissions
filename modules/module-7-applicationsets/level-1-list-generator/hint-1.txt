@@ -1,0 +1,4 @@
+The Applications are not written by hand: something generates them. Look at what owns them and what feeds it:
+  kubectl -n argocd get applicationset geo-edge -o yaml
+  argocd app get geo-edge-us-east      # look at the owner / labels
+Compare the list of regions with the regions customers use.

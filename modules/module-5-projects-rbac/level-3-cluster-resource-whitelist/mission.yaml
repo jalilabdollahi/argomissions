@@ -1,0 +1,17 @@
+name: "ClusterRole Forbidden"
+description: |
+  The radar team's `radar-agent` Application (project `radar`, repo `radar-agent`, folder `deploy/`) is OutOfSync
+  and refuses to deploy into namespace `radar`. Pressing Sync fails immediately with
+  `one or more synchronization tasks are not valid: resource rbac.authorization.k8s.io:ClusterRole is not permitted
+  in project radar; resource rbac.authorization.k8s.io:ClusterRoleBinding is not permitted in project radar`.
+  Nothing is created, not even the Deployment. The repo is a ServiceAccount, a ClusterRole, a ClusterRoleBinding,
+  a Deployment and a Service.
+objective: |
+  Application `radar-agent` stays in project `radar` and is Synced and Healthy at the head of `radar-agent/main`,
+  deployed by an Argo CD sync that includes ClusterRole and ClusterRoleBinding `radar-node-reader`.
+  Service `radar-agent` in namespace `radar` answers `radar-agent v0.9`. The project may allow those two kinds
+  and nothing wider: no wildcard for cluster-scoped resources.
+xp: 200
+difficulty: intermediate
+expected_time: 15m
+concepts: [AppProject, clusterResourceWhitelist, cluster-scoped resources, least privilege]

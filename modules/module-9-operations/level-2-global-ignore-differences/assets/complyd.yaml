@@ -1,0 +1,111 @@
+# The compliance scanner of the security team. NOT part of the tallyline repo, not managed by Argo CD.
+# It stamps every tallyline Deployment with a fresh `complyd.argomissions.io/scan` label every few seconds
+# (what an admission/compliance controller does in real clusters).
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: complyd
+  namespace: complyd-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: complyd
+  namespace: tallyline-ingest
+rules:
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["get", "patch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: complyd
+  namespace: tallyline-ingest
+subjects:
+- {kind: ServiceAccount, name: complyd, namespace: complyd-system}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: complyd
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: complyd
+  namespace: tallyline-rollup
+rules:
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["get", "patch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: complyd
+  namespace: tallyline-rollup
+subjects:
+- {kind: ServiceAccount, name: complyd, namespace: complyd-system}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: complyd
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: complyd
+  namespace: tallyline-gateway
+rules:
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["get", "patch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: complyd
+  namespace: tallyline-gateway
+subjects:
+- {kind: ServiceAccount, name: complyd, namespace: complyd-system}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: complyd
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: complyd
+  namespace: complyd-system
+  labels: {app: complyd}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: complyd}
+  template:
+    metadata:
+      labels: {app: complyd}
+    spec:
+      serviceAccountName: complyd
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: scanner
+        image: curlimages/curl:8.10.1
+        imagePullPolicy: IfNotPresent
+        command:
+        - sh
+        - -c
+        - |
+          SA=/var/run/secrets/kubernetes.io/serviceaccount
+          while true; do
+            for s in ingest rollup gateway; do
+              curl -s --cacert $SA/ca.crt -H "Authorization: Bearer $(cat $SA/token)" \
+                -X PATCH -H 'Content-Type: application/merge-patch+json' \
+                "https://kubernetes.default.svc/apis/apps/v1/namespaces/tallyline-$s/deployments/tallyline-$s?fieldManager=complyd" \
+                -d "{\"metadata\":{\"labels\":{\"complyd.argomissions.io/scan\":\"scan-$(date +%s)\"}}}" >/dev/null
+            done
+            sleep 10
+          done
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

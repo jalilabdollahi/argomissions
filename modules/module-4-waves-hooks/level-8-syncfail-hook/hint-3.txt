@@ -1,0 +1,3 @@
+Make the cleanup run on failure: the hook annotation accepts a comma-separated list of phases, or you can add a
+second Job whose phase is SyncFail. Push the change, then sync the new head. That sync is expected to fail
+again at the schema gate; what matters is what runs after it.

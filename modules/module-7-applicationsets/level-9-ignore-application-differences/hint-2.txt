@@ -1,0 +1,5 @@
+The ApplicationSet controller owns the spec of every Application it generates and rewrites it from the template
+whenever something changes. Your change is "drift" from the template's point of view. There are two ways to
+cooperate with it: tell the ApplicationSet which fields it must not overwrite, or make the field come from the
+template/generator so that the template itself says `hotfix-1.8.1` for prod.
+`kubectl explain applicationset.spec.ignoreApplicationDifferences` describes the first.

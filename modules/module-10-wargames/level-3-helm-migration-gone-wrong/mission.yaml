@@ -1,0 +1,22 @@
+name: "The Chart Migration"
+description: |
+  PAGER, Thursday 22:40 — change window for the inventory database migration is open and the on-call is stuck.
+  `stockroom-db` used to be plain manifests; the migration PR switched Application `stockroom-db-v2` (namespace
+  `stockroom`, repo `platform/stockroom-db`) to the Helm chart in `chart/`, with production values, and set the
+  sync policy to manual because it owns a volume. Since the switch `argocd app get stockroom-db-v2` shows sync
+  status `Unknown` and a `ComparisonError` that ends with `values/prod.yaml: no such file or directory`.
+  Consumers still call `http://stockroom-db.stockroom` and the volume `stockroom-db-data` holds the inventory data
+  (`/seq` on the service shows it); the last chart migration, on another team, silently started the database on an
+  empty volume. On-call already tried: syncing from the UI (same error), and re-reading the PR. Nobody dares to
+  press Sync with prune. A clone of the repo is in your workspace.
+objective: |
+  Application `stockroom-db-v2` keeps deploying the Helm chart (path `chart`) and is Synced and Healthy at the
+  current head of `main`, deployed by a Succeeded sync of that head. Deployment and Service are named
+  `stockroom-db` in namespace `stockroom` (managed by the Application, nothing renamed left over), the service
+  answers `stockroom-db prod 3.0` on `/` and the original inventory data `seq=4821 shipments=1873` on `/seq`.
+  The original PersistentVolumeClaim `stockroom-db-data` (same UID as when the mission started) is still the
+  volume the database uses, and no extra empty claim exists.
+xp: 400
+difficulty: expert
+expected_time: 30m
+concepts: [Helm, valueFiles, releaseName, helm parameters, PVC, prune, migration safety]

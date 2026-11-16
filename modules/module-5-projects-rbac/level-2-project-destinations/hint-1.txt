@@ -1,0 +1,4 @@
+Which project is the Application in, and where does that project let it deploy?
+  argocd app get rx-dispatch
+  argocd proj get clinic
+Compare the Application's destination with the project's "Destinations".

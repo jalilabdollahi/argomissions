@@ -1,0 +1,16 @@
+name: "Namespace Not Managed"
+description: |
+  Platform registered the cluster `regional` (cluster Secret `cluster-regional` in namespace `argocd`) when only
+  the EU region existed. Two Applications read the repo `platform/parcel-hub`: `parcel-hub-eu` (folder `eu/`,
+  namespace `parcel-eu`) is Healthy, but its twin `parcel-hub-us` (folder `us/`, namespace `parcel-us`) was
+  added today and shows `ComparisonError: Failed to load live state: namespace "parcel-us" for Deployment
+  "parcel-hub" is not managed`. The ServiceAccount behind the cluster may work in both namespaces.
+objective: |
+  Both `parcel-hub-eu` and `parcel-hub-us` stay on the `regional` cluster and in their own namespaces
+  (`parcel-eu`, `parcel-us`), and both are Synced and Healthy at the current head of `main`. The cluster keeps
+  its namespace scope, limited to those two region namespaces, and keeps authenticating as the namespace-scoped
+  deployer ServiceAccount. Each Service `parcel-hub` answers `parcel-hub eu v2.0` / `parcel-hub us v2.0`.
+xp: 200
+difficulty: advanced
+expected_time: 15m
+concepts: [cluster secret, namespaces scope, namespace-scoped ServiceAccount, destination]

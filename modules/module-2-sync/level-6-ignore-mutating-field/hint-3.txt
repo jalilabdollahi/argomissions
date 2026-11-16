@@ -1,0 +1,8 @@
+In the Application spec:
+  ignoreDifferences:
+  - group: apps
+    kind: Deployment
+    name: profile-svc
+    jsonPointers:
+    - /metadata/labels/cost-center
+(jqPathExpressions or managedFieldsManagers also work.) Check afterwards: argocd app get profile-svc

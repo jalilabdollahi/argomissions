@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tallyline-rollup
+  labels:
+    app: tallyline-rollup
+    complyd.argomissions.io/scan: pending
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: tallyline-rollup}
+  template:
+    metadata:
+      labels: {app: tallyline-rollup}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: web
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=tallyline-rollup v4.2", "-listen=:5678"]
+        ports:
+        - containerPort: 5678
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

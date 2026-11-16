@@ -1,0 +1,15 @@
+# CI fixture: fake upstream that always answers 200.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: fixture-fake-source
+  labels: {app: fixture-fake-source}
+spec:
+  terminationGracePeriodSeconds: 2
+  containers:
+  - name: fake
+    image: hashicorp/http-echo:1.0
+    imagePullPolicy: IfNotPresent
+    args: ["-text=FIXTURE fake-source", "-listen=:5678"]
+    resources:
+      requests: {cpu: 10m, memory: 16Mi}

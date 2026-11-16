@@ -1,0 +1,7 @@
+Restore apps/api.yaml (`git revert <commit>` or `git show <commit>^:apps/api.yaml > apps/api.yaml`) and add to every
+child Application:
+  metadata:
+    annotations:
+      argocd.argoproj.io/sync-options: Prune=false,Delete=false
+`Prune=false` stops the root from pruning the child when its manifest is removed; `Delete=false` keeps the child when
+the root itself is deleted. Push and refresh the root.

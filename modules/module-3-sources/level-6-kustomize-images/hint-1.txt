@@ -1,0 +1,3 @@
+See which image the production overlay maps the alias to, and what the Application offers for overriding it:
+  kubectl kustomize ticket-desk/kustomize/overlays/prod | grep image:
+  argocd app set --help | grep -i kustomize

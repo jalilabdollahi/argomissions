@@ -1,0 +1,4 @@
+Read the sync error closely and see what Argo CD tried to do to each object:
+  argocd app get ticket-desk
+  kubectl -n helpdesk get deploy ticket-desk -o jsonpath='{.spec.selector}'
+Compare the live selector with the one in your workspace clone (ticket-desk/deploy/deployment.yaml).

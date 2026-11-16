@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: helpdesk-db-migrate
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/hook-delete-policy: HookFailed
+spec:
+  backoffLimit: 0
+  template:
+    metadata:
+      labels: {app: helpdesk-db-migrate}
+    spec:
+      restartPolicy: Never
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: migrate
+        image: busybox:1.36
+        imagePullPolicy: IfNotPresent
+        command: ["sh", "-c", "echo 'migrating to 0018_ticket_sla'; sleep 2; echo done"]
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

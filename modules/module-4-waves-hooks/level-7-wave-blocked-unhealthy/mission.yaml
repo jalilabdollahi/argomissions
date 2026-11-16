@@ -1,0 +1,16 @@
+name: "Stuck In Wave 1"
+description: |
+  Release v1.4 of `fleet-tracker` (Gitea repo `platform/fleet-tracker`, folder `deploy/`, namespace `fleet`)
+  was synced an hour ago and the sync is still running: `argocd app get fleet-tracker --show-operation` says
+  `Phase: Running` and `waiting for healthy state of apps/Deployment/tracker-api`. The dashboard Service
+  `tracker-web` still answers `fleet-tracker v1.3`. The new `tracker-api` pod stays `0/1 Running`, and its events
+  say `Readiness probe failed: Get "http://10.244.0.73:8080/healthz": dial tcp 10.244.0.73:8080: connect:
+  connection refused`. A clone of the repo is in your workspace.
+objective: |
+  Application `fleet-tracker` is Synced and Healthy at the current head of `main`, and that head was deployed
+  by a completed (Succeeded) sync. Deployments `tracker-api` and `tracker-web` in namespace `fleet` are ready
+  and Service `tracker-web` answers `fleet-tracker v1.4`. The fix lives in Git.
+xp: 200
+difficulty: advanced
+expected_time: 15m
+concepts: [sync waves, wave health gate, running operation, terminate-op]

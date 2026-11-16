@@ -1,0 +1,4 @@
+Argo CD can issue credentials that belong to a project instead of a user. Look at the project first:
+  argocd proj get settlements
+  argocd proj role --help
+Then check what a token would be allowed to do before you give it to a pipeline: `argocd account can-i`.

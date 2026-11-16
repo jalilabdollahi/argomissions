@@ -1,0 +1,3 @@
+Ask Argo CD what exactly differs between Git and the cluster, before you touch anything:
+  argocd app diff checkout
+  kubectl -n checkout get deploy checkout

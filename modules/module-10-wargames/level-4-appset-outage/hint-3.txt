@@ -1,0 +1,5 @@
+Git: `git revert` the tidy-up commit (or fix the path by hand in a new commit) and push; in the same change set
+`spec.syncPolicy.preserveResourcesOnDeletion: true` on the ApplicationSet so generated Applications get no finalizer.
+Cluster: `argocd app set orbit-control --sync-policy automated --auto-prune --self-heal`, then
+`argocd proj add-source orbit http://gitea.gitea.svc.cluster.local:3000/platform/orbit-services.git`.
+Check `kubectl -n argocd get applications -o custom-columns=N:.metadata.name,OWNER:.metadata.ownerReferences[0].name`.

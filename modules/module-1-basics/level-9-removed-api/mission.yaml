@@ -1,0 +1,15 @@
+name: "Sync Failed: Unknown Kind"
+description: |
+  The billing team is shipping `billing v3.1` through GitOps: repo `platform/billing` (folder `deploy/`, branch
+  `main`) and Application `billing`, which deploys to namespace `billing`. The release manager pressed Sync and it
+  failed at once with: `one or more synchronization tasks are not valid: failed to discover server resources for
+  group version policy/v1beta1: the server could not find the requested resource`. Nothing from the repo is
+  running in `billing`. The manifests are older than the cluster; a clone of the repo is in your workspace.
+objective: |
+  Application `billing` (project `default`) is Synced and Healthy at the current head of `main`. The repo still
+  ships a PodDisruptionBudget named `billing` for the workload, it exists in namespace `billing`, and Service
+  `billing` answers `billing v3.1`.
+xp: 150
+difficulty: intermediate
+expected_time: 15m
+concepts: [sync failure, API versions, deprecated APIs, PodDisruptionBudget, Git as source of truth]

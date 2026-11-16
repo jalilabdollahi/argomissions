@@ -1,0 +1,5 @@
+Find out who changed what, outside Git:
+  argocd app get stormwatch-root ; argocd app diff stormwatch-root
+  argocd app diff sw-ingest ; argocd app get sw-ingest -o yaml | grep -A3 -i sync
+  argocd app history sw-alerts ; kubectl -n stormwatch get deploy sw-ingest -o yaml | less
+Two Applications are being compared with Git and with each other: look at the root's diff and at each child's.

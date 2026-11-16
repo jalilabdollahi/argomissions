@@ -1,0 +1,15 @@
+name: "Master Of Nothing"
+description: |
+  The `invoices` service is deployed by Argo CD from the Gitea repo `platform/invoices` (folder `deploy/`)
+  into namespace `invoices`. The team renamed the default branch from `master` to `main` months ago and moved
+  on. The Application, created back then, now shows `Unknown` with a ComparisonError:
+  `Failed to load target state: failed to generate manifest for source 1 of 1: rpc error: code = Unknown desc = unable to resolve 'master' to a commit SHA: revision not found`.
+  A clone of the repo is in your workspace.
+objective: |
+  Application `invoices` (namespace `argocd`) follows the branch the team really works on. It is Synced and
+  Healthy at the current head of that branch, and Service `invoices` in namespace `invoices` answers
+  `invoices v3.1`. The repo keeps its single branch.
+xp: 100
+difficulty: beginner
+expected_time: 10m
+concepts: [Application, targetRevision, branches, HEAD]

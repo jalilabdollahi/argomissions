@@ -1,0 +1,3 @@
+The change is one value in `deploy/deployment.yaml`, introduced by a commit with an innocent message. Later
+commits (the v1.2 release, the TTL change) are good and must stay: fix forward with a new commit
+(edit the value back, or `git revert <that commit>`), never rewrite history. Automated sync deploys the push.

@@ -1,0 +1,3 @@
+Make the root's destination namespace `argocd` (argocd app set billing-root --dest-namespace argocd), or put
+`namespace: argocd` on the child manifests in Git. The old copies in `billing-system` are still tracked by the root and
+are now surplus: the root is OutOfSync until they are pruned (argocd app sync billing-root --prune).

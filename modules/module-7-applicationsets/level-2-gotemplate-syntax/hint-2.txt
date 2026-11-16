@@ -1,0 +1,3 @@
+`goTemplate: true` switches the template engine from the default placeholders (`{{path.basename}}`) to Go
+templates, where parameters are fields of the root object and are read with a leading dot. The error says the
+engine tried to call a *function* named `path`.

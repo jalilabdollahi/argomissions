@@ -1,0 +1,6 @@
+argocd proj role create settlements deployer
+argocd proj role add-policy settlements deployer --action get  --permission allow --object '*'
+argocd proj role add-policy settlements deployer --action sync --permission allow --object '*'
+argocd proj role create-token settlements deployer --token-only
+Put the printed token into Secret argocd-pipeline-token (key token) in namespace settle-ci, e.g. with
+`kubectl create secret generic ... --from-literal=token=... --dry-run=client -o yaml | kubectl apply -f -`.

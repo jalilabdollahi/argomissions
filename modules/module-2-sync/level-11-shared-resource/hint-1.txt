@@ -1,0 +1,4 @@
+Find out who owns the live ConfigMap and who else claims it:
+  argocd app get promo-banner
+  kubectl -n storefront get cm feature-flags -o jsonpath='{.metadata.annotations}'
+  grep -rl feature-flags storefront-apps/

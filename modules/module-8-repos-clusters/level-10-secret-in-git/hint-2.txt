@@ -1,0 +1,5 @@
+Three separate problems: (1) the manifest must leave Git (history stays - do not rewrite it);
+(2) the password is burnt and must be replaced by a new one that never touches Git;
+(3) the Secret must live in the cluster without Argo CD owning it, and pods must pick up the new value.
+Argo CD will not prune on its own: after the commit the Secret shows as pending deletion. Environment variables
+are read when a container starts.

@@ -1,0 +1,16 @@
+name: "One Secret For The Org"
+description: |
+  The kiosk platform is five services, each in its own private repository under `platform/`: `kiosk-menu`,
+  `kiosk-queue`, `kiosk-payments`, `kiosk-signage` and `kiosk-reports`. All five Applications fail with
+  `authentication required: Unauthorized`. The read-only Gitea machine user `argo-reader` can read every one of them
+  (password `reader-pass-1Wm6`), and more repositories under `platform/` are coming next quarter. Nobody wants to
+  register each repository by hand and rotate five passwords later.
+objective: |
+  All five Applications (`kiosk-menu`, `kiosk-queue`, `kiosk-payments`, `kiosk-signage`, `kiosk-reports`) are
+  Synced and Healthy at the head of their repository's `main`, and each service in namespace `kiosk` answers its
+  version. Argo CD holds the machine user's credentials once, for the whole `platform` organisation, not once per
+  repository. Repositories stay private.
+xp: 200
+difficulty: intermediate
+expected_time: 15m
+concepts: [repo-creds, credential template, URL prefix, repository credentials]

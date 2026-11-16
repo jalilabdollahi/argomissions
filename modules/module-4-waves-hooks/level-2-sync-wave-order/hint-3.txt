@@ -1,0 +1,5 @@
+The ConfigMap must be applied before (or together with) the Deployment that reads it, i.e. its
+argocd.argoproj.io/sync-wave must be lower than or equal to the Deployment's. Change the annotation in
+deploy/configmap.yaml, commit, push, then sync again:
+  argocd app sync shipping-ui --refresh
+(the stuck operation is still running: stop it first with `argocd app terminate-op shipping-ui`)

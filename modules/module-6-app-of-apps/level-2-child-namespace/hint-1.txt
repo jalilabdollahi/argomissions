@@ -1,0 +1,4 @@
+The root says it created two Application objects. Ask Kubernetes where they are:
+  kubectl get applications.argoproj.io -A
+  argocd app get billing-root
+Compare the namespace column with the namespace where the Argo CD controller looks for Applications.

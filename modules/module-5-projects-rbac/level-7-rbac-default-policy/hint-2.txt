@@ -1,0 +1,3 @@
+policy.default is the role every authenticated user gets in addition to their own policies. Setting it to
+role:admin made everybody an admin. Argo CD ships a built-in read-only role. Lowering the default would also
+lower alice, so she needs a policy of her own, a `g, <user>, <role>` line in policy.csv.

@@ -1,0 +1,3 @@
+Register the repository in Argo CD with the machine user:
+  argocd repo add <the repoURL of the Application> --username <user> --password <password>
+(or a Secret in `argocd` labelled argocd.argoproj.io/secret-type=repository). Then refresh the app.

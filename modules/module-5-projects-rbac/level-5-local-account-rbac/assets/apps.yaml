@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: shop-web
+  namespace: argocd
+spec:
+  project: shop
+  source:
+    repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/webshop.git
+    targetRevision: main
+    path: web
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: shop
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: hr-portal
+  namespace: argocd
+spec:
+  project: people
+  source:
+    repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/webshop.git
+    targetRevision: main
+    path: hr
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: people

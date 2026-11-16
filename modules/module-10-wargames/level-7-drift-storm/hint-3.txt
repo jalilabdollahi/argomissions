@@ -1,0 +1,7 @@
+Near-fixes that are NOT enough:
+  * `argocd app set sw-alerts --revision main`: the root is still OutOfSync and nothing stops the next pin
+  * adding ignoreDifferences with `argocd app patch`: once the root heals it is reverted; the child Applications
+    are defined in Git (apps/), that is where the rule has to live
+  * deleting or scaling the mesh team's controller
+  * giving the second ConfigMap another name: the services read `thresholds`
+One of the two folders keeps `thresholds` and carries both keys.

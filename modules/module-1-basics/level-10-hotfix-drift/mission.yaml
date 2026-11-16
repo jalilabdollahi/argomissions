@@ -1,0 +1,15 @@
+name: "The Hotfix That Must Survive"
+description: |
+  During last night's load spike the on-call engineer ran `kubectl scale deploy/checkout --replicas=3` in
+  namespace `checkout` and the `checkout` service has been holding up since. This morning Application `checkout`
+  (repo `platform/checkout`, folder `deploy/`) shows `OutOfSync`, and the release manager wants to "just press
+  Sync to clean it up". The capacity must not be lost, and nobody wants a cluster that disagrees with Git. A
+  clone of the repo is in your workspace.
+objective: |
+  Deployment `checkout` in namespace `checkout` keeps running 3 ready replicas, the repo's manifest on `main`
+  says so too, and Application `checkout` (project `default`) is Synced and Healthy at the current head of
+  `main`. Service `checkout` answers `checkout v5.2`.
+xp: 150
+difficulty: intermediate
+expected_time: 15m
+concepts: [drift, OutOfSync, live vs desired state, replicas, Git as source of truth]

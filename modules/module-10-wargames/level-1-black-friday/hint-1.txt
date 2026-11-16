@@ -1,0 +1,4 @@
+Triage from the outside in. `argocd app list`, then `argocd app get` on both Applications: read the SyncWindow line,
+the Conditions table and the operation message. `argocd proj get blackfriday` and `argocd proj windows list blackfriday`
+show the project side. `kubectl -n bf-cart get deploy bf-cart -w` shows who touches the replica count.
+Expect one problem to hide another: a change that is blocked cannot show you what comes after it.

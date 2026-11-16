@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: media-store
+  labels: {app: media-store}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: media-store}
+  template:
+    metadata:
+      labels: {app: media-store}
+    spec:
+      terminationGracePeriodSeconds: 2
+      initContainers:
+      - name: seed
+        image: busybox:1.36
+        imagePullPolicy: IfNotPresent
+        command: ["sh", "-c", "[ -f /data/first-upload.txt ] || echo 'customer photo #0001' > /data/first-upload.txt"]
+        volumeMounts:
+        - {name: uploads, mountPath: /data}
+        resources:
+          requests: {cpu: 10m, memory: 8Mi}
+      containers:
+      - name: web
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=media-store v1.4", "-listen=:5678"]
+        ports:
+        - containerPort: 5678
+        volumeMounts:
+        - {name: uploads, mountPath: /data}
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}
+      volumes:
+      - name: uploads
+        persistentVolumeClaim:
+          claimName: uploads

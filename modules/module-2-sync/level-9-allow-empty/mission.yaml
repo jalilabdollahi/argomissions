@@ -1,0 +1,15 @@
+name: "Nothing Left To Deploy"
+description: |
+  The platform team took over the ETL workloads, so a commit in `platform/nightly-etl` emptied folder `deploy/`
+  (only a README is left). The `nightly-etl` Application has automated sync with prune and self-heal, yet nothing
+  happens: it is OutOfSync and shows `SyncError: Skipping sync attempt to <commit>: auto-sync will wipe out all
+  resources`. Deployment `etl-worker`, Service `etl-status` and ConfigMap `etl-schedule` keep running in namespace `etl`.
+  A clone of the repo is in your workspace.
+objective: |
+  Application `nightly-etl` is Synced at the current head of `main` and its last sync succeeded. The manifests stay out
+  of the repo, and namespace `etl` no longer contains Deployment `etl-worker`, Service `etl-status` or ConfigMap
+  `etl-schedule`.
+xp: 150
+difficulty: intermediate
+expected_time: 10m
+concepts: [allowEmpty, automated sync, prune, empty application]

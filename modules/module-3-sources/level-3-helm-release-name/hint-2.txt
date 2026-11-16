@@ -1,0 +1,3 @@
+The chart builds every object name from `{{ .Release.Name }}`. Argo CD uses the Application name as the Helm
+release name, so `fleet-tracker` + `-api` gives `fleet-tracker-api`. The release name and the Application
+name are two different settings.

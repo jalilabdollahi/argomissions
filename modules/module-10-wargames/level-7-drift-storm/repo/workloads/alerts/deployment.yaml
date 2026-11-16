@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sw-alerts
+  labels: {app: sw-alerts}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: sw-alerts}
+  template:
+    metadata:
+      labels: {app: sw-alerts}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: web
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=sw-alerts v1.0", "-listen=:5678"]
+        ports:
+        - containerPort: 5678
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sw-alerts
+spec:
+  selector: {app: sw-alerts}
+  ports:
+  - port: 80
+    targetPort: 5678

@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: etl-worker
+  labels: {app: etl-worker}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: etl-worker}
+  template:
+    metadata:
+      labels: {app: etl-worker}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: worker
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=etl-worker v3.2", "-listen=:5678"]
+        ports:
+        - containerPort: 5678
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

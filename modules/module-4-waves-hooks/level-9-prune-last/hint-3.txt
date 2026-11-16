@@ -1,0 +1,4 @@
+Sync option `PruneLast=true`. Put it in the Application (spec.syncPolicy.syncOptions, or
+`argocd app set chat-relay --sync-option ...`, keeping CreateNamespace=true) BEFORE you run the sync with pruning.
+If you already synced without it, the old objects are gone: revert the rename commit, sync, then bring the rename
+back and sync again with the option set.

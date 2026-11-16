@@ -1,0 +1,3 @@
+Make the names agree: either set `ref: values` on the pricing-env source, or change the valueFiles entry to
+`$env/prod/values.yaml`. Edit the Application (`kubectl -n argocd edit application pricing`, or the UI's
+manifest editor), then sync. Keep the values in the pricing-env repo, do not paste them in the Application.

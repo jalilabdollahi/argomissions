@@ -1,0 +1,4 @@
+Git is already right, do not touch it. Make Argo CD delete the old Deployment and create the new one:
+  argocd app sync ticket-desk --force
+(--replace alone is not enough: replacing still hits the immutable field.)
+Deleting the Deployment yourself and syncing afterwards works too.

@@ -1,0 +1,4 @@
+Something outside this repo owns the `cost-center` label and rewrites it all the time
+(`kubectl get deploy profile-svc --show-managed-fields -o yaml` names the writer).
+You cannot win by syncing, and removing the other team's controller is not your call.
+Tell the Application to exclude that field from comparison: `spec.ignoreDifferences`.

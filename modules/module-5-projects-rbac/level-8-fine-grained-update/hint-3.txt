@@ -1,0 +1,4 @@
+Add to policy.csv of argocd-rbac-cm (keep the existing lines):
+  p, role:loyalty-oncall, applications, action/apps/Deployment/restart, loyalty/*, allow
+  p, role:loyalty-oncall, applications, delete/*/Pod/*/*, loyalty/*, allow
+Changes apply within seconds. Test again as mira: a restart on a Deployment that exists should now run.

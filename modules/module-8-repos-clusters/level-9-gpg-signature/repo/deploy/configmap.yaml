@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: treasury-config
+data:
+  settlement-window: "T+1"
+  version: "treasury-core v1"

@@ -1,0 +1,17 @@
+name: "Job Already Exists"
+description: |
+  Release v2 of `helpdesk-api` (Gitea repo `platform/helpdesk-api`, folder `deploy/`) changes the PreSync
+  migration Job `helpdesk-db-migrate`. The sync of v2 stopped at the hook: the operation is `Failed` with
+  `Job.batch "helpdesk-db-migrate" is invalid: spec.template: Invalid value: ... field is immutable`, the
+  release did not roll out, and the old version still answers. A colleague says "just sync again, it worked for
+  me yesterday". Nobody wants a pipeline that needs a second try for every release. A clone of the repo is in
+  your workspace.
+objective: |
+  Application `helpdesk-api` (namespace `argocd`) is Synced and Healthy at the current head of `main`, the sync
+  that deployed it Succeeded and ran the migration Job, and Service `helpdesk-api` in namespace `helpdesk`
+  answers `helpdesk-api v2`. The migration Job is defined in Git so that the next change to it will not collide
+  with the run that is left behind from this one.
+xp: 200
+difficulty: intermediate
+expected_time: 15m
+concepts: [hook-delete-policy, BeforeHookCreation, HookSucceeded, PreSync, immutable Job]

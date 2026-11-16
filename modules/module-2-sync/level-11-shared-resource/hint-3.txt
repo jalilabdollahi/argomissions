@@ -1,0 +1,4 @@
+Keep feature-flags in one folder only, with both keys, and delete the file from the other folder:
+  git rm storefront-apps/promo/feature-flags.yaml
+  (add promo_banner: "on" to storefront-apps/cart/feature-flags.yaml)
+Push, then refresh both Applications. Sync options like FailOnSharedResource only report the clash harder.

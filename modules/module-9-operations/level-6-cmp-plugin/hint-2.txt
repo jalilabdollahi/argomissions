@@ -1,0 +1,3 @@
+Without `spec.source.plugin`, Argo CD asks every plugin sidecar "do you support this directory?" using its
+`discover` rule. Compare that rule with the files that are really in `deploy/`.
+Naming the plugin in the Application does not skip the question, so it is not the shortcut it looks like.

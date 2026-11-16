@@ -1,0 +1,6 @@
+argocd app set pricing-api --self-heal
+or in the Application YAML:
+  syncPolicy:
+    automated:
+      selfHeal: true
+Then check: kubectl -n pricing get deploy,cm pricing-rules -o yaml

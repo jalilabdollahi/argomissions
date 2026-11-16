@@ -1,0 +1,5 @@
+Four independent faults, in the order they appear:
+1. The root Application was never applied on this cluster (the runbook step is in the README).
+2. Argo CD has no credentials for the private repository (the machine user is in handoff.md).
+3. tidewater-ledger deploys into a namespace that does not exist and does not ask Argo CD to create it.
+4. tidewater-batch targets namespace tidewater-jobs, which project `tidewater` does not list as a destination.

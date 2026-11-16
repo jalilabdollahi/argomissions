@@ -1,0 +1,16 @@
+name: "The Empty Root"
+description: |
+  The storefront team adopted the app-of-apps pattern: root Application `shopfront-root` is supposed to create one
+  child Application per service (`cart-svc` and `catalog-svc`), and each child deploys its own workload. The repo is
+  `platform/shopfront-fleet`; the child Application manifests are committed to it. The root shows `Synced` and
+  `Healthy`, green in the UI, with no complaints. But `argocd app list` shows only the root, and namespaces
+  `shop-cart` and `shop-catalog` do not exist. A clone of the repo is in your workspace.
+objective: |
+  Application `shopfront-root` stays Synced and Healthy at the current head of `main` and, through Argo CD itself,
+  creates the child Applications `cart-svc` and `catalog-svc` (managed by the root, not applied by hand). Both are
+  Synced and Healthy at head, and Service `cart-svc` in `shop-cart` answers `cart-svc v1.0`, Service `catalog-svc`
+  in `shop-catalog` answers `catalog-svc v2.3`.
+xp: 150
+difficulty: intermediate
+expected_time: 10m
+concepts: [app of apps, root Application, source path, directory source]

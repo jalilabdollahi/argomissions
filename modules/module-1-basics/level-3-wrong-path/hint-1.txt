@@ -1,0 +1,3 @@
+Read the exact error Argo CD reports, then look at the repo as it is at the head of `main`:
+  argocd app get catalog
+  cd catalog && git log --stat --oneline

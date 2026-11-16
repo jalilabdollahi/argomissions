@@ -1,0 +1,18 @@
+name: "Clean Up On Failure"
+description: |
+  Every sync of `booking-portal` (Gitea repo `platform/booking-portal`, folder `deploy/`, namespace `bookings`)
+  raises a "read-only" maintenance banner first (ConfigMap `maintenance-flag`) and lowers it again with the
+  `exit-maintenance` Job when the sync is done. Release v5.2 ran into its schema gate and the sync failed with
+  `one or more synchronization tasks completed unsuccessfully` (Job `schema-gate`: `Job has reached the specified
+  backoff limit`, a DBA approval that is still pending). Since then the site has been stuck in maintenance mode:
+  `maintenance-flag` is still in namespace `bookings`, although the cleanup Job is in Git. A clone of the repo is in
+  your workspace.
+objective: |
+  The next sync of the current head of `main` of `booking-portal` still fails at the schema gate (that release is
+  not yours to fix), but this time the failure itself lowers the banner: the last sync operation of the head is
+  Failed, a failure hook Job ran in it and Succeeded, and ConfigMap `maintenance-flag` no longer exists in
+  namespace `bookings`.
+xp: 250
+difficulty: advanced
+expected_time: 20m
+concepts: [SyncFail hook, hook phases, failed sync, hook annotation]

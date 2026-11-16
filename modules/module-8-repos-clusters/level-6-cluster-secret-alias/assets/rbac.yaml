@@ -1,0 +1,39 @@
+# Namespace-scoped deployer for the "staging" destination: full rights, but only inside boarding-stg.
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: argocd-deployer
+  namespace: boarding-stg
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: argocd-deployer
+  namespace: boarding-stg
+rules:
+- apiGroups: ["*"]
+  resources: ["*"]
+  verbs: ["*"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: argocd-deployer
+  namespace: boarding-stg
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: argocd-deployer
+subjects:
+- kind: ServiceAccount
+  name: argocd-deployer
+  namespace: boarding-stg
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: argocd-deployer-token
+  namespace: boarding-stg
+  annotations:
+    kubernetes.io/service-account.name: argocd-deployer
+type: kubernetes.io/service-account-token

@@ -1,0 +1,4 @@
+The error names a project, not a file in Git. Look at what the Application is allowed to do:
+  argocd app get claims-intake
+  argocd proj get claims
+Compare the repository the Application reads with the project's "Source repositories".

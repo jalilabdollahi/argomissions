@@ -1,0 +1,12 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: loyalty
+  namespace: argocd
+spec:
+  description: Loyalty programme services
+  sourceRepos:
+  - http://gitea.gitea.svc.cluster.local:3000/platform/rewards-engine.git
+  destinations:
+  - server: https://kubernetes.default.svc
+    namespace: rewards

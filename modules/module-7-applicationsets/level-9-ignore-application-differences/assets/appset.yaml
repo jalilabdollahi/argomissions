@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: feedhub
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+  - list:
+      elements:
+      - env: dev
+      - env: stage
+      - env: prod
+  template:
+    metadata:
+      name: 'feedhub-{{.env}}'
+    spec:
+      project: default
+      source:
+        repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/feedhub.git
+        targetRevision: main
+        path: deploy
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: 'feedhub-{{.env}}'
+      syncPolicy:
+        automated: {}
+        syncOptions:
+        - CreateNamespace=true

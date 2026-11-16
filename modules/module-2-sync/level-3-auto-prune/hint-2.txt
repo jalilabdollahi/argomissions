@@ -1,0 +1,3 @@
+Argo CD never deletes anything by default, not even in an automated sync: removing a manifest from Git
+leaves the live object in place. Deleting is a separate permission, "prune", and it lives next to `automated`.
+  argocd app set --help | grep -i prune

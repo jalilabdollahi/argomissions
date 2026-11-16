@@ -1,0 +1,4 @@
+The child manifests carry no namespace of their own, so the root creates them in its own destination namespace,
+`billing-system`. The Argo CD controller only reconciles Applications in `argocd` (apps-in-any-namespace is not
+enabled here), so those objects are inert. Once the children are in the right place, look again at what the root
+says about the copies it created earlier.

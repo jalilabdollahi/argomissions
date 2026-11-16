@@ -1,0 +1,3 @@
+Git already contains the permission the migration needs, but the cluster does not have it: the Role change is a
+regular resource, applied in the Sync phase, and the migration Job is a PreSync hook, which runs (and fails) before
+the Sync phase ever starts. Order matters more than content here.

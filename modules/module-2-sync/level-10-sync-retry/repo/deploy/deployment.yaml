@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sensor-hub
+  labels: {app: sensor-hub}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: sensor-hub}
+  template:
+    metadata:
+      labels: {app: sensor-hub}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: hub
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=sensor-hub v2.0", "-listen=:5678"]
+        ports:
+        - containerPort: 5678
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

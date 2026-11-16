@@ -1,0 +1,15 @@
+name: "Authentication Required"
+description: |
+  The `vault-ui` Application in Argo CD has never synced. Its repository, `platform/vault-ui` in Gitea, was made
+  private last week when the security review flagged it, and since then `argocd app get vault-ui` shows
+  `ComparisonError: Failed to load target state: ... failed to list refs: authentication required: Unauthorized`.
+  Platform has already created a read-only Gitea machine user for Argo CD; its details are in
+  `workspace/handoff.md`. The Gitea admin account is for humans and must not end up inside Argo CD.
+objective: |
+  Application `vault-ui` (namespace `argocd`) is Synced and Healthy at the current head of `main`, and
+  Service `vault-ui` in namespace `vault-ui` answers `vault-ui v2.4`. The repository stays private, and Argo CD
+  authenticates to it as the read-only machine user, never as `player`.
+xp: 150
+difficulty: intermediate
+expected_time: 10m
+concepts: [repository credentials, private repo, repository secret, argocd repo add]

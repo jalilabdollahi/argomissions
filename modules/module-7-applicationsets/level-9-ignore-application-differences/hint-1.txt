@@ -1,0 +1,4 @@
+Watch the Application while you change it:
+  argocd app set feedhub-prod --revision hotfix-1.8.1
+  argocd app get feedhub-prod | grep -i revision
+Then ask who else writes to that Application: look at its ownerReferences and at the ApplicationSet status.

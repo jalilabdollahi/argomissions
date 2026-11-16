@@ -1,0 +1,16 @@
+name: "Two Owners, One ConfigMap"
+description: |
+  Two Applications, `cart-service` and `promo-banner`, deploy folders `cart/` and `promo/` of the repo
+  `platform/storefront-apps` into namespace `storefront`. Both folders contain a ConfigMap named `feature-flags`,
+  each with its own flag. `promo-banner` is OutOfSync and stays that way, with
+  `SharedResourceWarning: ConfigMap/feature-flags is part of applications argocd/promo-banner and cart-service`.
+  The live ConfigMap only holds the flag of whichever Application got there first. A clone of the repo is in your workspace.
+objective: |
+  Both Applications `cart-service` and `promo-banner` are Synced and Healthy at the current head of `main`, neither
+  reports a SharedResourceWarning, and exactly one of them defines ConfigMap `feature-flags` in Git and tracks it.
+  The live ConfigMap holds both flags (`checkout_v2: "true"` and `promo_banner: "on"`), and both Services answer
+  (`cart-service v4.1`, `promo-banner v2.3`).
+xp: 200
+difficulty: intermediate
+expected_time: 15m
+concepts: [SharedResourceWarning, resource tracking, ownership, FailOnSharedResource]

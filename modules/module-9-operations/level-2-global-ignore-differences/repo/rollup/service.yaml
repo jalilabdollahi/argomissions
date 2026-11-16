@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tallyline-rollup
+spec:
+  selector: {app: tallyline-rollup}
+  ports:
+  - port: 80
+    targetPort: 5678

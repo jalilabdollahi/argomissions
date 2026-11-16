@@ -1,0 +1,11 @@
+spec:
+  source:
+    path: chart
+    helm:
+      valueFiles:
+      - values/prod.yaml
+      parameters:
+      - name: message
+        value: "stockroom-db hotfix-2.9"
+  syncPolicy:
+    automated: null

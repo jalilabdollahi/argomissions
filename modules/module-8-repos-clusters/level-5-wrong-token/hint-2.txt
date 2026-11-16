@@ -1,0 +1,3 @@
+Nothing in Git, the Application or the Secret's shape changed: the secret's value did. A token is valid only while
+Gitea still knows it, and Gitea says no to a revoked one exactly as it would to a wrong password.
+Check the machine user's tokens in Gitea (Settings > Applications) against the one stored in Argo CD.

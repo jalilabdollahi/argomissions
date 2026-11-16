@@ -1,0 +1,84 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kiosk-menu
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/kiosk-menu.git
+    targetRevision: main
+    path: k8s
+  destination:
+    name: in-cluster
+    namespace: kiosk
+  syncPolicy:
+    automated: {}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kiosk-queue
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/kiosk-queue.git
+    targetRevision: main
+    path: k8s
+  destination:
+    name: in-cluster
+    namespace: kiosk
+  syncPolicy:
+    automated: {}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kiosk-payments
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/kiosk-payments.git
+    targetRevision: main
+    path: k8s
+  destination:
+    name: in-cluster
+    namespace: kiosk
+  syncPolicy:
+    automated: {}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kiosk-signage
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/kiosk-signage.git
+    targetRevision: main
+    path: k8s
+  destination:
+    name: in-cluster
+    namespace: kiosk
+  syncPolicy:
+    automated: {}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kiosk-reports
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/kiosk-reports.git
+    targetRevision: main
+    path: k8s
+  destination:
+    name: in-cluster
+    namespace: kiosk
+  syncPolicy:
+    automated: {}

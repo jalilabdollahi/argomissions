@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payroll-api
+  labels: {app: payroll-api}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: payroll-api}
+  template:
+    metadata:
+      labels: {app: payroll-api}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: web
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=payroll-api v1", "-listen=:5678"]
+        ports:
+        - containerPort: 5678
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

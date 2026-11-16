@@ -1,0 +1,3 @@
+Argo CD does not read every Secret in its namespace: it selects them by the label
+`argocd.argoproj.io/secret-type`, and only a few values mean something. Check the value on this Secret
+against the documented ones.

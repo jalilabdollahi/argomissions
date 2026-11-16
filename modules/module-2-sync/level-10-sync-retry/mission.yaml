@@ -1,0 +1,17 @@
+name: "Flaky First Contact"
+description: |
+  `sensor-hub` (repo `platform/sensor-hub`, namespace `iot-edge`) ships a `SensorProfile` custom resource next to its
+  Deployment. The CRD behind it is installed by the platform bootstrap (`kubectl -n iot-bootstrap get jobs`), which
+  finishes a few minutes after a cluster comes up, but the Application syncs first. Its automated sync fails with
+  `SyncError: Failed last sync attempt to <commit>: one or more synchronization tasks are not valid: failed to discover
+  server resources for group version runtime.argomissions.io/v1: the server could not find the requested resource
+  (retried 2 times).` and then stops. Nothing runs in `iot-edge`.
+objective: |
+  Application `sensor-hub` keeps its automated sync and is Synced and Healthy at the current head of `main`, its last
+  sync succeeded, and the SensorProfile `edge-default` exists. Its sync policy now retries patiently enough
+  (at least five minutes of attempts in total) that a CRD arriving late no longer leaves the Application failed. Service
+  `sensor-hub` in `iot-edge` answers `sensor-hub v2.0`.
+xp: 200
+difficulty: intermediate
+expected_time: 15m
+concepts: [syncPolicy.retry, backoff, CRD ordering, automated sync]

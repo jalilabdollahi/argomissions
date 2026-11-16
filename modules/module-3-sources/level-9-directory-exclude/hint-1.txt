@@ -1,0 +1,4 @@
+Find where the extra pods come from:
+  kubectl -n telemetry get pods --show-labels
+  argocd app get collector
+Then look at which files in your clone declare them: `find telemetry-agents/deploy -type f`.

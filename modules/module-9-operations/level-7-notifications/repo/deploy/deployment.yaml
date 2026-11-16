@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payout-worker
+  labels:
+    app: payout-worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payout-worker
+  template:
+    metadata:
+      labels:
+        app: payout-worker
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+        - name: app
+          image: hashicorp/http-echo:1.0
+          imagePullPolicy: IfNotPresent
+          args: ["-text=payout-worker v3.0", "-listen=:5678"]
+          ports:
+            - containerPort: 5678
+          resources:
+            requests:
+              cpu: 10m
+              memory: 16Mi

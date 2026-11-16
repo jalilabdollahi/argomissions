@@ -1,0 +1,15 @@
+name: "Values Not Found"
+description: |
+  The `weather-api` forecast service is a Helm chart in the Gitea repo `platform/weather-api` (folder `chart/`,
+  branch `main`). Its Argo CD Application was created last week, yet nothing runs in namespace `weather`:
+  the Application shows `Unknown` sync status and a `ComparisonError` condition that ends with
+  `Error: open <path to cached source>/chart/values-prod.yaml: no such file or directory`.
+  A clone of the repo is in your workspace. The Argo CD UI is at http://localhost:9094 (admin / argomissions).
+objective: |
+  Application `weather-api` is Synced and Healthy at the current head of `main`, with the production
+  configuration of the chart applied: Deployment `weather-api` in namespace `weather` has 2 ready pods and
+  Service `weather-api` answers `weather-api prod 3.2` (not the laptop defaults).
+xp: 150
+difficulty: beginner
+expected_time: 10m
+concepts: [Helm, valueFiles, ComparisonError, helm template]

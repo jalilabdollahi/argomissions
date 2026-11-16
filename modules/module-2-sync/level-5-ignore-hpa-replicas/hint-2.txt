@@ -1,0 +1,4 @@
+Switching self-heal off would end the fight but also end drift protection for everything else.
+Better: decide that `/spec/replicas` is not Git's to decide. Either do not pin it in Git, or tell Argo CD
+to leave it alone with `spec.ignoreDifferences` on the Application. Mind the sync option that makes syncs
+respect that list too: `RespectIgnoreDifferences=true`.

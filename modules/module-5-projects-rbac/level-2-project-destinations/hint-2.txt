@@ -1,0 +1,3 @@
+The `clinic` project only allows namespaces matching `clinic-*`. The Application targets `pharmacy`,
+and that is where the pharmacy system really lives, so the Application is right. The project is missing a destination.
+Moving to project `default` or allowing every namespace would remove the fence for everybody.

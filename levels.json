@@ -1,0 +1,2161 @@
+{
+  "generated_at": "2026-11-16T15:33:20.857114+00:00",
+  "level_count": 106,
+  "total_xp": 22600,
+  "modules": [
+    {
+      "name": "module-1-basics",
+      "xp": 1550,
+      "levels": [
+        {
+          "id": "module-1-basics/level-1-first-application",
+          "name": "level-1-first-application",
+          "path": "modules/module-1-basics/level-1-first-application",
+          "mission": {
+            "name": "Hello, GitOps",
+            "description": "The SRE team moved the public `status-page` service to GitOps. Its manifests are in the Gitea repo\n`platform/status-page` (folder `deploy/`, branch `main`), and namespace `status` has been created for it.\nBut nobody ever told Argo CD about the repo: `argocd app list` is empty and nothing runs in `status`.\nA clone of the repo is in your workspace. The Argo CD UI is at http://localhost:9080 (admin / argomissions).\n",
+            "objective": "An Argo CD Application named `status-page` (namespace `argocd`, project `default`) deploys folder `deploy/`\nof the `status-page` repo to namespace `status` of the in-cluster destination. It is Synced and Healthy at\nthe current head of `main`, and Service `status-page` in `status` answers `status-page v1.0`.\n",
+            "xp": 100,
+            "difficulty": "beginner",
+            "expected_time": "10m",
+            "concepts": [
+              "Application",
+              "source",
+              "destination",
+              "sync",
+              "in-cluster URL"
+            ]
+          }
+        },
+        {
+          "id": "module-1-basics/level-2-repo-url-localhost",
+          "name": "level-2-repo-url-localhost",
+          "path": "modules/module-1-basics/level-2-repo-url-localhost",
+          "mission": {
+            "name": "Works On My Laptop",
+            "description": "The `orders` service is meant to run from the Gitea repo `platform/orders` (folder `deploy/`, branch `main`)\ninto namespace `orders`. The developer who created the Application cloned the repo on their laptop and\npasted that same address into Argo CD. Now `argocd app get orders` shows the Application as `Unknown` with\na ComparisonError: `failed to list refs: Get \"http://localhost:3300/platform/orders.git/info/refs?service=git-upload-pack\":\ndial tcp [::1]:3300: connect: connection refused`. Yet the URL opens fine in the developer's browser.\nA clone of the repo is in your workspace. The Argo CD UI is at http://localhost:9080 (admin / argomissions).\n",
+            "objective": "Application `orders` (namespace `argocd`) reads the `orders` repo through an address Argo CD can reach from\ninside the cluster. It is Synced and Healthy at the current head of `main`, and Service `orders` in namespace\n`orders` answers `orders v1.4`.\n",
+            "xp": 100,
+            "difficulty": "beginner",
+            "expected_time": "10m",
+            "concepts": [
+              "Application",
+              "repoURL",
+              "repo-server",
+              "in-cluster URL"
+            ]
+          }
+        },
+        {
+          "id": "module-1-basics/level-3-wrong-path",
+          "name": "level-3-wrong-path",
+          "path": "modules/module-1-basics/level-3-wrong-path",
+          "mission": {
+            "name": "The Moved Manifests",
+            "description": "The `catalog` service is deployed by Argo CD from the Gitea repo `platform/catalog` (branch `main`) into\nnamespace `catalog`. Last week a teammate merged a commit called \"restructure: move manifests to\ndeploy/catalog\". Since then the Application shows `Unknown` with a ComparisonError:\n`Failed to load target state: failed to generate manifest for source 1 of 1: rpc error: code = Unknown desc = k8s: app path does not exist`.\nNothing has been deployed yet. A clone of the repo is in your workspace.\n",
+            "objective": "Application `catalog` (namespace `argocd`) reads the manifests where they live now, so it is Synced and\nHealthy at the current head of `main`, and Service `catalog` in namespace `catalog` answers `catalog v2.0`.\nThe restructured layout of the repo stays as it is.\n",
+            "xp": 100,
+            "difficulty": "beginner",
+            "expected_time": "10m",
+            "concepts": [
+              "Application",
+              "source.path",
+              "ComparisonError"
+            ]
+          }
+        },
+        {
+          "id": "module-1-basics/level-4-target-revision-branch",
+          "name": "level-4-target-revision-branch",
+          "path": "modules/module-1-basics/level-4-target-revision-branch",
+          "mission": {
+            "name": "Master Of Nothing",
+            "description": "The `invoices` service is deployed by Argo CD from the Gitea repo `platform/invoices` (folder `deploy/`)\ninto namespace `invoices`. The team renamed the default branch from `master` to `main` months ago and moved\non. The Application, created back then, now shows `Unknown` with a ComparisonError:\n`Failed to load target state: failed to generate manifest for source 1 of 1: rpc error: code = Unknown desc = unable to resolve 'master' to a commit SHA: revision not found`.\nA clone of the repo is in your workspace.\n",
+            "objective": "Application `invoices` (namespace `argocd`) follows the branch the team really works on. It is Synced and\nHealthy at the current head of that branch, and Service `invoices` in namespace `invoices` answers\n`invoices v3.1`. The repo keeps its single branch.\n",
+            "xp": 100,
+            "difficulty": "beginner",
+            "expected_time": "10m",
+            "concepts": [
+              "Application",
+              "targetRevision",
+              "branches",
+              "HEAD"
+            ]
+          }
+        },
+        {
+          "id": "module-1-basics/level-5-create-namespace",
+          "name": "level-5-create-namespace",
+          "path": "modules/module-1-basics/level-5-create-namespace",
+          "mission": {
+            "name": "No Room At The Inn",
+            "description": "The `ledger` service is deployed by Argo CD from the Gitea repo `platform/ledger` (folder `deploy/`, branch\n`main`) into namespace `ledger`. The first sync was attempted this morning and failed:\n`one or more objects failed to apply, reason: namespaces \"ledger\" not found`. Nobody created that namespace\non this cluster, and the platform team wants the Application to deploy to a brand-new cluster without a\nchecklist of manual steps. A clone of the repo is in your workspace.\n",
+            "objective": "Application `ledger` (namespace `argocd`) is configured to create its destination namespace itself. It is\nSynced and Healthy at the current head of `main`, namespace `ledger` exists, and Service `ledger` in it\nanswers `ledger v1.0`.\n",
+            "xp": 100,
+            "difficulty": "beginner",
+            "expected_time": "10m",
+            "concepts": [
+              "syncOptions",
+              "CreateNamespace",
+              "sync failure",
+              "destination namespace"
+            ]
+          }
+        },
+        {
+          "id": "module-1-basics/level-6-wrong-cluster",
+          "name": "level-6-wrong-cluster",
+          "path": "modules/module-1-basics/level-6-wrong-cluster",
+          "mission": {
+            "name": "Cluster Not Found",
+            "description": "The `telemetry` service is deployed by Argo CD from the Gitea repo `platform/telemetry` (folder `deploy/`,\nbranch `main`) into namespace `telemetry`, which already exists. The Application was written by hand, and\nnow it shows `Unknown` with this condition: `InvalidSpecError: error getting cluster by server\n\"https://kubernetes.default.svc.cluster.local\": rpc error: code = NotFound desc = cluster\n\"https://kubernetes.default.svc.cluster.local\" not found`. The repo is fine. A clone of it is in your\nworkspace.\n",
+            "objective": "Application `telemetry` (namespace `argocd`) deploys to a cluster that Argo CD knows, the one it runs in, in\nnamespace `telemetry`. It is Synced and Healthy at the current head of `main`, and Service `telemetry` in\nthat namespace answers `telemetry v1.7`.\n",
+            "xp": 100,
+            "difficulty": "beginner",
+            "expected_time": "10m",
+            "concepts": [
+              "destination",
+              "cluster",
+              "in-cluster",
+              "InvalidSpecError"
+            ]
+          }
+        },
+        {
+          "id": "module-1-basics/level-7-manual-sync-pending",
+          "name": "level-7-manual-sync-pending",
+          "path": "modules/module-1-basics/level-7-manual-sync-pending",
+          "mission": {
+            "name": "The Commit Nobody Shipped",
+            "description": "The release manager merged \"release v2.3\" of `search-api` into `main` of the Gitea repo `platform/search-api`\nand told the team it is live. But customers still get the old behaviour: Service `search-api` in namespace\n`search` answers `search-api v2.2`, and the Argo CD Application `search-api` is `OutOfSync`. The Application\nwas synced once, at v2.2, and nothing has happened since. A clone of the repo is in your workspace.\n",
+            "objective": "Application `search-api` (namespace `argocd`) is Synced and Healthy at the current head of `main`, the release\nreached the cluster through Argo CD, and Service `search-api` in namespace `search` answers `search-api v2.3`.\n",
+            "xp": 150,
+            "difficulty": "beginner",
+            "expected_time": "10m",
+            "concepts": [
+              "manual sync",
+              "OutOfSync",
+              "argocd app diff",
+              "sync policy"
+            ]
+          }
+        },
+        {
+          "id": "module-1-basics/level-8-synced-but-degraded",
+          "name": "level-8-synced-but-degraded",
+          "path": "modules/module-1-basics/level-8-synced-but-degraded",
+          "mission": {
+            "name": "Synced But Sick",
+            "description": "The messaging team released `notifier v2.0` through Argo CD (repo `platform/notifier`, folder `deploy/`,\nnamespace `messaging`). The sync went through without a single error, and the Application even says\n`Synced` — yet the push-notification gateway does not answer and `argocd app get notifier` reports\n`Health Status: Degraded`. The release manager is sure that \"green means done\". A clone of the repo is in\nyour workspace.\n",
+            "objective": "Application `notifier` (project `default`) is Synced and Healthy at the current head of `main`, the\nDeployment `notifier` in namespace `messaging` is available, and Service `notifier` answers `notifier v2.0`.\n",
+            "xp": 150,
+            "difficulty": "beginner",
+            "expected_time": "15m",
+            "concepts": [
+              "sync status vs health status",
+              "Degraded",
+              "progressDeadlineSeconds",
+              "ImagePullBackOff"
+            ]
+          }
+        },
+        {
+          "id": "module-1-basics/level-9-removed-api",
+          "name": "level-9-removed-api",
+          "path": "modules/module-1-basics/level-9-removed-api",
+          "mission": {
+            "name": "Sync Failed: Unknown Kind",
+            "description": "The billing team is shipping `billing v3.1` through GitOps: repo `platform/billing` (folder `deploy/`, branch\n`main`) and Application `billing`, which deploys to namespace `billing`. The release manager pressed Sync and it\nfailed at once with: `one or more synchronization tasks are not valid: failed to discover server resources for\ngroup version policy/v1beta1: the server could not find the requested resource`. Nothing from the repo is\nrunning in `billing`. The manifests are older than the cluster; a clone of the repo is in your workspace.\n",
+            "objective": "Application `billing` (project `default`) is Synced and Healthy at the current head of `main`. The repo still\nships a PodDisruptionBudget named `billing` for the workload, it exists in namespace `billing`, and Service\n`billing` answers `billing v3.1`.\n",
+            "xp": 150,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "sync failure",
+              "API versions",
+              "deprecated APIs",
+              "PodDisruptionBudget",
+              "Git as source of truth"
+            ]
+          }
+        },
+        {
+          "id": "module-1-basics/level-10-hotfix-drift",
+          "name": "level-10-hotfix-drift",
+          "path": "modules/module-1-basics/level-10-hotfix-drift",
+          "mission": {
+            "name": "The Hotfix That Must Survive",
+            "description": "During last night's load spike the on-call engineer ran `kubectl scale deploy/checkout --replicas=3` in\nnamespace `checkout` and the `checkout` service has been holding up since. This morning Application `checkout`\n(repo `platform/checkout`, folder `deploy/`) shows `OutOfSync`, and the release manager wants to \"just press\nSync to clean it up\". The capacity must not be lost, and nobody wants a cluster that disagrees with Git. A\nclone of the repo is in your workspace.\n",
+            "objective": "Deployment `checkout` in namespace `checkout` keeps running 3 ready replicas, the repo's manifest on `main`\nsays so too, and Application `checkout` (project `default`) is Synced and Healthy at the current head of\n`main`. Service `checkout` answers `checkout v5.2`.\n",
+            "xp": 150,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "drift",
+              "OutOfSync",
+              "live vs desired state",
+              "replicas",
+              "Git as source of truth"
+            ]
+          }
+        },
+        {
+          "id": "module-1-basics/level-11-prune-orphans",
+          "name": "level-11-prune-orphans",
+          "path": "modules/module-1-basics/level-11-prune-orphans",
+          "mission": {
+            "name": "The Ghost Worker",
+            "description": "The media team retired the `legacy-worker` Deployment: the commit \"retire legacy worker\" removed it from repo\n`platform/media` (folder `deploy/`), and the release manager synced Application `media` right after. The sync\nsucceeded — yet `legacy-worker` is still running in namespace `media-prod`, eating CPU, and the Application\nstill says `OutOfSync`. Git no longer mentions the worker, so nobody can say what the cluster is waiting for.\n",
+            "objective": "Deployment `legacy-worker` no longer exists in namespace `media-prod`. The rest of the application is\nuntouched (Deployment and Service `media-web` keep running without being recreated), and Application `media`\n(project `default`) is Synced and Healthy at the current head of `main`. Service `media-web` answers `media v4.0`.\n",
+            "xp": 150,
+            "difficulty": "intermediate",
+            "expected_time": "10m",
+            "concepts": [
+              "pruning",
+              "OutOfSync",
+              "sync options",
+              "orphaned resources"
+            ]
+          }
+        },
+        {
+          "id": "module-1-basics/level-12-rollback-then-revert",
+          "name": "level-12-rollback-then-revert",
+          "path": "modules/module-1-basics/level-12-rollback-then-revert",
+          "mission": {
+            "name": "Undo Without Rewriting History",
+            "description": "Yesterday a colleague pushed \"tune worker flags\" to repo `platform/reports` (folder `deploy/`, branch `main`),\nand Application `reports` was synced. Since then the report worker in namespace `reports` is not answering and\n`argocd app get reports` shows `Synced` but `Degraded`; the pod restarts over and over. The nightly reports\nare late, other teams already pulled `main`, and the audit log must keep showing what happened. A clone of the\nrepo is in your workspace.\n",
+            "objective": "The previous behaviour is live again: Service `report-worker` in namespace `reports` answers `reports v1.0`.\nApplication `reports` (project `default`) is Synced and Healthy at the current head of `main`. The commit\n\"tune worker flags\" is still part of the history of `main` (no rewritten history), and its change is undone\nat the head.\n",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "20m",
+            "concepts": [
+              "git revert",
+              "rollback",
+              "history",
+              "force push",
+              "Degraded"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "module-2-sync",
+      "xp": 2100,
+      "levels": [
+        {
+          "id": "module-2-sync/level-1-enable-auto-sync",
+          "name": "level-1-enable-auto-sync",
+          "path": "modules/module-2-sync/level-1-enable-auto-sync",
+          "mission": {
+            "name": "Deploy On Merge",
+            "description": "The telemetry team's `metrics-gw` gateway is managed by an Argo CD Application of the same name. The team\nagreed that every merge to `main` of the Gitea repo `platform/metrics-gw` must reach the cluster without\nanyone touching Argo CD. Yet three releases (v1.1, v1.2 and v1.3) were merged today and the Application\njust sits there: `argocd app get metrics-gw` says `OutOfSync` and the gateway in namespace `metrics` still\nanswers `metrics-gw v1.0`. A clone of the repo is in your workspace.\n",
+            "objective": "Application `metrics-gw` deploys new commits of `main` on its own, with no manual sync. It is Synced and\nHealthy at the current head of `main`, and Service `metrics-gw` in namespace `metrics` answers\n`metrics-gw v1.3`.\n",
+            "xp": 100,
+            "difficulty": "beginner",
+            "expected_time": "10m",
+            "concepts": [
+              "syncPolicy",
+              "automated sync",
+              "OutOfSync"
+            ]
+          }
+        },
+        {
+          "id": "module-2-sync/level-2-self-heal",
+          "name": "level-2-self-heal",
+          "path": "modules/module-2-sync/level-2-self-heal",
+          "mission": {
+            "name": "The Drift That Stays",
+            "description": "During last night's incident an engineer edited the live `pricing-api` objects in namespace `pricing` by hand:\nthe Deployment was scaled up and the discount cap in ConfigMap `pricing-rules` was raised. The Application\n`pricing-api` has automated sync enabled, yet this morning `argocd app get pricing-api` still shows `OutOfSync`\nand `argocd app diff pricing-api` lists the manual edits, which nobody reverted. Finance is not amused: the\nrepo `platform/pricing-api` (a clone is in your workspace) says what production must look like.\n",
+            "objective": "Application `pricing-api` is Synced and Healthy at the current head of `main`, the live Deployment and ConfigMap\n`pricing-rules` match what Git says (the manifests in Git stay as they are), and the Application undoes such\nmanual edits by itself from now on. Service `pricing-api` in namespace `pricing` answers `pricing-api v2.0`.\n",
+            "xp": 150,
+            "difficulty": "beginner",
+            "expected_time": "10m",
+            "concepts": [
+              "selfHeal",
+              "drift",
+              "automated sync"
+            ]
+          }
+        },
+        {
+          "id": "module-2-sync/level-3-auto-prune",
+          "name": "level-3-auto-prune",
+          "path": "modules/module-2-sync/level-3-auto-prune",
+          "mission": {
+            "name": "Automated, But Not Tidy",
+            "description": "The photo team retired the old `gallery-classic` Service: its manifest was deleted from `deploy/` in the Gitea\nrepo `platform/gallery-web` (a clone is in your workspace). Application `gallery-web` has automated sync, yet\nthe Service is still answering in namespace `gallery` and the Application is stuck on `OutOfSync`;\n`argocd app get gallery-web` lists `gallery-classic` as `OutOfSync` and the sync never runs by itself. Security\nwants the retired endpoint gone, and wants it to stay that way for every manifest the team retires from now on.\n",
+            "objective": "Application `gallery-web` is Synced and Healthy at the current head of `main`, Service `gallery-classic` no\nlonger exists in namespace `gallery` (and Git still does not contain it), and the Application removes objects\nthat disappear from Git on its own. Service `gallery-web` in `gallery` answers `gallery-web v3.1`.\n",
+            "xp": 150,
+            "difficulty": "beginner",
+            "expected_time": "10m",
+            "concepts": [
+              "prune",
+              "automated sync",
+              "orphan resources"
+            ]
+          }
+        },
+        {
+          "id": "module-2-sync/level-4-prune-false-resource",
+          "name": "level-4-prune-false-resource",
+          "path": "modules/module-2-sync/level-4-prune-false-resource",
+          "mission": {
+            "name": "Keep The Data",
+            "description": "Application `media-store` (auto-sync with prune, namespace `media`) serves customer photos and keeps them on\nPersistentVolumeClaim `uploads`, which is declared in `deploy/pvc.yaml` of the Gitea repo `platform/media-store`\n(a clone is in your workspace). The platform team is moving all storage to a separate `storage` application\nthat will adopt the existing claim next week, so `pvc.yaml` has to leave this repository today. The storage\naudit recorded the claim's UID in ConfigMap `storage-audit`; a claim that is deleted and re-created cannot get\nits volume, and the photos, back. There is no undo: if the claim is deleted, restart the mission.\n",
+            "objective": "The `uploads` PersistentVolumeClaim manifest is gone from the `media-store` repo (the Deployment and Service\nstay) and the Application still has auto-prune enabled, yet in namespace `media` the live claim `uploads` is\nstill the original one (same UID as in `storage-audit`, Bound, not being deleted). Application `media-store`\nis Synced and Healthy at the current head of `main` and Service `media-store` answers `media-store v1.4`.\n",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "20m",
+            "concepts": [
+              "prune",
+              "Prune=false",
+              "IgnoreExtraneous",
+              "sync-options",
+              "resource annotations"
+            ]
+          }
+        },
+        {
+          "id": "module-2-sync/level-5-ignore-hpa-replicas",
+          "name": "level-5-ignore-hpa-replicas",
+          "path": "modules/module-2-sync/level-5-ignore-hpa-replicas",
+          "mission": {
+            "name": "Fighting The Autoscaler",
+            "description": "Application `quote-api` (namespace `quotes`, repo `platform/quote-api`, a clone is in your workspace) has\nautomated sync with self-heal, and the manifest in Git pins `replicas: 2`. Under load the platform's\nautoscaler, the controller `load-scaler` in namespace `quotes-scaler` (it does what an HPA does; the cluster has\nno metrics-server, so it is a small stand-in), keeps raising the Deployment to 4 replicas. Since then\n`kubectl -n quotes get deploy quote-api -w` shows the replica count jumping between 2 and 4, pods starting and\ndying, and `argocd app get quote-api` is `OutOfSync` with an `Automated` operation that keeps running again\nand again. The autoscaler belongs to another team and must keep working.\n",
+            "objective": "Application `quote-api` is Synced and Healthy at the current head of `main`, with self-heal still enabled.\nDeployment `quote-api` in `quotes` holds the 4 replicas the autoscaler wants, with nobody rewriting its spec\nback and forth. The `load-scaler` controller still runs, and Service `quote-api` answers `quote-api v5.0`.\n",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "ignoreDifferences",
+              "RespectIgnoreDifferences",
+              "selfHeal",
+              "HPA",
+              "field ownership"
+            ]
+          }
+        },
+        {
+          "id": "module-2-sync/level-6-ignore-mutating-field",
+          "name": "level-6-ignore-mutating-field",
+          "path": "modules/module-2-sync/level-6-ignore-mutating-field",
+          "mission": {
+            "name": "The Webhook's Signature",
+            "description": "Application `profile-svc` (namespace `profiles`, repo `platform/profile-svc`, a clone is in your workspace) has\nautomated sync, nobody has touched it, and still `argocd app get profile-svc` is `OutOfSync` all day long: a\nsync clears it and a few seconds later it is back. `argocd app diff profile-svc` shows one thing, the\n`cost-center` label of the Deployment, which Git sets to `unassigned` while the live object carries something\nlike `cc-1763300000` that keeps changing. The finance platform's controller `cost-stamper` (namespace\n`profiles-finops`, a stand-in for the mutating webhook or allocation operator that does this in real clusters)\nstamps every Deployment it knows, and finance needs it to keep doing so.\n",
+            "objective": "Application `profile-svc` is Synced and Healthy at the current head of `main` and stays Synced while\n`cost-stamper` keeps rewriting the label on the live Deployment. The controller still runs, and Service\n`profile-svc` in namespace `profiles` answers `profile-svc v2.3`.\n",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "ignoreDifferences",
+              "jsonPointers",
+              "jqPathExpressions",
+              "managedFieldsManagers",
+              "mutating controllers"
+            ]
+          }
+        },
+        {
+          "id": "module-2-sync/level-7-immutable-field",
+          "name": "level-7-immutable-field",
+          "path": "modules/module-2-sync/level-7-immutable-field",
+          "mission": {
+            "name": "Field Is Immutable",
+            "description": "The help-desk team shipped release v1.1 of `ticket-desk` (repo `platform/ticket-desk`, folder `deploy/`, namespace\n`helpdesk`). One commit also moved every label to the `app.kubernetes.io/name` convention, including the\nDeployment's pod selector. Syncing the `ticket-desk` Application now fails: Argo CD reports\n`Deployment.apps \"ticket-desk\" is invalid: spec.selector: Invalid value: {\"matchLabels\":{\"app.kubernetes.io/name\":\"ticket-desk\"}}: field is immutable`.\nThe Application stays OutOfSync, and the Service no longer finds its pods. A clone of the repo is in your workspace.\n",
+            "objective": "Application `ticket-desk` is Synced and Healthy at the current head of `main`. Git keeps the new\n`app.kubernetes.io/name` selector, the live Deployment `ticket-desk` in `helpdesk` uses it, two pods are ready,\nand Service `ticket-desk` answers `ticket-desk v1.1`.\n",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "immutable field",
+              "Replace",
+              "Force",
+              "sync options",
+              "selector"
+            ]
+          }
+        },
+        {
+          "id": "module-2-sync/level-8-server-side-apply",
+          "name": "level-8-server-side-apply",
+          "path": "modules/module-2-sync/level-8-server-side-apply",
+          "mission": {
+            "name": "Annotation Too Long",
+            "description": "The network team publishes the full CMDB export (about 9,000 hosts, roughly 400 KB) as ConfigMap `host-inventory`\nin the repo `platform/host-registry` (folder `deploy/`), served by the `host-registry` Deployment in namespace `netops`.\nThe `host-registry` Application has never synced: Argo CD stops at the ConfigMap with\n`ConfigMap \"host-inventory\" is invalid: metadata.annotations: Too long: may not be more than 262144 bytes`.\nThe pod waits for a ConfigMap that does not exist. A clone of the repo is in your workspace.\n",
+            "objective": "Application `host-registry` (namespace `argocd`) is Synced and Healthy at the current head of `main`, and its\nlast sync succeeded. ConfigMap `host-inventory` in `netops` holds the complete export (all 9,000 hosts, still\nin Git), the application declares how it is applied so the next sync succeeds too, and Service `host-registry`\nanswers `host-registry v1.0`.\n",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "ServerSideApply",
+              "last-applied-configuration",
+              "sync options",
+              "annotations limit"
+            ]
+          }
+        },
+        {
+          "id": "module-2-sync/level-9-allow-empty",
+          "name": "level-9-allow-empty",
+          "path": "modules/module-2-sync/level-9-allow-empty",
+          "mission": {
+            "name": "Nothing Left To Deploy",
+            "description": "The platform team took over the ETL workloads, so a commit in `platform/nightly-etl` emptied folder `deploy/`\n(only a README is left). The `nightly-etl` Application has automated sync with prune and self-heal, yet nothing\nhappens: it is OutOfSync and shows `SyncError: Skipping sync attempt to <commit>: auto-sync will wipe out all\nresources`. Deployment `etl-worker`, Service `etl-status` and ConfigMap `etl-schedule` keep running in namespace `etl`.\nA clone of the repo is in your workspace.\n",
+            "objective": "Application `nightly-etl` is Synced at the current head of `main` and its last sync succeeded. The manifests stay out\nof the repo, and namespace `etl` no longer contains Deployment `etl-worker`, Service `etl-status` or ConfigMap\n`etl-schedule`.\n",
+            "xp": 150,
+            "difficulty": "intermediate",
+            "expected_time": "10m",
+            "concepts": [
+              "allowEmpty",
+              "automated sync",
+              "prune",
+              "empty application"
+            ]
+          }
+        },
+        {
+          "id": "module-2-sync/level-10-sync-retry",
+          "name": "level-10-sync-retry",
+          "path": "modules/module-2-sync/level-10-sync-retry",
+          "mission": {
+            "name": "Flaky First Contact",
+            "description": "`sensor-hub` (repo `platform/sensor-hub`, namespace `iot-edge`) ships a `SensorProfile` custom resource next to its\nDeployment. The CRD behind it is installed by the platform bootstrap (`kubectl -n iot-bootstrap get jobs`), which\nfinishes a few minutes after a cluster comes up, but the Application syncs first. Its automated sync fails with\n`SyncError: Failed last sync attempt to <commit>: one or more synchronization tasks are not valid: failed to discover\nserver resources for group version runtime.argomissions.io/v1: the server could not find the requested resource\n(retried 2 times).` and then stops. Nothing runs in `iot-edge`.\n",
+            "objective": "Application `sensor-hub` keeps its automated sync and is Synced and Healthy at the current head of `main`, its last\nsync succeeded, and the SensorProfile `edge-default` exists. Its sync policy now retries patiently enough\n(at least five minutes of attempts in total) that a CRD arriving late no longer leaves the Application failed. Service\n`sensor-hub` in `iot-edge` answers `sensor-hub v2.0`.\n",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "syncPolicy.retry",
+              "backoff",
+              "CRD ordering",
+              "automated sync"
+            ]
+          }
+        },
+        {
+          "id": "module-2-sync/level-11-shared-resource",
+          "name": "level-11-shared-resource",
+          "path": "modules/module-2-sync/level-11-shared-resource",
+          "mission": {
+            "name": "Two Owners, One ConfigMap",
+            "description": "Two Applications, `cart-service` and `promo-banner`, deploy folders `cart/` and `promo/` of the repo\n`platform/storefront-apps` into namespace `storefront`. Both folders contain a ConfigMap named `feature-flags`,\neach with its own flag. `promo-banner` is OutOfSync and stays that way, with\n`SharedResourceWarning: ConfigMap/feature-flags is part of applications argocd/promo-banner and cart-service`.\nThe live ConfigMap only holds the flag of whichever Application got there first. A clone of the repo is in your workspace.\n",
+            "objective": "Both Applications `cart-service` and `promo-banner` are Synced and Healthy at the current head of `main`, neither\nreports a SharedResourceWarning, and exactly one of them defines ConfigMap `feature-flags` in Git and tracks it.\nThe live ConfigMap holds both flags (`checkout_v2: \"true\"` and `promo_banner: \"on\"`), and both Services answer\n(`cart-service v4.1`, `promo-banner v2.3`).\n",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "SharedResourceWarning",
+              "resource tracking",
+              "ownership",
+              "FailOnSharedResource"
+            ]
+          }
+        },
+        {
+          "id": "module-2-sync/level-12-apply-out-of-sync-only",
+          "name": "level-12-apply-out-of-sync-only",
+          "path": "modules/module-2-sync/level-12-apply-out-of-sync-only",
+          "mission": {
+            "name": "The Slow Sync",
+            "description": "The `region-configs` Application (repo `platform/region-configs`, folder `deploy/`, namespace `regions`) holds eight\nper-region ConfigMaps, the `edge-banner` Deployment and `visit-counter`, a ConfigMap the analytics controller keeps\nupdating at runtime (the Application ignores differences on `/data/count`, so it never shows as drifted). Every sync so far\nre-applied all 11 objects: the last release quietly reset `visit-counter` to its Git value `0`, and analytics lost its\nhistory. The counter reads 4821 again and release r42 is waiting (the Application is OutOfSync, sync policy manual).\nA clone of the repo is in your workspace.\n",
+            "objective": "Release r42 is deployed: `region-configs` is Synced and Healthy at the current head of `main`, its last sync succeeded, Service\n`edge-banner` answers `edge-banner r42` and ConfigMap `region-eu-west` has `banner-template: spring`. ConfigMap `visit-counter`\nstill holds `4821`, and the Application is configured so that its syncs only apply the objects that are out of sync.\n",
+            "xp": 150,
+            "difficulty": "intermediate",
+            "expected_time": "10m",
+            "concepts": [
+              "ApplyOutOfSyncOnly",
+              "sync options",
+              "ignoreDifferences",
+              "resourceVersion"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "module-3-sources",
+      "xp": 2150,
+      "levels": [
+        {
+          "id": "module-3-sources/level-1-helm-values-file",
+          "name": "level-1-helm-values-file",
+          "path": "modules/module-3-sources/level-1-helm-values-file",
+          "mission": {
+            "name": "Values Not Found",
+            "description": "The `weather-api` forecast service is a Helm chart in the Gitea repo `platform/weather-api` (folder `chart/`,\nbranch `main`). Its Argo CD Application was created last week, yet nothing runs in namespace `weather`:\nthe Application shows `Unknown` sync status and a `ComparisonError` condition that ends with\n`Error: open <path to cached source>/chart/values-prod.yaml: no such file or directory`.\nA clone of the repo is in your workspace. The Argo CD UI is at http://localhost:9094 (admin / argomissions).\n",
+            "objective": "Application `weather-api` is Synced and Healthy at the current head of `main`, with the production\nconfiguration of the chart applied: Deployment `weather-api` in namespace `weather` has 2 ready pods and\nService `weather-api` answers `weather-api prod 3.2` (not the laptop defaults).\n",
+            "xp": 150,
+            "difficulty": "beginner",
+            "expected_time": "10m",
+            "concepts": [
+              "Helm",
+              "valueFiles",
+              "ComparisonError",
+              "helm template"
+            ]
+          }
+        },
+        {
+          "id": "module-3-sources/level-2-helm-parameters-override",
+          "name": "level-2-helm-parameters-override",
+          "path": "modules/module-3-sources/level-2-helm-parameters-override",
+          "mission": {
+            "name": "The Parameter That Wins",
+            "description": "During an incident two weeks ago somebody pinned the `media-gateway` banner to a hotfix build. Since then the\nrelease team bumped `release.version` in `chart/values.yaml` of the Gitea repo `platform/media-gateway` to\n`2.1`, and Argo CD reports the Application `media-gateway` as Synced and Healthy at the new commit.\nYet the gateway in namespace `media` still answers `media-gateway 1.9.1-hotfix`, and every further version\nbump in Git changes nothing. A clone of the repo is in your workspace.\n",
+            "objective": "Application `media-gateway` is Synced and Healthy at the current head of `main`, carries no override for the\nrelease version, and Service `media-gateway` in namespace `media` answers `media-gateway ` followed by the\nversion that `chart/values.yaml` in Git declares.\n",
+            "xp": 150,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "Helm",
+              "parameters",
+              "precedence",
+              "values.yaml",
+              "argocd app unset"
+            ]
+          }
+        },
+        {
+          "id": "module-3-sources/level-3-helm-release-name",
+          "name": "level-3-helm-release-name",
+          "path": "modules/module-3-sources/level-3-helm-release-name",
+          "mission": {
+            "name": "The Renamed Release",
+            "description": "The `fleet-tracker` team moved from plain manifests to a Helm chart: the Application `fleet-tracker` now\nreads `chart/` of the Gitea repo `platform/fleet-tracker` instead of `manifests/`. Argo CD says Synced and\nHealthy, but every consumer of `http://tracker-api.fleet` now fails with \"could not resolve host\".\n`kubectl -n fleet get svc,deploy` shows objects called `fleet-tracker-api`, and the old `tracker-api`\nDeployment and Service are gone. Other teams cannot change the name they call. A clone of the repo is in your workspace.\n",
+            "objective": "Application `fleet-tracker` keeps deploying the Helm chart (path `chart`) and is Synced and Healthy at the\ncurrent head of `main`. Deployment and Service are named `tracker-api` in namespace `fleet` (managed by the\nApplication, nothing named `fleet-tracker-api` left over), and the Service answers `tracker-api v3 (helm chart)`.\n",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "Helm",
+              "releaseName",
+              "Release.Name",
+              "pruning",
+              "object names"
+            ]
+          }
+        },
+        {
+          "id": "module-3-sources/level-4-helm-values-object",
+          "name": "level-4-helm-values-object",
+          "path": "modules/module-3-sources/level-4-helm-values-object",
+          "mission": {
+            "name": "Inline Values, Ignored",
+            "description": "The search team keeps production settings inside the Argo CD Application `search-suggest` (the `valuesObject`\nfield) and leaves `chart/values.yaml` of the Gitea repo `platform/search-suggest` as development defaults.\nThe Application is Synced and Healthy, there is no error anywhere, and still namespace `search` runs a single\npod and the service answers `search-suggest dev defaults`: the production values are silently not used.\nA clone of the repo is in your workspace.\n",
+            "objective": "Application `search-suggest` is Synced and Healthy at the current head of `main` and keeps the production\nsettings inline in the Application (the chart defaults in Git stay as they are). Deployment `search-suggest`\nin namespace `search` runs 3 ready replicas and Service `search-suggest` answers `search-suggest prod 4.1`.\n",
+            "xp": 150,
+            "difficulty": "intermediate",
+            "expected_time": "10m",
+            "concepts": [
+              "Helm",
+              "valuesObject",
+              "values nesting",
+              "argocd app manifests"
+            ]
+          }
+        },
+        {
+          "id": "module-3-sources/level-5-kustomize-overlay-path",
+          "name": "level-5-kustomize-overlay-path",
+          "path": "modules/module-3-sources/level-5-kustomize-overlay-path",
+          "mission": {
+            "name": "The Base Is Not An Environment",
+            "description": "The `inventory-sync` service has a Kustomize layout in the Gitea repo `platform/inventory-sync`:\n`kustomize/base` plus an overlay per environment. The Application `inventory-sync` was created for\nproduction, and it is Synced and Healthy. But namespace `inventory` runs one pod and the service answers\n`inventory-sync base`, while the production overlay is supposed to run three replicas with its own settings.\nA clone of the repo is in your workspace.\n",
+            "objective": "Application `inventory-sync` is Synced and Healthy at the current head of `main` and deploys the production\nenvironment to namespace `inventory`: Deployment `inventory-sync` has 3 ready replicas and Service\n`inventory-sync` answers `inventory-sync prod`. The shared base stays a neutral base.\n",
+            "xp": 150,
+            "difficulty": "beginner",
+            "expected_time": "10m",
+            "concepts": [
+              "Kustomize",
+              "base",
+              "overlay",
+              "source path",
+              "kubectl kustomize"
+            ]
+          }
+        },
+        {
+          "id": "module-3-sources/level-6-kustomize-images",
+          "name": "level-6-kustomize-images",
+          "path": "modules/module-3-sources/level-6-kustomize-images",
+          "mission": {
+            "name": "Promote Without Editing YAML",
+            "description": "`ticket-desk` is a Kustomize app in the Gitea repo `platform/ticket-desk`: the base refers to the logical image\n`ticket-desk-web`, and each overlay maps it to a real image. Build 2.0 (`traefik/whoami:v1.10`) was\nvalidated in staging, but the production overlay still maps the alias to the old build `nginx:1.27-alpine`, so\nApplication `ticket-desk` keeps serving the old nginx page from namespace `desk`. Production has to run\nbuild 2.0 now. The change window is tonight and the release engineer wants it done through the Application\nitself, with no new commit in the app repo. A clone of the repo is in your workspace.\n",
+            "objective": "Application `ticket-desk` keeps deploying `kustomize/overlays/prod`, is Synced and Healthy at the current head\nof `main`, and Deployment `ticket-desk` in namespace `desk` runs the image `traefik/whoami:v1.10` on at least\n2 ready pods; Service `ticket-desk` answers like build 2.0 (a whoami response).\n",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "Kustomize",
+              "images override",
+              "kustomize.images",
+              "promotion"
+            ]
+          }
+        },
+        {
+          "id": "module-3-sources/level-7-kustomize-common-labels",
+          "name": "level-7-kustomize-common-labels",
+          "path": "modules/module-3-sources/level-7-kustomize-common-labels",
+          "mission": {
+            "name": "Selector Is Immutable",
+            "description": "The platform team asked every service to carry the labels `team: ledger` and `cost-center: cc-4711`. A\ncolleague added them to the Kustomize package in `platform/ledger-api` (folder `deploy/`, branch `main`)\nand synced Application `ledger-api` from the UI. The sync failed: the operation message ends in\n`Deployment.apps \"ledger-api\" is invalid: spec.selector: Invalid value: {...}: field is immutable`.\nThe old pods are still serving, the Application is OutOfSync, and a clone of the repo is in your workspace.\n",
+            "objective": "Application `ledger-api` is Synced and Healthy at the current head of `main`. The pods of Deployment\n`ledger-api` in namespace `ledger` carry the labels `team=ledger` and `cost-center=cc-4711`, the Deployment's\nselector is still only `app: ledger-api` (the Deployment is not deleted and re-created with a wider selector),\nand Service `ledger-api` answers `ledger-api v2.2`.\n",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "Kustomize",
+              "commonLabels",
+              "labels",
+              "includeSelectors",
+              "immutable fields"
+            ]
+          }
+        },
+        {
+          "id": "module-3-sources/level-8-directory-recurse",
+          "name": "level-8-directory-recurse",
+          "path": "modules/module-3-sources/level-8-directory-recurse",
+          "mission": {
+            "name": "Half The Manifests",
+            "description": "The warehouse team keeps the `inventory` service in the Gitea repo `platform/inventory-stack`: a web tier in\n`deploy/web/` and a database stub in `deploy/db/`. Argo CD Application `inventory` (path `deploy`, branch\n`main`, namespace `inventory`) looks perfect in the UI: Synced, Healthy, a green tick. Yet `kubectl get all -n\ninventory` is empty and the web service does not exist. A clone of the repo is in your workspace.\n",
+            "objective": "Application `inventory` is Synced and Healthy at the current head of `main` and manages both tiers:\nDeployments `stock-web` and `stock-db` and their Services run in namespace `inventory`, and Service\n`stock-web` answers `stock-web v3.1`. The folder layout of the repo stays as it is (`deploy/web`,\n`deploy/db`).\n",
+            "xp": 150,
+            "difficulty": "beginner",
+            "expected_time": "10m",
+            "concepts": [
+              "directory source",
+              "directory.recurse",
+              "tool detection"
+            ]
+          }
+        },
+        {
+          "id": "module-3-sources/level-9-directory-exclude",
+          "name": "level-9-directory-exclude",
+          "path": "modules/module-3-sources/level-9-directory-exclude",
+          "mission": {
+            "name": "Test Fixtures In Production",
+            "description": "Application `collector` deploys folder `deploy/` of the Gitea repo `platform/telemetry-agents` (branch `main`)\nto namespace `telemetry`, with automated sync and pruning. It is Synced and Healthy, but the namespace is\ncrowded: `kubectl get pods -n telemetry` shows `fixture-loadgen` and `fixture-fake-source` next to the real\n`metrics-collector`. Those come from `deploy/tests/`, YAML our CI loads into a scratch cluster. CI still\nneeds those files in the repo. A clone is in your workspace.\n",
+            "objective": "Application `collector` is Synced and Healthy at the current head of `main`, no `fixture-*` object exists in\nnamespace `telemetry`, and Service `metrics-collector` still answers `metrics-collector v5.0`. The fixture\nfiles stay in the repo (`deploy/tests/fixture-*.yaml`).\n",
+            "xp": 150,
+            "difficulty": "intermediate",
+            "expected_time": "10m",
+            "concepts": [
+              "directory.exclude",
+              "directory.include",
+              "recurse",
+              "prune"
+            ]
+          }
+        },
+        {
+          "id": "module-3-sources/level-10-multi-source-values",
+          "name": "level-10-multi-source-values",
+          "path": "modules/module-3-sources/level-10-multi-source-values",
+          "mission": {
+            "name": "Values From Another Repo",
+            "description": "The pricing team keeps its Helm chart in `platform/pricing-charts` (`charts/pricing`) and the per-environment\nvalues in a separate repo, `platform/pricing-env` (`prod/values.yaml`, `staging/values.yaml`). Application\n`pricing` combines both with two `sources`, but it never deployed: it shows Sync Status Unknown and a\nComparisonError, \"Failed to load target state: failed to generate manifest for source 1 of 2 ... source\nreferenced \"$values\", which is not one of the available sources ($env)\". Namespace `pricing` is empty.\nClones of both repos are in your workspace.\n",
+            "objective": "Application `pricing` still takes the chart from `pricing-charts` and the values from the `pricing-env` repo\n(`prod/values.yaml`) through its two sources, with no inline value overrides. It is Synced and Healthy at the\ncurrent heads of both repos, and Service `pricing-quote` in namespace `pricing` answers `pricing v2.4 prod`\nfrom 2 replicas.\n",
+            "xp": 250,
+            "difficulty": "advanced",
+            "expected_time": "20m",
+            "concepts": [
+              "multiple sources",
+              "ref",
+              "valueFiles",
+              "$values",
+              "Helm"
+            ]
+          }
+        },
+        {
+          "id": "module-3-sources/level-11-helm-dependency",
+          "name": "level-11-helm-dependency",
+          "path": "modules/module-3-sources/level-11-helm-dependency",
+          "mission": {
+            "name": "Missing Subchart",
+            "description": "The notifications team split shared Helm templates into a library chart, `charts/notify-common`, and made\n`charts/notify` depend on it with a local `file://` dependency, all in the Gitea repo\n`platform/notify-platform` (branch `main`). Application `notify` (path `charts/notify`, namespace\n`notifications`) has never deployed: Sync Status is Unknown and the condition reads \"Failed to load target\nstate ... error building helm chart dependencies ... `helm dependency build` failed exit status 1: Error:\ndirectory ../notify-commons not found\". A clone of the repo is in your workspace.\n",
+            "objective": "Application `notify` is Synced and Healthy at the current head of `main`, and chart `notify` still gets its\nshared templates from the `notify-common` library chart through a `file://` dependency (the templates are not\ncopied into `notify`). Service `notify` in namespace `notifications` answers `notify v4.7 (email)` from\n2 replicas.\n",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "Helm dependencies",
+              "library chart",
+              "file:// repository",
+              "helm dependency build"
+            ]
+          }
+        },
+        {
+          "id": "module-3-sources/level-12-plain-yaml-vs-helm",
+          "name": "level-12-plain-yaml-vs-helm",
+          "path": "modules/module-3-sources/level-12-plain-yaml-vs-helm",
+          "mission": {
+            "name": "Detected As The Wrong Tool",
+            "description": "The docs team keeps plain Kubernetes manifests (`deployment.yaml`, `service.yaml`) in the folder `deploy/` of\nthe Gitea repo `platform/docs-portal` (branch `main`). Application `docs-portal` (path `deploy`, automated\nsync, namespace `docs`) is Synced and Healthy, a green tick with no errors, but `kubectl get all -n docs`\nis empty and the portal does not exist. The Argo CD UI shows the application's tool as Helm, though nobody\never configured Helm. A clone of the repo is in your workspace.\n",
+            "objective": "Application `docs-portal` treats `deploy/` as plain manifests (its detected source type is Directory, not\nHelm) and is Synced and Healthy at the current head of `main`. Deployment and Service `docs-portal` run in\nnamespace `docs` under Argo CD, and the service answers `docs-portal v1.8`.\n",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "tool detection",
+              "Helm",
+              "Directory source",
+              "Chart.yaml",
+              "source type"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "module-4-waves-hooks",
+      "xp": 2000,
+      "levels": [
+        {
+          "id": "module-4-waves-hooks/level-1-presync-migration",
+          "name": "level-1-presync-migration",
+          "path": "modules/module-4-waves-hooks/level-1-presync-migration",
+          "mission": {
+            "name": "Migrate Before You Deploy",
+            "description": "Release v2 of `payroll-api` is merged on `main` of the Gitea repo `platform/payroll-api`. Besides the new\nimage it ships a database migration, Job `payroll-schema-migrate`, which takes about 12 seconds. On staging\nlast week the same pattern went wrong: Argo CD created the Job and the new Deployment in the same sync, the\nv2 pods started serving while the schema was still old, and users saw errors until the Job finished. The\nApplication `payroll-api` is `OutOfSync` (v1 is live, the release is not synced yet). A clone of the repo\nis in your workspace. Production must not repeat staging's mistake.\n",
+            "objective": "Application `payroll-api` (namespace `argocd`) is Synced and Healthy at the current head of `main`, release v2\nwas deployed by an Argo CD sync, and in that sync Job `payroll-schema-migrate` in namespace `payroll` ran to\ncompletion before the Deployment `payroll-api` rolled out. Service `payroll-api` answers `payroll-api v2`.\n",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "resource hooks",
+              "PreSync",
+              "sync phases",
+              "sync waves",
+              "Job"
+            ]
+          }
+        },
+        {
+          "id": "module-4-waves-hooks/level-2-sync-wave-order",
+          "name": "level-2-sync-wave-order",
+          "path": "modules/module-4-waves-hooks/level-2-sync-wave-order",
+          "mission": {
+            "name": "Config Before Code",
+            "description": "The new `shipping-ui` was added to Argo CD through the Gitea repo `platform/shipping-ui` (folder `deploy/`,\nbranch `main`, namespace `shipping`). The first sync never finishes: the operation stays `Running` with the message\n`waiting for healthy state of apps/Deployment/shipping-ui`, and the Application is `Progressing`. The pod\nsays `CreateContainerConfigError`, and `kubectl describe pod` shows `configmap \"shipping-ui-config\" not found`\nalthough that ConfigMap is in the repo. A clone of the repo is in your workspace.\n",
+            "objective": "Application `shipping-ui` (namespace `argocd`) is Synced and Healthy at the current head of `main`, its last\nsync operation Succeeded at that commit, and Service `shipping-ui` in namespace `shipping` answers\n`shipping-ui carrier=dhl`.\n",
+            "xp": 150,
+            "difficulty": "intermediate",
+            "expected_time": "10m",
+            "concepts": [
+              "sync waves",
+              "sync-wave annotation",
+              "wave health gating",
+              "ConfigMap"
+            ]
+          }
+        },
+        {
+          "id": "module-4-waves-hooks/level-3-crd-before-cr",
+          "name": "level-3-crd-before-cr",
+          "path": "modules/module-4-waves-hooks/level-3-crd-before-cr",
+          "mission": {
+            "name": "Unknown Kind On First Sync",
+            "description": "The plant monitoring stack lives in the Gitea repo `platform/sensor-hub`: `crds/` holds the `Probe`\nCustomResourceDefinition (API group `sensors.argomissions.io`), `hub/` holds the first `Probe` instance. Two\nArgo CD Applications read them: `sensor-crds` and `sensor-hub`, both to namespace `sensors`. The team synced\n`sensor-hub` first and the operation `Failed` with\n`one or more synchronization tasks are not valid: failed to discover server resources for group version\nsensors.argomissions.io/v1: the server could not find the requested resource`. `sensor-crds` was never\nsynced. A clone of the repo is in your workspace.\n",
+            "objective": "Both Applications (`sensor-crds`, `sensor-hub`, namespace `argocd`) are Synced and Healthy at the current head\nof `main`, their last sync operations Succeeded, the CRD `probes.sensors.argomissions.io` is managed by\n`sensor-crds` (not applied by hand), and the `Probe` named `boiler-temp` exists in namespace `sensors` and is\nowned by `sensor-hub`.\n",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "CustomResourceDefinition",
+              "custom resource",
+              "sync order",
+              "dry run",
+              "SkipDryRunOnMissingResource"
+            ]
+          }
+        },
+        {
+          "id": "module-4-waves-hooks/level-4-hook-delete-policy",
+          "name": "level-4-hook-delete-policy",
+          "path": "modules/module-4-waves-hooks/level-4-hook-delete-policy",
+          "mission": {
+            "name": "Job Already Exists",
+            "description": "Release v2 of `helpdesk-api` (Gitea repo `platform/helpdesk-api`, folder `deploy/`) changes the PreSync\nmigration Job `helpdesk-db-migrate`. The sync of v2 stopped at the hook: the operation is `Failed` with\n`Job.batch \"helpdesk-db-migrate\" is invalid: spec.template: Invalid value: ... field is immutable`, the\nrelease did not roll out, and the old version still answers. A colleague says \"just sync again, it worked for\nme yesterday\". Nobody wants a pipeline that needs a second try for every release. A clone of the repo is in\nyour workspace.\n",
+            "objective": "Application `helpdesk-api` (namespace `argocd`) is Synced and Healthy at the current head of `main`, the sync\nthat deployed it Succeeded and ran the migration Job, and Service `helpdesk-api` in namespace `helpdesk`\nanswers `helpdesk-api v2`. The migration Job is defined in Git so that the next change to it will not collide\nwith the run that is left behind from this one.\n",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "hook-delete-policy",
+              "BeforeHookCreation",
+              "HookSucceeded",
+              "PreSync",
+              "immutable Job"
+            ]
+          }
+        },
+        {
+          "id": "module-4-waves-hooks/level-5-postsync-smoke-test",
+          "name": "level-5-postsync-smoke-test",
+          "path": "modules/module-4-waves-hooks/level-5-postsync-smoke-test",
+          "mission": {
+            "name": "The Test That Fails The Sync",
+            "description": "`booking-web` (Gitea repo `platform/booking-web`, folder `deploy/`, namespace `booking`) has a PostSync smoke\ntest, Job `booking-web-smoke-test`, that calls the Service after every sync. The sync of the Application\n`booking-web` ends with operation `Failed` and the message `one or more synchronization tasks completed\nunsuccessfully`, and the CI pipeline that waits for a green sync is red. Yet the pod runs and\n`booking-web v1.4` is served; customers are not affected. A clone of the repo is in your workspace.\n",
+            "objective": "Application `booking-web` (namespace `argocd`) is Synced and Healthy at the current head of `main`, and its\nlast sync operation Succeeded at that commit, including a PostSync smoke test that ran and passed against\nthe Service. Service `booking-web` in namespace `booking` still answers `booking-web v1.4` on port 80.\n",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "PostSync hook",
+              "smoke test",
+              "operationState",
+              "hook failure"
+            ]
+          }
+        },
+        {
+          "id": "module-4-waves-hooks/level-6-hook-typo",
+          "name": "level-6-hook-typo",
+          "path": "modules/module-4-waves-hooks/level-6-hook-typo",
+          "mission": {
+            "name": "The Hook That Never Ran",
+            "description": "Release v3.1 of `ticket-desk` (Gitea repo `platform/ticket-desk`, folder `deploy/`, namespace `helpdesk`)\nwas synced through Argo CD: the Application is Synced and Healthy and the Service answers `ticket-desk v3.1`.\nBut the helpdesk agents report that search shows stale tickets. The release added a `reindex-tickets` Job\nthat must finish before the new version rolls out, and the sync result shows no sign of it:\n`kubectl -n helpdesk get jobs` says `No resources found`, and the Job is not in the Application's resource\nlist at all. A clone of the repo is in your workspace.\n",
+            "objective": "Application `ticket-desk` is Synced and Healthy at the current head of `main`, and the last sync of that\nhead ran Job `reindex-tickets` as a hook that finishes before the rollout (the Job completed and logged\n`index rebuilt`). Service `ticket-desk` in namespace `helpdesk` still answers `ticket-desk v3.1`.\n",
+            "xp": 150,
+            "difficulty": "intermediate",
+            "expected_time": "10m",
+            "concepts": [
+              "resource hooks",
+              "PreSync",
+              "hook annotation",
+              "sync result"
+            ]
+          }
+        },
+        {
+          "id": "module-4-waves-hooks/level-7-wave-blocked-unhealthy",
+          "name": "level-7-wave-blocked-unhealthy",
+          "path": "modules/module-4-waves-hooks/level-7-wave-blocked-unhealthy",
+          "mission": {
+            "name": "Stuck In Wave 1",
+            "description": "Release v1.4 of `fleet-tracker` (Gitea repo `platform/fleet-tracker`, folder `deploy/`, namespace `fleet`)\nwas synced an hour ago and the sync is still running: `argocd app get fleet-tracker --show-operation` says\n`Phase: Running` and `waiting for healthy state of apps/Deployment/tracker-api`. The dashboard Service\n`tracker-web` still answers `fleet-tracker v1.3`. The new `tracker-api` pod stays `0/1 Running`, and its events\nsay `Readiness probe failed: Get \"http://10.244.0.73:8080/healthz\": dial tcp 10.244.0.73:8080: connect:\nconnection refused`. A clone of the repo is in your workspace.\n",
+            "objective": "Application `fleet-tracker` is Synced and Healthy at the current head of `main`, and that head was deployed\nby a completed (Succeeded) sync. Deployments `tracker-api` and `tracker-web` in namespace `fleet` are ready\nand Service `tracker-web` answers `fleet-tracker v1.4`. The fix lives in Git.\n",
+            "xp": 200,
+            "difficulty": "advanced",
+            "expected_time": "15m",
+            "concepts": [
+              "sync waves",
+              "wave health gate",
+              "running operation",
+              "terminate-op"
+            ]
+          }
+        },
+        {
+          "id": "module-4-waves-hooks/level-8-syncfail-hook",
+          "name": "level-8-syncfail-hook",
+          "path": "modules/module-4-waves-hooks/level-8-syncfail-hook",
+          "mission": {
+            "name": "Clean Up On Failure",
+            "description": "Every sync of `booking-portal` (Gitea repo `platform/booking-portal`, folder `deploy/`, namespace `bookings`)\nraises a \"read-only\" maintenance banner first (ConfigMap `maintenance-flag`) and lowers it again with the\n`exit-maintenance` Job when the sync is done. Release v5.2 ran into its schema gate and the sync failed with\n`one or more synchronization tasks completed unsuccessfully` (Job `schema-gate`: `Job has reached the specified\nbackoff limit`, a DBA approval that is still pending). Since then the site has been stuck in maintenance mode:\n`maintenance-flag` is still in namespace `bookings`, although the cleanup Job is in Git. A clone of the repo is in\nyour workspace.\n",
+            "objective": "The next sync of the current head of `main` of `booking-portal` still fails at the schema gate (that release is\nnot yours to fix), but this time the failure itself lowers the banner: the last sync operation of the head is\nFailed, a failure hook Job ran in it and Succeeded, and ConfigMap `maintenance-flag` no longer exists in\nnamespace `bookings`.\n",
+            "xp": 250,
+            "difficulty": "advanced",
+            "expected_time": "20m",
+            "concepts": [
+              "SyncFail hook",
+              "hook phases",
+              "failed sync",
+              "hook annotation"
+            ]
+          }
+        },
+        {
+          "id": "module-4-waves-hooks/level-9-prune-last",
+          "name": "level-9-prune-last",
+          "path": "modules/module-4-waves-hooks/level-9-prune-last",
+          "mission": {
+            "name": "Remove The Old Last",
+            "description": "Release v2.0 of `chat-relay` (Gitea repo `platform/chat-relay`, folder `deploy/`, namespace `chat`) renames the\nDeployment and the Service from `relay` to `relay-gateway`; the old manifests were deleted from Git and the\nApplication is `OutOfSync`, waiting for the release manager's sync with pruning (`argocd app sync chat-relay\n--prune`). The last rename of this kind caused an outage: the old Service was removed while the new Deployment was\nstill starting. The cut-over runbook is encoded in Job `handover-check` (repo file `deploy/handover-check.yaml`):\nafter the first wave it records whether both the old and the new name still answer. Nothing has been synced\nyet. A clone of the repo is in your workspace.\n",
+            "objective": "Application `chat-relay` is Synced and Healthy at the current head of `main`, deployed by a Succeeded sync of that\nhead. The rename is complete: Service and Deployment `relay` are gone, `relay-gateway` answers\n`chat-relay v2.0`, and Job `handover-check` of that sync recorded that the old Service `relay` and the new\nService `relay-gateway` were both answering when it ran (no outage window).\n",
+            "xp": 200,
+            "difficulty": "advanced",
+            "expected_time": "15m",
+            "concepts": [
+              "PruneLast",
+              "prune",
+              "sync waves",
+              "hooks",
+              "zero-downtime rename"
+            ]
+          }
+        },
+        {
+          "id": "module-4-waves-hooks/level-10-hook-rbac",
+          "name": "level-10-hook-rbac",
+          "path": "modules/module-4-waves-hooks/level-10-hook-rbac",
+          "mission": {
+            "name": "Migration Job Forbidden",
+            "description": "Release v4.1 of `payroll-engine` (Gitea repo `platform/payroll-engine`, folder `deploy/`, namespace `payroll`)\nships a schema migration (Job `ledger-migrate`, a PreSync hook running as ServiceAccount `migrator`) and, in the same\ncommit, a Role change that lets `migrator` create ConfigMaps. The sync fails with `one or more synchronization tasks\ncompleted unsuccessfully`; the hook says `Job has reached the specified backoff limit` and its log ends with\n`configmaps is forbidden: User \"system:serviceaccount:payroll:migrator\" cannot create resource \"configmaps\" in API\ngroup \"\" in the namespace \"payroll\"`. Yet the permission is right there in Git. A clone of the repo is in your\nworkspace.\n",
+            "objective": "Application `payroll-engine` is Synced and Healthy at the current head of `main`, deployed by a Succeeded sync of\nthat head: the migration completed (ConfigMap `schema-version` in `payroll` records `v4.1`) and Service\n`payroll-engine` answers `payroll-engine v4.1`. The fix is in Git, so that it works on any cluster and any future\nrelease: in the repository the `migrator` Role and RoleBinding are applied strictly before the migration Job runs,\nand the Deployment rolls out strictly after the migration finished.\n",
+            "xp": 250,
+            "difficulty": "advanced",
+            "expected_time": "20m",
+            "concepts": [
+              "sync phases",
+              "sync waves",
+              "hook ordering",
+              "RBAC",
+              "PreSync"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "module-5-projects-rbac",
+      "xp": 2000,
+      "levels": [
+        {
+          "id": "module-5-projects-rbac/level-1-project-source-repos",
+          "name": "level-1-project-source-repos",
+          "path": "modules/module-5-projects-rbac/level-1-project-source-repos",
+          "mission": {
+            "name": "Repo Not Permitted",
+            "description": "The claims team's `claims-intake` Application (project `claims`, repo `intake-gateway`, folder `deploy/`)\nwas created this morning, but nothing runs in namespace `claims`. `argocd app get claims-intake` shows\nSync Status `Unknown` and the condition\n`InvalidSpecError: application repo http://gitea.gitea.svc.cluster.local:3000/platform/intake-gateway.git is not permitted in project 'claims'`.\nThe platform team created the `claims` project so the team can only deploy from its own repositories.\n",
+            "objective": "Application `claims-intake` stays in project `claims` and is Synced and Healthy at the current head of\n`intake-gateway/main`; Service `claims-intake` in namespace `claims` answers `claims-intake v2.3`.\nThe project must still refuse repositories it has no business with (for example `platform/payroll-secrets`).\n",
+            "xp": 150,
+            "difficulty": "intermediate",
+            "expected_time": "10m",
+            "concepts": [
+              "AppProject",
+              "sourceRepos",
+              "InvalidSpecError",
+              "project boundaries"
+            ]
+          }
+        },
+        {
+          "id": "module-5-projects-rbac/level-2-project-destinations",
+          "name": "level-2-project-destinations",
+          "path": "modules/module-5-projects-rbac/level-2-project-destinations",
+          "mission": {
+            "name": "Destination Not Permitted",
+            "description": "The clinic's `rx-dispatch` Application (project `clinic`, repo `rx-dispatch`, folder `deploy/`) must run in\nnamespace `pharmacy`, which already exists. Instead `argocd app get rx-dispatch` shows Sync Status `Unknown`\nand `InvalidSpecError: application destination server 'https://kubernetes.default.svc' and namespace\n'pharmacy' do not match any of the allowed destinations in project 'clinic'`. The repository is fine.\n",
+            "objective": "Application `rx-dispatch` stays in project `clinic`, still targets namespace `pharmacy`, and is Synced and\nHealthy at the head of `rx-dispatch/main`; Service `rx-dispatch` in `pharmacy` answers `rx-dispatch v4.1`.\nThe project must not become a way to deploy into the cluster's own namespaces such as `kube-system`.\n",
+            "xp": 150,
+            "difficulty": "intermediate",
+            "expected_time": "10m",
+            "concepts": [
+              "AppProject",
+              "destinations",
+              "namespace glob",
+              "InvalidSpecError"
+            ]
+          }
+        },
+        {
+          "id": "module-5-projects-rbac/level-3-cluster-resource-whitelist",
+          "name": "level-3-cluster-resource-whitelist",
+          "path": "modules/module-5-projects-rbac/level-3-cluster-resource-whitelist",
+          "mission": {
+            "name": "ClusterRole Forbidden",
+            "description": "The radar team's `radar-agent` Application (project `radar`, repo `radar-agent`, folder `deploy/`) is OutOfSync\nand refuses to deploy into namespace `radar`. Pressing Sync fails immediately with\n`one or more synchronization tasks are not valid: resource rbac.authorization.k8s.io:ClusterRole is not permitted\nin project radar; resource rbac.authorization.k8s.io:ClusterRoleBinding is not permitted in project radar`.\nNothing is created, not even the Deployment. The repo is a ServiceAccount, a ClusterRole, a ClusterRoleBinding,\na Deployment and a Service.\n",
+            "objective": "Application `radar-agent` stays in project `radar` and is Synced and Healthy at the head of `radar-agent/main`,\ndeployed by an Argo CD sync that includes ClusterRole and ClusterRoleBinding `radar-node-reader`.\nService `radar-agent` in namespace `radar` answers `radar-agent v0.9`. The project may allow those two kinds\nand nothing wider: no wildcard for cluster-scoped resources.\n",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "AppProject",
+              "clusterResourceWhitelist",
+              "cluster-scoped resources",
+              "least privilege"
+            ]
+          }
+        },
+        {
+          "id": "module-5-projects-rbac/level-4-namespace-resource-blacklist",
+          "name": "level-4-namespace-resource-blacklist",
+          "path": "modules/module-5-projects-rbac/level-4-namespace-resource-blacklist",
+          "mission": {
+            "name": "Secrets Are Blocked",
+            "description": "The mailroom team's `mail-relay` Application (project `mailroom`, repo `mail-relay`, folder `deploy/`) will not\nsync. `argocd app get mail-relay` ends in\n`one or more synchronization tasks are not valid: resource :Secret is not permitted in project mailroom`,\nand not even the Deployment is created. The repo holds a Secret `relay-credentials` (key `token`), a Deployment\nthat reads it and a Service. A note on the project says: \"SEC-114: Secret objects are provided by the platform\nteam, never rendered from Git\". A clone of the repo is in your workspace.\n",
+            "objective": "Application `mail-relay` stays in project `mailroom`, which keeps refusing Secret objects, and is Synced and\nHealthy at the head of `mail-relay/main` after a successful Argo CD sync. Secret `relay-credentials` (key `token`)\nexists in namespace `mailroom` but is not managed by Argo CD, the repo contains no Secret and no copy of the\ncredential, and Service `mail-relay` answers `mail-relay v3.2`.\n",
+            "xp": 150,
+            "difficulty": "intermediate",
+            "expected_time": "10m",
+            "concepts": [
+              "AppProject",
+              "namespaceResourceBlacklist",
+              "Secret",
+              "security policy"
+            ]
+          }
+        },
+        {
+          "id": "module-5-projects-rbac/level-5-local-account-rbac",
+          "name": "level-5-local-account-rbac",
+          "path": "modules/module-5-projects-rbac/level-5-local-account-rbac",
+          "mission": {
+            "name": "CI Cannot Sync",
+            "description": "The shop's pipeline logs in to Argo CD as the local account `ci-bot` and runs `argocd app sync shop-web`\n(application `shop-web`, project `shop`). Since this morning every deploy fails with\n`rpc error: code = PermissionDenied desc = permission denied`. The account exists (`argocd account list`\nshows `ci-bot  true  apiKey, login`) and its password works, but `argocd-rbac-cm` gives it nothing. The staff\nportal `hr-portal` lives in another project, `people`, and the pipeline has no business there.\nPipeline notes and the bot's credentials are in `ci-pipeline.md` in your workspace.\n",
+            "objective": "Logged in as `ci-bot`, `argocd account can-i sync applications 'shop/shop-web'` and the same for `get` answer\n`yes`, while everything else a deploy pipeline does not need is still refused: any action on applications of\nproject `people`, deleting, updating or creating applications, and managing projects, clusters or repositories.\nThe account must stay as it is (`apiKey, login`).\n",
+            "xp": 250,
+            "difficulty": "advanced",
+            "expected_time": "20m",
+            "concepts": [
+              "local accounts",
+              "argocd-rbac-cm",
+              "policy.csv",
+              "least privilege",
+              "can-i"
+            ]
+          }
+        },
+        {
+          "id": "module-5-projects-rbac/level-6-project-role-token",
+          "name": "level-6-project-role-token",
+          "path": "modules/module-5-projects-rbac/level-6-project-role-token",
+          "mission": {
+            "name": "A Token For The Pipeline",
+            "description": "The release pipeline of the settlements team runs in namespace `settle-ci` and has to deploy `settle-api`\n(Application in AppProject `settlements`) after every build. Its Argo CD credential is read from the Secret\n`argocd-pipeline-token` (key `token`) in that namespace, but the Secret still holds the placeholder from the\ntemplate, and the first pipeline run died with:\n`rpc error: code = Unauthenticated desc = invalid session: token is malformed: token contains an invalid number of segments`.\nSecurity has been clear: the pipeline must never carry the admin password or an admin session, only\na credential that can do what a release needs inside its own project.\n",
+            "objective": "The Secret `argocd-pipeline-token` (key `token`) in namespace `settle-ci` holds a valid Argo CD token that\nbelongs to the project role `deployer` of AppProject `settlements`. With that token alone Argo CD allows\n`get` and `sync` on the Applications of project `settlements`, and refuses everything else: deleting them,\ncreating or overriding them, and syncing Applications of any other project. Application `settle-api` stays\nSynced and Healthy.\n",
+            "xp": 250,
+            "difficulty": "advanced",
+            "expected_time": "20m",
+            "concepts": [
+              "AppProject",
+              "project roles",
+              "JWT tokens",
+              "RBAC policy",
+              "least privilege",
+              "argocd proj role"
+            ]
+          }
+        },
+        {
+          "id": "module-5-projects-rbac/level-7-rbac-default-policy",
+          "name": "level-7-rbac-default-policy",
+          "path": "modules/module-5-projects-rbac/level-7-rbac-default-policy",
+          "mission": {
+            "name": "Everyone Is Admin",
+            "description": "A new hire on the claims team, `bob`, wanted to tidy the Argo CD UI and clicked **Delete** on an Application\nthat was not his. It worked. Digging into why, the platform team found that `policy.default: role:admin` in\n`argocd-rbac-cm` has been there since a demo: every local account that has no policy of its own is a full\nadministrator. Two people have accounts: `alice` (platform lead, must stay an administrator) and `bob`\n(claims developer). Passwords: `alice-pw-4821` and `bob-pw-4821`.\n",
+            "objective": "`bob` can look at everything (`get` on applications, projects and clusters) but cannot sync, update, create,\noverride or delete anything. `alice` can still do everything, including deleting Applications and creating\nprojects. The `admin` account and Application `claims-portal` are untouched and `claims-portal` is still\nSynced and Healthy.\n",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "argocd-rbac-cm",
+              "policy.default",
+              "role:readonly",
+              "role:admin",
+              "local accounts",
+              "argocd account can-i"
+            ]
+          }
+        },
+        {
+          "id": "module-5-projects-rbac/level-8-fine-grained-update",
+          "name": "level-8-fine-grained-update",
+          "path": "modules/module-5-projects-rbac/level-8-fine-grained-update",
+          "mission": {
+            "name": "Update Is Not Delete",
+            "description": "The loyalty on-call engineer `mira` (password `mira-pw-4821`) used to restart the `rewards-engine` Deployment\nand kick stuck Pods from the Argo CD UI. Since the platform moved to Argo CD 3.x, both fail with\n`rpc error: code = PermissionDenied desc = permission denied`, although her role `role:loyalty-oncall` in\n`argocd-rbac-cm` still contains `applications, update, loyalty/*, allow`. She can still edit the Application\nitself. The team lead wants her on-call powers back, but nothing more: she must not be able to delete the\nApplication, remove anything but Pods, or run arbitrary resource actions.\n",
+            "objective": "As `mira`, Argo CD accepts the `restart` resource action on Deployments and the deletion of Pods in\nApplications of project `loyalty` (a request for something that does not exist must be answered with \"not\nfound\", not \"permission denied\"). It still refuses to delete other resources (Secrets, Deployments), to run\nother actions such as `scale`, and to delete the Application. `mira` keeps `get`, `sync` and `update` on the\nApplications of her project. Application `rewards-engine` is Synced and Healthy.\n",
+            "xp": 250,
+            "difficulty": "advanced",
+            "expected_time": "20m",
+            "concepts": [
+              "argocd-rbac-cm",
+              "fine-grained RBAC",
+              "update/*",
+              "delete/*",
+              "action/*",
+              "Argo CD 3.x"
+            ]
+          }
+        },
+        {
+          "id": "module-5-projects-rbac/level-9-sync-windows",
+          "name": "level-9-sync-windows",
+          "path": "modules/module-5-projects-rbac/level-9-sync-windows",
+          "mission": {
+            "name": "Frozen Friday",
+            "description": "Before the month-end billing run the platform team froze `billing-core` with a deny sync window (every minute,\n24 hours long, all applications). The freeze is meant to stop routine, automated deployments. Then a rounding\nbug in `statement-api` was found and fixed in `main` of the Gitea repo `platform/statement-api`, and the\nfix is approved to go out now. Argo CD shows the Application as OutOfSync, `Sync Policy: Automated` does\nnothing, and pressing Sync fails with\n`rpc error: code = PermissionDenied desc = cannot sync: blocked by sync window`.\nThe freeze must stay for everything that is not an approved manual action.\n",
+            "objective": "The fixed commit at the head of `main` is deployed by an Argo CD sync of Application `statement-api` (project\n`billing-core`, namespace `statements`): it is Synced and Healthy at the head and the service answers\n`statement-api v1.4.1`. AppProject `billing-core` still has a deny sync window, and a manual sync of its\napplications is permitted from now on, so the next urgent fix does not need a change to the freeze.\n",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "AppProject",
+              "sync windows",
+              "deny window",
+              "manualSync",
+              "argocd proj windows"
+            ]
+          }
+        },
+        {
+          "id": "module-5-projects-rbac/level-10-orphaned-resources",
+          "name": "level-10-orphaned-resources",
+          "path": "modules/module-5-projects-rbac/level-10-orphaned-resources",
+          "mission": {
+            "name": "Who Owns This?",
+            "description": "Namespace `search` is managed by the Application `query-service` (project `search-platform`) and Argo CD\nreports it Synced and Healthy. A cost review nevertheless found a running workload in the namespace that\nnobody can explain, and the security team reminds everybody that the TLS Secret `search-tls-manual` is\nissued by hand, is documented in runbook SEC-114 and must never be deleted. Argo CD itself has said nothing\nabout either of them: `argocd app get query-service` has no warnings.\n",
+            "objective": "Project `search-platform` has orphaned-resource monitoring enabled, and Application `query-service` reports no\norphaned resources. The unowned workload `legacy-indexer` is gone from namespace `search`. Secret\n`search-tls-manual` still exists, and it is excluded from the orphan report by a specific rule on the project\n(not by hiding everything). `query-service` stays Synced and Healthy.\n",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "AppProject",
+              "orphanedResources",
+              "warn",
+              "ignore",
+              "unmanaged resources"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "module-6-app-of-apps",
+      "xp": 2250,
+      "levels": [
+        {
+          "id": "module-6-app-of-apps/level-1-root-app-path",
+          "name": "level-1-root-app-path",
+          "path": "modules/module-6-app-of-apps/level-1-root-app-path",
+          "mission": {
+            "name": "The Empty Root",
+            "description": "The storefront team adopted the app-of-apps pattern: root Application `shopfront-root` is supposed to create one\nchild Application per service (`cart-svc` and `catalog-svc`), and each child deploys its own workload. The repo is\n`platform/shopfront-fleet`; the child Application manifests are committed to it. The root shows `Synced` and\n`Healthy`, green in the UI, with no complaints. But `argocd app list` shows only the root, and namespaces\n`shop-cart` and `shop-catalog` do not exist. A clone of the repo is in your workspace.\n",
+            "objective": "Application `shopfront-root` stays Synced and Healthy at the current head of `main` and, through Argo CD itself,\ncreates the child Applications `cart-svc` and `catalog-svc` (managed by the root, not applied by hand). Both are\nSynced and Healthy at head, and Service `cart-svc` in `shop-cart` answers `cart-svc v1.0`, Service `catalog-svc`\nin `shop-catalog` answers `catalog-svc v2.3`.\n",
+            "xp": 150,
+            "difficulty": "intermediate",
+            "expected_time": "10m",
+            "concepts": [
+              "app of apps",
+              "root Application",
+              "source path",
+              "directory source"
+            ]
+          }
+        },
+        {
+          "id": "module-6-app-of-apps/level-2-child-namespace",
+          "name": "level-2-child-namespace",
+          "path": "modules/module-6-app-of-apps/level-2-child-namespace",
+          "mission": {
+            "name": "Children In The Wrong Namespace",
+            "description": "Root Application `billing-root` deploys the folder `apps/` of the Gitea repo `platform/billing-gitops`, which holds\none Application manifest per billing service (`invoice-api`, `dunning-worker`). The sync of the root succeeded and\nthe root is `Synced` and `Healthy`, and its resource list shows two `Application` objects created. Yet\n`argocd app list` shows only the root, nothing runs in namespaces `billing-invoice` and `billing-dunning`, and the\nchildren have no sync status at all. A clone of the repo is in your workspace.\n",
+            "objective": "Application `billing-root` is Synced and Healthy at the current head of `main` and maintains the child Applications\n`invoice-api` and `dunning-worker` in namespace `argocd`; no Application object is left in any other namespace.\nBoth children are Synced and Healthy at head, Service `invoice-api` in `billing-invoice` answers `invoice-api v3.2`\nand Service `dunning-worker` in `billing-dunning` answers `dunning-worker v1.8`.\n",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "app of apps",
+              "Application namespace",
+              "destination namespace",
+              "prune"
+            ]
+          }
+        },
+        {
+          "id": "module-6-app-of-apps/level-3-child-project-missing",
+          "name": "level-3-child-project-missing",
+          "path": "modules/module-6-app-of-apps/level-3-child-project-missing",
+          "mission": {
+            "name": "Orphaned Children",
+            "description": "The tracing team rebuilt their cluster. Root Application `tracing-root` (repo `platform/tracing-gitops`, folder\n`apps/`) is `Synced` and `Healthy` and created the two child Applications `trace-collector` and `trace-query`.\nBut both children are stuck: their status is `Unknown`, nothing runs in `tracing-collector` and `tracing-query`, and\nthe condition says `InvalidSpecError: Application referencing project tracing-team which does not exist`.\n`argocd app sync trace-collector` answers `app is not allowed in project \"tracing-team\", or the project does not\nexist`. The team's README describes what the project may do. A clone of the repo is in your workspace.\n",
+            "objective": "AppProject `tracing-team` exists and is maintained by `tracing-root` from the repo (not created by hand). It allows\nonly the tracing-gitops repository and the namespaces `tracing-collector` and `tracing-query`, and in Git it is\napplied strictly before the Applications that use it, so a fresh bootstrap works first time. `tracing-root`,\n`trace-collector` and `trace-query` are Synced and Healthy at the current head of `main`, the children still belong\nto `tracing-team`, Service `trace-collector` in `tracing-collector` answers `trace-collector v5.1` and Service\n`trace-query` in `tracing-query` answers `trace-query v2.0`.\n",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "app of apps",
+              "AppProject",
+              "sync waves",
+              "InvalidSpecError"
+            ]
+          }
+        },
+        {
+          "id": "module-6-app-of-apps/level-4-cascade-finalizer",
+          "name": "level-4-cascade-finalizer",
+          "path": "modules/module-6-app-of-apps/level-4-cascade-finalizer",
+          "mission": {
+            "name": "Deleting The Child Left Everything",
+            "description": "The pricing platform team retired the old `tariff-legacy` service the GitOps way: they deleted its Application\nmanifest from `apps/` in `platform/tariff-gitops` and the root `tariff-root` (automated sync with prune) removed the\nchild Application. `argocd app list` no longer shows `tariff-legacy`, the root is `Synced` and `Healthy`. But\nDeployment and Service `tariff-legacy` still run in namespace `tariff-old` and still answer, and nobody owns them.\nThe remaining child `tariff-api` must not be disturbed. A clone of the repo is in your workspace.\n",
+            "objective": "Nothing of `tariff-legacy` is left in the cluster (no Application, no Deployment, Service or Pod), and it stays out\nof Git. So that the next retirement does not leak, every child Application in `apps/` carries the\n`resources-finalizer.argocd.argoproj.io` finalizer, also on the live `tariff-api`. `tariff-root` and `tariff-api` are\nSynced and Healthy at the current head of `main`, and Service `tariff-api` in `tariff-live` answers `tariff-api v4.0`.\n",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "app of apps",
+              "resources-finalizer",
+              "cascade delete",
+              "prune",
+              "orphaned resources"
+            ]
+          }
+        },
+        {
+          "id": "module-6-app-of-apps/level-5-root-delete-danger",
+          "name": "level-5-root-delete-danger",
+          "path": "modules/module-6-app-of-apps/level-5-root-delete-danger",
+          "mission": {
+            "name": "The Day The Root Was Deleted",
+            "description": "Root Application `inventory-root` (repo `platform/inventory-gitops`, folder `apps/`, automated sync with prune)\ncreates one child Application per inventory service, and every child carries `resources-finalizer.argocd.argoproj.io`\nso that retiring a service from Git also removes its workloads. This morning a tidy-up commit, \"cleanup: drop unused\nmanifests\", deleted `apps/api.yaml`. The root dutifully pruned the child `stock-api` and, thanks to the finalizer,\ndeleted its Deployment and Service too: nothing answers in namespace `inventory-stock`, and the warehouse scanners are\nfailing. `stock-sync` was not part of the commit and is untouched. A clone of the repo is in your workspace.\n",
+            "objective": "Application `stock-api` is back, managed by `inventory-root`, and the root is Synced and Healthy at the current\nhead of `main`: Service `stock-api` in `inventory-stock` answers `stock-api v6.2`, Service `stock-sync` in\n`inventory-sync` answers `stock-sync v3.4`, and the Deployment `stock-sync` was never restarted. The history of `main`\nkeeps the accident (nothing is rewritten). Finally every child Application in `apps/` (in Git and live) is protected\nagainst both a mistaken removal of its manifest and the deletion of the root, so that the next accident does not take\na service down.\n",
+            "xp": 250,
+            "difficulty": "advanced",
+            "expected_time": "20m",
+            "concepts": [
+              "app of apps",
+              "resources-finalizer",
+              "Prune=false",
+              "Delete=false",
+              "git revert",
+              "blast radius"
+            ]
+          }
+        },
+        {
+          "id": "module-6-app-of-apps/level-6-app-health-waves",
+          "name": "level-6-app-health-waves",
+          "path": "modules/module-6-app-of-apps/level-6-app-health-waves",
+          "mission": {
+            "name": "Waves That Do Not Wait",
+            "description": "The Beacon telemetry platform is deployed with an app-of-apps: root Application `beacon-root` (repo\n`platform/beacon-fleet`, folder `apps/`) creates the child Applications `beacon-db` (sync-wave 1) and `beacon-api`\n(sync-wave 2). The database needs about half a minute before it serves, and the runbook says the API must not even\nexist until it does. Yet on a fresh bring-up `argocd app get beacon-root` shows both children created within a\nsecond of each other, and `beacon-api` was Healthy while `beacon-db` was still `Progressing`. The waves are in Git,\nexactly as the runbook says, and the root sync reported `successfully synced (all tasks run)`.\n",
+            "objective": "The ordering is enforced by Argo CD itself, not by luck: Argo CD must assess the health of the child Applications\n(an Application whose status is Progressing or Degraded must be reported as such, an Application resource must\nnot count as Healthy by default). After a fresh bring-up of the platform from `beacon-root`, Application\n`beacon-api` was created only after `beacon-db`'s workload was available. `beacon-root`, `beacon-db` and\n`beacon-api` are Synced and Healthy, the children are owned by the root, the waves are still in Git, and\nServices `beacon-db` (namespace `beacon-data`) and `beacon-api` (namespace `beacon-edge`) answer\n`beacon-db v3.1` and `beacon-api v3.1`.\n",
+            "xp": 300,
+            "difficulty": "advanced",
+            "expected_time": "25m",
+            "concepts": [
+              "app of apps",
+              "sync waves",
+              "Application health",
+              "resource customizations",
+              "Lua",
+              "argocd-cm"
+            ]
+          }
+        },
+        {
+          "id": "module-6-app-of-apps/level-7-self-managed-argocd",
+          "name": "level-7-self-managed-argocd",
+          "path": "modules/module-6-app-of-apps/level-7-self-managed-argocd",
+          "mission": {
+            "name": "The Permission That Vanishes",
+            "description": "Argo CD's own configuration is managed by Argo CD: Application `argocd-settings` (repo `platform/argocd-settings`,\nfolder `config/`, self-heal on) applies the ConfigMaps `argocd-cm` and `argocd-rbac-cm` in namespace `argocd`.\nThe payments on-call engineers (SSO group `payments-oncall`) need to be able to sync applications of project\n`default` during incidents. An SRE added the permission with `kubectl edit configmap argocd-rbac-cm` and told them\nit was done, but a few seconds later the line was gone again and they got `permission denied` once more. Nobody\ntouched Git. A clone of the repo is in your workspace.\n",
+            "objective": "Members of `payments-oncall` may `sync` applications in project `default` (and nothing destructive: they may not\ndelete them), while the auditors' read-only access stays as it is. The change lives in Git and has been applied by\nApplication `argocd-settings` itself (Synced at the current head of `main`, deployed by a Succeeded sync of that\nhead, self-heal still on), and the cluster's own settings keep working: the URL, `admin.enabled` and the 60 s\nreconciliation timeout are untouched.\n",
+            "xp": 250,
+            "difficulty": "advanced",
+            "expected_time": "20m",
+            "concepts": [
+              "self-managed Argo CD",
+              "argocd-rbac-cm",
+              "self-heal",
+              "GitOps for configuration"
+            ]
+          }
+        },
+        {
+          "id": "module-6-app-of-apps/level-8-env-promotion",
+          "name": "level-8-env-promotion",
+          "path": "modules/module-6-app-of-apps/level-8-env-promotion",
+          "mission": {
+            "name": "Staging Before Prod",
+            "description": "MeterHub has one root Application per environment, both reading the repo `platform/meterhub-gitops`:\n`meterhub-env-staging` (folder `envs/staging/`) and `meterhub-env-prod` (folder `envs/prod/`). Each creates one\nchild, `meterhub-staging` and `meterhub-prod`, which deploy the service repo `platform/meterhub-service`. The\npolicy is: staging follows `main`, production runs released tags only, and the last release is `v1.2.0`. This\nmorning a customer reports the new, unfinished metering code in production: Service `meterhub` in namespace\n`meterhub-prod` answers `meterhub v1.3.0-rc1`. A clone of the gitops repo is in your workspace.\n",
+            "objective": "Production runs the release again, deployed through Git and the existing roots: Service `meterhub` in\n`meterhub-prod` answers `meterhub v1.2.0`, and `meterhub-prod` is Synced and Healthy at the commit that tag\n`v1.2.0` points to. Staging keeps following `main` of the service repo and still answers `meterhub v1.3.0-rc1`.\nBoth roots and both children are Synced and Healthy, the children are owned by their roots.\n",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "app of apps",
+              "environments",
+              "targetRevision",
+              "Git tags",
+              "promotion"
+            ]
+          }
+        },
+        {
+          "id": "module-6-app-of-apps/level-9-child-drift-root",
+          "name": "level-9-child-drift-root",
+          "path": "modules/module-6-app-of-apps/level-9-child-drift-root",
+          "mission": {
+            "name": "The Hotfix That Flips Back",
+            "description": "Incident on the Courier platform: `courier-routing` v2.4.0 sends parcels to the wrong depot. The fix, v2.4.1, is on\nbranch `hotfix-routing` of the repo `platform/courier-services` and is not merged yet. The on-call engineer ran\n`argocd app set courier-routing --revision hotfix-routing` and watched the fixed version go live. Minutes later the\nservice answered `courier-routing v2.4.0` again, and every time it is pointed at the hotfix it flips back. The child\nApplications come from root Application `courier-fleet` (repo `platform/courier-fleet`, folder `apps/`). A clone of\n`courier-fleet` is in your workspace.\n",
+            "objective": "`courier-routing` runs the hotfix and stays on it: it is deployed from branch `hotfix-routing` of `courier-services`\n(Synced and Healthy at its head) and Service `courier-routing` in namespace `courier-routing` answers `courier-routing v2.4.1`.\n`courier-tracking` is untouched: it still follows `main` and answers `courier-tracking v1.9.0`. The change is made the way the\nplatform is operated: `courier-fleet` is Synced at the current head of `main` of `courier-fleet`, still with\nself-heal on, and owns both children.\n",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "app of apps",
+              "self-heal",
+              "drift",
+              "targetRevision",
+              "argocd app set"
+            ]
+          }
+        },
+        {
+          "id": "module-6-app-of-apps/level-10-bootstrap-from-scratch",
+          "name": "level-10-bootstrap-from-scratch",
+          "path": "modules/module-6-app-of-apps/level-10-bootstrap-from-scratch",
+          "mission": {
+            "name": "Rebuild The Platform",
+            "description": "The Lighthouse platform cluster was lost and rebuilt: Argo CD is up, nothing else is. Everything that ran there\nis described in the Gitea repo `platform/lighthouse-gitops`: AppProjects in `platform/projects/`, one child\nApplication per component in `platform/apps/` (with sync-waves), and the workloads in `workloads/`. The README\nsays the platform is brought up by one root Application named `lighthouse-bootstrap`, but its manifest was never\ncommitted, and neither the projects nor the children exist yet (`argocd app list` is empty). The folder\n`platform/apps/_archive/` holds a retired component that must stay retired. A clone of the repo is in your\nworkspace.\n",
+            "objective": "Application `lighthouse-bootstrap` (namespace `argocd`) reads `platform/lighthouse-gitops` and is Synced and Healthy\nat the current head of `main`, deployed by a Succeeded sync of that head. Through it, and only through it, the\nAppProjects `infra` and `services` and the Applications `lighthouse-cache`, `lighthouse-gateway` and\n`lighthouse-catalog` exist; all are Synced and Healthy. The root manages Applications and AppProjects only (not\nthe workloads themselves), the retired `lighthouse-billing-legacy` is not deployed, and the Services answer\n`lighthouse-cache v7.2` (namespace `lighthouse-infra`), `lighthouse-gateway v1.4` (`lighthouse-edge`) and\n`lighthouse-catalog v5.0` (`lighthouse-core`).\n",
+            "xp": 300,
+            "difficulty": "advanced",
+            "expected_time": "25m",
+            "concepts": [
+              "app of apps",
+              "bootstrap",
+              "directory recurse",
+              "exclude",
+              "AppProject",
+              "sync waves"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "module-7-applicationsets",
+      "xp": 2800,
+      "levels": [
+        {
+          "id": "module-7-applicationsets/level-1-list-generator",
+          "name": "level-1-list-generator",
+          "path": "modules/module-7-applicationsets/level-1-list-generator",
+          "mission": {
+            "name": "The Missing Region",
+            "description": "The edge team runs one `geo-edge` proxy per region, generated from the ApplicationSet `geo-edge` (namespace\n`argocd`) and the Helm chart in the Gitea repo `platform/geo-edge`. `argocd app list` shows `geo-edge-us-east`\nand `geo-edge-ap-south`, both healthy. Customers in Europe are complaining: nothing answers for `eu-west`,\nthere is no Application and no namespace `geo-eu-west`, and the ApplicationSet itself reports no error.\nA copy of the ApplicationSet manifest is in your workspace (`geo-edge-appset.yaml`).\n",
+            "objective": "The ApplicationSet `geo-edge` generates three Applications `geo-edge-us-east`, `geo-edge-eu-west` and\n`geo-edge-ap-south`, each owned by the ApplicationSet, deploying the chart to namespace `geo-<region>` of the\nin-cluster destination. All three are Synced and Healthy, and Service `geo-edge` in each namespace answers\n`geo-edge <region>` (for example `geo-edge eu-west`).\n",
+            "xp": 150,
+            "difficulty": "intermediate",
+            "expected_time": "10m",
+            "concepts": [
+              "ApplicationSet",
+              "list generator",
+              "template",
+              "generated Applications"
+            ]
+          }
+        },
+        {
+          "id": "module-7-applicationsets/level-2-gotemplate-syntax",
+          "name": "level-2-gotemplate-syntax",
+          "path": "modules/module-7-applicationsets/level-2-gotemplate-syntax",
+          "mission": {
+            "name": "Template Mismatch",
+            "description": "The shipping platform keeps one folder per service under `services/` in the Gitea repo `platform/harbor-services`\n(`dock-api`, `dock-tracker`, `dock-notify`). A colleague wrote the ApplicationSet `harbor` to turn every folder\ninto an Application, switching on `goTemplate: true` \"because it is the modern syntax\". Since then\n`argocd app list` is empty, namespace `harbor` does not exist, and the ApplicationSet is Degraded with\n\"failed to parse template {{path.basename}}: template: base:1: function \\\"path\\\" not defined\".\nA copy of the manifest is in your workspace (`harbor-appset.yaml`).\n",
+            "objective": "The ApplicationSet `harbor` generates one Application per folder of `services/`, named after the folder\n(`dock-api`, `dock-tracker`, `dock-notify`), each owned by the ApplicationSet, deploying that folder to namespace\n`harbor`. All three are Synced and Healthy, and Service `<name>` in `harbor` answers `<name> v1`\n(for example `dock-api v1`).\n",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "ApplicationSet",
+              "goTemplate",
+              "fasttemplate",
+              "git directory generator",
+              "template syntax"
+            ]
+          }
+        },
+        {
+          "id": "module-7-applicationsets/level-3-git-directory-generator",
+          "name": "level-3-git-directory-generator",
+          "path": "modules/module-7-applicationsets/level-3-git-directory-generator",
+          "mission": {
+            "name": "Too Many Apps",
+            "description": "The media studio keeps one folder per service under `apps/` in the Gitea repo `platform/studio-platform`, and\nthe ApplicationSet `studio` turns every folder into an Application in namespace `studio`. The three services\n(`render`, `thumbnails`, `captions`) are fine, but `argocd app list` shows a fourth Application, `studio-shared`,\nSynced and Healthy but pointless: it deploys a ConfigMap `studio-defaults` into namespace `studio`. Nobody\nasked for it: `apps/shared/` only holds build defaults that the CI pipeline reads, not a service.\nA copy of the ApplicationSet manifest and a clone of the repo are in your workspace.\n",
+            "objective": "The ApplicationSet `studio` generates exactly three Applications, `studio-render`, `studio-thumbnails` and\n`studio-captions`, each owned by the ApplicationSet and deploying its folder to namespace `studio`. There is no\nApplication for `apps/shared` and ConfigMap `studio-defaults` is gone from `studio`. All three are Synced and Healthy, and Service `<service>` in `studio` answers\n`studio <service> v1`.\n",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "ApplicationSet",
+              "git directory generator",
+              "exclude",
+              "generated Applications"
+            ]
+          }
+        },
+        {
+          "id": "module-7-applicationsets/level-4-git-file-generator",
+          "name": "level-4-git-file-generator",
+          "path": "modules/module-7-applicationsets/level-4-git-file-generator",
+          "mission": {
+            "name": "Config Field Typo",
+            "description": "Every customer of the portal product is described by a file `tenants/<name>/config.json` in the Gitea repo\n`platform/tenant-stack`, and the ApplicationSet `tenant-portals` turns each file into an Application. Last week\n`globex` was onboarded and since then nothing is generated for anyone: `argocd app list` is empty and the\nApplicationSet is Degraded with \"failed to execute go template {{.namespace}}: template: base:1:2: executing\n\\\"base\\\" at <.namespace>: map has no entry for key \\\"namespace\\\"\". A clone of the repo is in your workspace.\n",
+            "objective": "The ApplicationSet `tenant-portals` generates one Application per tenant, `tenant-acme`, `tenant-globex` and\n`tenant-initech`, each owned by the ApplicationSet, deploying the `chart` folder to namespace `tenant-<name>`.\nAll three are Synced and Healthy at the current head of `tenant-stack`, and Service `tenant-portal` in each\nnamespace answers the `message` from that tenant's config (for example `portal globex silver`).\n",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "ApplicationSet",
+              "git file generator",
+              "config.json",
+              "missingkey",
+              "goTemplate"
+            ]
+          }
+        },
+        {
+          "id": "module-7-applicationsets/level-5-cluster-generator",
+          "name": "level-5-cluster-generator",
+          "path": "modules/module-7-applicationsets/level-5-cluster-generator",
+          "mission": {
+            "name": "Label Me In",
+            "description": "The platform team registered a second destination, `staging`, in Argo CD (it is an alias of this cluster's own\nAPI server: `argocd cluster list` shows it next to `in-cluster`). The ApplicationSet `quota-fleet` should deploy\nthe `quota-api` service from the Gitea repo `platform/quota-service` to every cluster that is labelled\n`env: staging`. The ApplicationSet reports \"All applications have been generated successfully\", yet\n`argocd app list` is empty and namespace `quota` does not exist.\n",
+            "objective": "The ApplicationSet `quota-fleet` generates exactly one Application, `quota-staging`, owned by the ApplicationSet,\ndeploying folder `deploy` to namespace `quota` of the `staging` cluster, and nothing for `in-cluster`. It is\nSynced and Healthy, and Service `quota-api` in `quota` answers `quota-api v3`. The `staging` cluster stays\nregistered under that name.\n",
+            "xp": 250,
+            "difficulty": "advanced",
+            "expected_time": "20m",
+            "concepts": [
+              "ApplicationSet",
+              "cluster generator",
+              "cluster secret",
+              "labels",
+              "selector"
+            ]
+          }
+        },
+        {
+          "id": "module-7-applicationsets/level-6-matrix-generator",
+          "name": "level-6-matrix-generator",
+          "path": "modules/module-7-applicationsets/level-6-matrix-generator",
+          "mission": {
+            "name": "Every Service In Every Env",
+            "description": "The mesh team wants every service in `services/` of the Gitea repo `platform/mesh-services` (`invoicer`, `mailer`)\ndeployed once per environment (`staging` and `prod`). The ApplicationSet `mesh` combines a git directory\ngenerator with a list of environments in a matrix, but nothing is deployed: `argocd app list` is empty and the\nApplicationSet is Degraded with \"ApplicationSet mesh contains applications with duplicate name: mailer (and 1 more)\".\nA copy of the manifest is in your workspace (`mesh-appset.yaml`).\n",
+            "objective": "The ApplicationSet `mesh` generates four Applications, `invoicer-staging`, `invoicer-prod`, `mailer-staging` and\n`mailer-prod`, each owned by the ApplicationSet, deploying its service folder to namespace `<service>-<env>`\nwith Helm parameter `env=<env>`. All four are Synced and Healthy, and Service `<service>` in each namespace\nanswers `<service> <env>` (for example `invoicer prod`).\n",
+            "xp": 250,
+            "difficulty": "advanced",
+            "expected_time": "20m",
+            "concepts": [
+              "ApplicationSet",
+              "matrix generator",
+              "git directory generator",
+              "list generator",
+              "template names"
+            ]
+          }
+        },
+        {
+          "id": "module-7-applicationsets/level-7-merge-generator",
+          "name": "level-7-merge-generator",
+          "path": "modules/module-7-applicationsets/level-7-merge-generator",
+          "mission": {
+            "name": "Overrides Ignored",
+            "description": "The ApplicationSet `parcel-api` (namespace `argocd`) generates one Application per environment from the Helm\nchart in the Gitea repo `platform/parcel-api`: `parcel-api-dev`, `parcel-api-stage` and `parcel-api-prod`.\nA merge generator combines a base list of environments with a short list of per-environment overrides, and\n`prod` is meant to be the odd one out: three replicas and the banner `parcel-api prod priority-lane`.\nEvery Application is Synced and Healthy and the ApplicationSet reports no error, yet production runs a single\npod and still answers `parcel-api prod`. A copy of the manifest is in your workspace (`parcel-api-appset.yaml`).\n",
+            "objective": "The ApplicationSet `parcel-api` still generates `parcel-api-dev`, `parcel-api-stage` and `parcel-api-prod`\n(owned by it) with a merge generator, all Synced and Healthy at the head of `main`. Deployment `parcel-api`\nin `parcel-prod` runs 3 ready replicas and its Service answers `parcel-api prod priority-lane`; `dev` and\n`stage` keep one replica and answer `parcel-api dev` and `parcel-api stage`.\n",
+            "xp": 250,
+            "difficulty": "advanced",
+            "expected_time": "20m",
+            "concepts": [
+              "ApplicationSet",
+              "merge generator",
+              "mergeKeys",
+              "list generator",
+              "Helm parameters"
+            ]
+          }
+        },
+        {
+          "id": "module-7-applicationsets/level-8-appset-delete-safety",
+          "name": "level-8-appset-delete-safety",
+          "path": "modules/module-7-applicationsets/level-8-appset-delete-safety",
+          "mission": {
+            "name": "Delete The Set, Lose The Fleet",
+            "description": "The ApplicationSet `kiosk-apps` (namespace `argocd`) runs the in-store kiosk web app in three regions:\nApplications `kiosk-north`, `kiosk-south` and `kiosk-east`, deploying `platform/kiosk-web` to namespaces\n`kiosk-<region>`. The platform team's new naming convention is `<team>-fleet`, so the ApplicationSet has to be\nreplaced by `kiosk-fleet` (same generator, same template, new name — the manifest is in your workspace as\n`kiosk-fleet-appset.yaml`). The stores are open: the kiosks must not blink. Nobody dares to type\n`kubectl delete applicationset kiosk-apps` — the last time someone did that on another fleet, the kiosks went dark.\n",
+            "objective": "ApplicationSet `kiosk-fleet` exists and generates `kiosk-north`, `kiosk-south` and `kiosk-east` (owned by it, Synced\nand Healthy at the head of `main`); the ApplicationSet `kiosk-apps` is gone. The workloads never went away:\nthe Deployments and Services in `kiosk-north`, `kiosk-south` and `kiosk-east` are the very same objects (same\nUIDs) that were running when the mission started, and each Service still answers `kiosk-web v2.4`.\n",
+            "xp": 250,
+            "difficulty": "advanced",
+            "expected_time": "20m",
+            "concepts": [
+              "ApplicationSet",
+              "preserveResourcesOnDeletion",
+              "cascade delete",
+              "resources-finalizer",
+              "ownerReferences"
+            ]
+          }
+        },
+        {
+          "id": "module-7-applicationsets/level-9-ignore-application-differences",
+          "name": "level-9-ignore-application-differences",
+          "path": "modules/module-7-applicationsets/level-9-ignore-application-differences",
+          "mission": {
+            "name": "The Set Reverts My Change",
+            "description": "Production `feedhub-prod` serves `feedhub v1.8` from the `main` branch of `platform/feedhub`. A bug was found and\nthe fix is sitting on branch `hotfix-1.8.1` waiting for review; the on-call engineer is allowed to run production\nfrom that branch in the meantime (it answers `feedhub v1.8.1-hotfix`). The Application is generated by the\nApplicationSet `feedhub` (namespace `argocd`), together with `feedhub-dev` and `feedhub-stage`. Every time the\nengineer points `feedhub-prod` at the hotfix branch (`argocd app set`, the UI, `kubectl edit`), the setting is back\nto `main` within seconds. A copy of the ApplicationSet is in your workspace (`feedhub-appset.yaml`).\n",
+            "objective": "Application `feedhub-prod` stays owned by ApplicationSet `feedhub`, tracks branch `hotfix-1.8.1` and is Synced and\nHealthy at the head of that branch; Service `feedhub` in `feedhub-prod` answers `feedhub v1.8.1-hotfix`. It must\nnot flip back by itself. `feedhub-dev` and `feedhub-stage` keep tracking `main` and answer `feedhub v1.8`.\n",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "ApplicationSet",
+              "ignoreApplicationDifferences",
+              "jsonPointers",
+              "targetRevision",
+              "template parameters"
+            ]
+          }
+        },
+        {
+          "id": "module-7-applicationsets/level-10-template-patch",
+          "name": "level-10-template-patch",
+          "path": "modules/module-7-applicationsets/level-10-template-patch",
+          "mission": {
+            "name": "Only Prod Gets Auto-Sync",
+            "description": "The ApplicationSet `lumen-gateway` (namespace `argocd`) generates `lumen-dev`, `lumen-stage` and `lumen-prod`\nfrom the `platform/lumen-gateway` repo. Release v2 was merged to `main` this morning and nothing happened:\nall three Applications are `OutOfSync`, production still answers `lumen-gateway v1`, and somebody has to click\nSync on prod after every merge. The rules of the house: `dev` and `stage` are regression rigs that QA freezes, so\nthey must stay manual; `prod` must follow `main` by itself (with pruning). The template has no sync policy at all.\nA copy of the ApplicationSet is in your workspace (`lumen-appset.yaml`).\n",
+            "objective": "Application `lumen-prod` has an automated sync policy (with prune), is owned by ApplicationSet `lumen-gateway`,\nSynced and Healthy at the head of `main`, and Service `lumen-gateway` in `lumen-prod` answers `lumen-gateway v2`\nwithout anyone pressing Sync. `lumen-dev` and `lumen-stage` have no automated sync policy and still answer\n`lumen-gateway v1`.\n",
+            "xp": 250,
+            "difficulty": "advanced",
+            "expected_time": "20m",
+            "concepts": [
+              "ApplicationSet",
+              "templatePatch",
+              "goTemplate",
+              "syncPolicy.automated",
+              "per-element configuration"
+            ]
+          }
+        },
+        {
+          "id": "module-7-applicationsets/level-11-scm-provider-gitea",
+          "name": "level-11-scm-provider-gitea",
+          "path": "modules/module-7-applicationsets/level-11-scm-provider-gitea",
+          "mission": {
+            "name": "Every Repo An App",
+            "description": "The mesh platform team wants every repository named `mesh-*` in the Gitea organization `platform` to be deployed\nautomatically: no Application to write when a new service repo appears. They set up the ApplicationSet\n`mesh-fleet` (namespace `argocd`) with an SCM provider generator that lists the organization through the Gitea API,\nauthenticated with an access token kept in the Secret `gitea-scm-token`. Three service repos exist\n(`mesh-pinger`, `mesh-quill`, `mesh-ember`) plus `wiki-notes`, which is not a service. Nothing has been generated:\n`argocd app list` is empty and the ApplicationSet is in an error state. A copy of the manifest is in your\nworkspace (`mesh-appset.yaml`).\n",
+            "objective": "ApplicationSet `mesh-fleet` (SCM provider generator on the `platform` organization of Gitea, repositories\nmatching `^mesh-`) generates exactly the Applications `mesh-pinger`, `mesh-quill` and `mesh-ember`, owned by it,\ndeploying `deploy/` of each repo to a namespace of the same name. All three are Synced and Healthy at the head of\n`main`, each Service answers `<repo> v1` (for example `mesh-pinger v1`), and there is no Application for `wiki-notes`.\n",
+            "xp": 300,
+            "difficulty": "advanced",
+            "expected_time": "25m",
+            "concepts": [
+              "ApplicationSet",
+              "SCM provider generator",
+              "Gitea API",
+              "tokenRef",
+              "filters",
+              "repositoryMatch"
+            ]
+          }
+        },
+        {
+          "id": "module-7-applicationsets/level-12-pull-request-generator",
+          "name": "level-12-pull-request-generator",
+          "path": "modules/module-7-applicationsets/level-12-pull-request-generator",
+          "mission": {
+            "name": "Preview Environments",
+            "description": "The web team wants a preview environment for every open pull request of `platform/pulse-web` that carries the\nGitea label `deploy-preview`: an Application `pulse-pr-<number>` in namespace `pulse-pr-<number>`, built from the\nhead of the PR branch and removed again when the PR is closed. The ApplicationSet `pulse-previews`\n(namespace `argocd`) uses the pull request generator for Gitea and a token from the Secret `gitea-pr-token`.\nThere are three PRs: one open and labelled, one labelled but already closed, one open without the label.\nNothing happens: the ApplicationSet reports no error and no preview Application exists. A copy of the manifest is\nin your workspace (`pulse-previews-appset.yaml`).\n",
+            "objective": "ApplicationSet `pulse-previews` generates exactly one Application: `pulse-pr-<n>` for the open pull request\nlabelled `deploy-preview` (branch `checkout-redesign`), owned by the set, deploying `deploy/` at the head commit of\nthat branch to namespace `pulse-pr-<n>`. It is Synced and Healthy and its Service `pulse-web` answers\n`pulse-web checkout-redesign`. The closed PR and the unlabelled open PR have no Application and no namespace.\n",
+            "xp": 300,
+            "difficulty": "expert",
+            "expected_time": "25m",
+            "concepts": [
+              "ApplicationSet",
+              "pull request generator",
+              "Gitea labels",
+              "head_sha",
+              "preview environments"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "module-8-repos-clusters",
+      "xp": 2150,
+      "levels": [
+        {
+          "id": "module-8-repos-clusters/level-1-private-repo-credentials",
+          "name": "level-1-private-repo-credentials",
+          "path": "modules/module-8-repos-clusters/level-1-private-repo-credentials",
+          "mission": {
+            "name": "Authentication Required",
+            "description": "The `vault-ui` Application in Argo CD has never synced. Its repository, `platform/vault-ui` in Gitea, was made\nprivate last week when the security review flagged it, and since then `argocd app get vault-ui` shows\n`ComparisonError: Failed to load target state: ... failed to list refs: authentication required: Unauthorized`.\nPlatform has already created a read-only Gitea machine user for Argo CD; its details are in\n`workspace/handoff.md`. The Gitea admin account is for humans and must not end up inside Argo CD.\n",
+            "objective": "Application `vault-ui` (namespace `argocd`) is Synced and Healthy at the current head of `main`, and\nService `vault-ui` in namespace `vault-ui` answers `vault-ui v2.4`. The repository stays private, and Argo CD\nauthenticates to it as the read-only machine user, never as `player`.\n",
+            "xp": 150,
+            "difficulty": "intermediate",
+            "expected_time": "10m",
+            "concepts": [
+              "repository credentials",
+              "private repo",
+              "repository secret",
+              "argocd repo add"
+            ]
+          }
+        },
+        {
+          "id": "module-8-repos-clusters/level-2-repo-secret-label",
+          "name": "level-2-repo-secret-label",
+          "path": "modules/module-8-repos-clusters/level-2-repo-secret-label",
+          "mission": {
+            "name": "The Secret Argo CD Ignores",
+            "description": "Last Friday the platform team created a Secret named `repo-parcel-tracker` in the `argocd` namespace holding\nthe read-only Gitea credentials for the private repo `platform/parcel-tracker`. It is right there in\n`kubectl -n argocd get secret`, with the correct URL, user and password, and yet the `parcel-tracker`\nApplication reports `ComparisonError: ... failed to list refs: authentication required: Unauthorized`,\nand `argocd repo list` does not show the repository.\n",
+            "objective": "Application `parcel-tracker` (namespace `argocd`) is Synced and Healthy at the current head of `main`, and\nService `parcel-tracker` in namespace `parcels` answers `parcel-tracker v0.9`. The repository stays private\nand Argo CD reads it as the read-only machine user `argo-reader`.\n",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "repository secret",
+              "secret-type label",
+              "Argo CD secret discovery"
+            ]
+          }
+        },
+        {
+          "id": "module-8-repos-clusters/level-3-repo-creds-template",
+          "name": "level-3-repo-creds-template",
+          "path": "modules/module-8-repos-clusters/level-3-repo-creds-template",
+          "mission": {
+            "name": "One Secret For The Org",
+            "description": "The kiosk platform is five services, each in its own private repository under `platform/`: `kiosk-menu`,\n`kiosk-queue`, `kiosk-payments`, `kiosk-signage` and `kiosk-reports`. All five Applications fail with\n`authentication required: Unauthorized`. The read-only Gitea machine user `argo-reader` can read every one of them\n(password `reader-pass-1Wm6`), and more repositories under `platform/` are coming next quarter. Nobody wants to\nregister each repository by hand and rotate five passwords later.\n",
+            "objective": "All five Applications (`kiosk-menu`, `kiosk-queue`, `kiosk-payments`, `kiosk-signage`, `kiosk-reports`) are\nSynced and Healthy at the head of their repository's `main`, and each service in namespace `kiosk` answers its\nversion. Argo CD holds the machine user's credentials once, for the whole `platform` organisation, not once per\nrepository. Repositories stay private.\n",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "repo-creds",
+              "credential template",
+              "URL prefix",
+              "repository credentials"
+            ]
+          }
+        },
+        {
+          "id": "module-8-repos-clusters/level-4-ssh-repo-known-hosts",
+          "name": "level-4-ssh-repo-known-hosts",
+          "path": "modules/module-8-repos-clusters/level-4-ssh-repo-known-hosts",
+          "mission": {
+            "name": "Host Key Verification Failed",
+            "description": "The `fleet-agent` Application reads its manifests over SSH, as security asked: the repo URL is\n`ssh://git@gitea.gitea.svc.cluster.local:22/platform/fleet-agent.git` and the repository Secret `repo-fleet-agent` in\n`argocd` carries a read-only deploy key that Gitea already accepts. Yet the Application never synced and\nshows `ComparisonError: ... failed to list refs: ssh: handshake failed: knownhosts: key is unknown`.\nSomeone suggested \"just tick insecure-ignore-host-key\"; security will reject that in review.\n",
+            "objective": "Application `fleet-agent` (namespace `argocd`) is Synced and Healthy at the current head of `main`, and\nService `fleet-agent` in namespace `fleet` answers `fleet-agent v5.0`. Argo CD still reads the repository over SSH\nwith its deploy key, and it verifies the Git server's host key: host key checking is not switched off.\n",
+            "xp": 250,
+            "difficulty": "advanced",
+            "expected_time": "20m",
+            "concepts": [
+              "SSH repository",
+              "deploy key",
+              "known hosts",
+              "argocd cert add-ssh",
+              "host key verification"
+            ]
+          }
+        },
+        {
+          "id": "module-8-repos-clusters/level-5-wrong-token",
+          "name": "level-5-wrong-token",
+          "path": "modules/module-8-repos-clusters/level-5-wrong-token",
+          "mission": {
+            "name": "Expired Credentials",
+            "description": "Mailroom v3.1 was deployed from the private repo `platform/mailroom` and ran fine for weeks. Today the team\npushed v3.2 to `main` and nothing happened: the `mailroom` Application is stuck at the old revision and shows\n`ComparisonError: ... failed to list refs: authentication required: Failed to authenticate user`.\nThe repository Secret `repo-mailroom` in `argocd` has not been touched,\nbut the Gitea access token it holds was revoked during a security clean-up. Details of the machine user are in\n`workspace/handoff.md`.\n",
+            "objective": "Application `mailroom` (namespace `argocd`) is Synced and Healthy at the current head of `main` (the v3.2 commit),\nand Service `mailroom` in namespace `mailroom` answers `mailroom v3.2`. Argo CD still reads the repository as the\nread-only machine user `argo-reader` (not `player`), and the repository stays private.\n",
+            "xp": 150,
+            "difficulty": "intermediate",
+            "expected_time": "10m",
+            "concepts": [
+              "repository secret",
+              "access token",
+              "credential rotation",
+              401
+            ]
+          }
+        },
+        {
+          "id": "module-8-repos-clusters/level-6-cluster-secret-alias",
+          "name": "level-6-cluster-secret-alias",
+          "path": "modules/module-8-repos-clusters/level-6-cluster-secret-alias",
+          "mission": {
+            "name": "Register A Second Destination",
+            "description": "The release team wants the `boarding-pass` API on a destination called `staging`, separate from the built-in\n`in-cluster` one. A colleague registered it with a cluster Secret `cluster-staging` in namespace `argocd`: the\nsame API server under its DNS name `https://kubernetes.default.svc.cluster.local`, authenticating as the\nnamespace-scoped ServiceAccount `argocd-deployer` of namespace `boarding-stg` (its token Secret lives there).\nApplication `boarding-pass` targets `name: staging`, but it stays Unknown with\n`... tls: failed to verify certificate: x509: certificate signed by unknown authority` and nothing\nis deployed. `argocd cluster list` shows `staging` as Failed.\n",
+            "objective": "Cluster `staging` is connected in Argo CD (`argocd cluster list`), it verifies the API server certificate, and\nauthenticates as ServiceAccount `argocd-deployer` of namespace `boarding-stg`. Application `boarding-pass`\nstill deploys to that `staging` destination (namespace `boarding-stg`), is Synced and Healthy at the current\nhead of `main`, and Service `boarding-pass` in `boarding-stg` answers `boarding-pass v3.1`.\n",
+            "xp": 250,
+            "difficulty": "advanced",
+            "expected_time": "20m",
+            "concepts": [
+              "cluster secret",
+              "destination name",
+              "bearer token",
+              "tlsClientConfig",
+              "caData",
+              "ServiceAccount"
+            ]
+          }
+        },
+        {
+          "id": "module-8-repos-clusters/level-7-cluster-namespaces-scope",
+          "name": "level-7-cluster-namespaces-scope",
+          "path": "modules/module-8-repos-clusters/level-7-cluster-namespaces-scope",
+          "mission": {
+            "name": "Namespace Not Managed",
+            "description": "Platform registered the cluster `regional` (cluster Secret `cluster-regional` in namespace `argocd`) when only\nthe EU region existed. Two Applications read the repo `platform/parcel-hub`: `parcel-hub-eu` (folder `eu/`,\nnamespace `parcel-eu`) is Healthy, but its twin `parcel-hub-us` (folder `us/`, namespace `parcel-us`) was\nadded today and shows `ComparisonError: Failed to load live state: namespace \"parcel-us\" for Deployment\n\"parcel-hub\" is not managed`. The ServiceAccount behind the cluster may work in both namespaces.\n",
+            "objective": "Both `parcel-hub-eu` and `parcel-hub-us` stay on the `regional` cluster and in their own namespaces\n(`parcel-eu`, `parcel-us`), and both are Synced and Healthy at the current head of `main`. The cluster keeps\nits namespace scope, limited to those two region namespaces, and keeps authenticating as the namespace-scoped\ndeployer ServiceAccount. Each Service `parcel-hub` answers `parcel-hub eu v2.0` / `parcel-hub us v2.0`.\n",
+            "xp": 200,
+            "difficulty": "advanced",
+            "expected_time": "15m",
+            "concepts": [
+              "cluster secret",
+              "namespaces scope",
+              "namespace-scoped ServiceAccount",
+              "destination"
+            ]
+          }
+        },
+        {
+          "id": "module-8-repos-clusters/level-8-gitea-webhook",
+          "name": "level-8-gitea-webhook",
+          "path": "modules/module-8-repos-clusters/level-8-gitea-webhook",
+          "mission": {
+            "name": "Waiting For The Poll",
+            "description": "The catalog team pushes to `platform/catalog-api` and then waits up to a minute for Argo CD to notice: the\nApplication `catalog-api` only reacts to the periodic Git poll. The SCM team did add a Gitea webhook on the repo\n(push events, JSON, to `http://argocd-server.argocd.svc.cluster.local/api/webhook`), yet Gitea's \"Recent\nDeliveries\" for it are red: HTTP 400 `Webhook processing failed`, and the Argo CD server logs `Gogs webhook HMAC\nverification failed` / `Webhook processing failed: HMAC verification failed`. `argocd-secret` already contains a\n`webhook.gitea.secret` with the hook's secret. Notes from the SCM team are in `WEBHOOK-NOTES.md`.\n",
+            "objective": "Gitea's deliveries for the webhook of `catalog-api` are accepted by Argo CD (a test delivery from Gitea is logged as\na received push event), while a push event signed with any other secret is still refused, so the endpoint stays\nauthenticated. The webhook stays active and keeps sending JSON push events to Argo CD. Application `catalog-api`\nis Synced and Healthy at the current head of `main`.\n",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "webhook",
+              "Gitea",
+              "argocd-secret",
+              "HMAC",
+              "refresh",
+              "poll interval"
+            ]
+          }
+        },
+        {
+          "id": "module-8-repos-clusters/level-9-gpg-signature",
+          "name": "level-9-gpg-signature",
+          "path": "modules/module-8-repos-clusters/level-9-gpg-signature",
+          "mission": {
+            "name": "Unsigned Commit Rejected",
+            "description": "Project `treasury` only deploys commits signed with the team's release key (`spec.signatureKeys`), and Argo CD\nhas the public key in its keyring. Application `treasury-core` (repo `platform/treasury-core`, branch `main`)\nwas fine until a colleague pushed \"treasury-core v2: same-day settlement window\". Now `argocd app get\ntreasury-core` shows `ComparisonError: GIT/GPG: Failed verifying revision ... by 'ArgoMissions Player\n<player@argomissions.local>': unsigned (key_id=)`, the app is OutOfSync and a sync is refused. The release\nkey's private half lives in a keyring that git in your workspace already uses (the wrapper `gpg-release` next to\nthe clone), so you can sign.\n",
+            "objective": "The head of `main` in `treasury-core` carries a valid signature from the release key, project `treasury` still\naccepts that key and only that key, and Application `treasury-core` is Synced and Healthy at the head of `main`\nafter a sync Argo CD ran itself. The v2 settlement window (`T+0`) reaches the cluster and Service `treasury-core` in\nnamespace `treasury` answers `treasury-core v2`.\n",
+            "xp": 300,
+            "difficulty": "expert",
+            "expected_time": "25m",
+            "requires": [
+              "gpg"
+            ],
+            "concepts": [
+              "signatureKeys",
+              "GnuPG",
+              "commit signing",
+              "argocd gpg",
+              "AppProject"
+            ]
+          }
+        },
+        {
+          "id": "module-8-repos-clusters/level-10-secret-in-git",
+          "name": "level-10-secret-in-git",
+          "path": "modules/module-8-repos-clusters/level-10-secret-in-git",
+          "mission": {
+            "name": "The Leaked Password",
+            "description": "The security scanner flagged ticket SEC-2291: the Gitea repo `platform/smtp-gateway` contains a Secret manifest,\n`deploy/secret.yaml`, with the real SMTP password in clear text, and Argo CD has been deploying it into\nnamespace `smtp-gw` since the first commit. Application `smtp-gateway` is Synced and Healthy and the mail relay\nworks, which is exactly why nobody noticed. Everyone who ever cloned the repo has the password. Security wants the\ncredentials out of Git without losing the audit trail of what happened, and the gateway must keep running.\n",
+            "objective": "No file at the head of `main` in `smtp-gateway` contains the leaked password or any other Secret data, and the\ncommit history is untouched (the original leaking commit is still there). Secret `smtp-credentials` in\nnamespace `smtp-gw` exists with `username` and a new password (never committed to Git, not the leaked one) and\nis not managed by Argo CD. The pods of Deployment `smtp-gateway` run with the new value. Application\n`smtp-gateway` is Synced and Healthy at the current head of `main`, and Service `smtp-gateway` answers\n`smtp-gateway v1.4`.\n",
+            "xp": 250,
+            "difficulty": "advanced",
+            "expected_time": "20m",
+            "concepts": [
+              "secrets",
+              "GitOps",
+              "prune",
+              "tracking annotation",
+              "credential rotation",
+              "pod restart"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "module-9-operations",
+      "xp": 2200,
+      "levels": [
+        {
+          "id": "module-9-operations/level-1-custom-health-lua",
+          "name": "level-1-custom-health-lua",
+          "path": "modules/module-9-operations/level-1-custom-health-lua",
+          "mission": {
+            "name": "Green Dashboard, Red Backups",
+            "description": "Application `vaultline` (repo `platform/vaultline-backups`, namespace `vaultline`) deploys three `Backup`\ncustom resources of the CRD `backups.vaultline.argomissions.io`. The Argo CD dashboard has shown the\napplication as Synced and Healthy for weeks, yet the on-call engineer just found out that last night's\nledger backup failed: `kubectl -n vaultline get backups` lists `nightly-ledger` with phase `Failed`, and\n`weekly-archive` with `Done`, `hourly-journal` with `Running`. In `argocd app get vaultline` the HEALTH column\nof all three Backups is empty. Argo CD never raised an alarm. The vaultline operator owns the `.status` of\nthese objects; nobody is supposed to touch it.\n",
+            "objective": "Argo CD reports the real health of the Backups of Application `vaultline`: `nightly-ledger` (phase Failed) is\nDegraded, `weekly-archive` (phase Done) is Healthy and `hourly-journal` (phase Running) is Progressing,\nso the application itself is no longer Healthy. The application stays Synced at the current head of `main`,\nand the Backups still carry exactly the status the operator wrote.\n",
+            "xp": 250,
+            "difficulty": "advanced",
+            "expected_time": "20m",
+            "concepts": [
+              "custom health check",
+              "resource.customizations",
+              "Lua",
+              "argocd-cm",
+              "CRD health"
+            ]
+          }
+        },
+        {
+          "id": "module-9-operations/level-2-global-ignore-differences",
+          "name": "level-2-global-ignore-differences",
+          "path": "modules/module-9-operations/level-2-global-ignore-differences",
+          "mission": {
+            "name": "Every App Is OutOfSync",
+            "description": "Since this morning the whole `tallyline` pipeline is OutOfSync: Applications `tallyline-ingest`,\n`tallyline-rollup` and `tallyline-gateway` (repo `platform/tallyline`, one folder and one namespace\n`tallyline-<folder>` each, automated sync, nobody touched them) flip back to OutOfSync seconds after every\nsync. `argocd app diff` of each one shows the same single line: the label `complyd.argomissions.io/scan` is\n`pending` in Git and something like `scan-1763300000` on the live Deployment, and the value keeps changing.\nThe security team's scanner `complyd` (namespace `complyd-system`, a stand-in for the compliance and admission\ncontrollers real clusters run) stamps that label on every Deployment of the pipeline, and it will do so for\nevery service that is added later too. The security team needs the scanner to keep running.\n",
+            "objective": "Applications `tallyline-ingest`, `tallyline-rollup` and `tallyline-gateway` are Synced and Healthy at the\ncurrent head of `main` and stay Synced while `complyd` keeps rewriting the label. The scanner still runs.\nThe Applications themselves carry no `ignoreDifferences` of their own, and the setting must not hide real\ndrift of the Deployments (their spec, for one). Each service answers `tallyline-<folder> v4.2`.\n",
+            "xp": 200,
+            "difficulty": "advanced",
+            "expected_time": "15m",
+            "concepts": [
+              "resource.customizations",
+              "ignoreDifferences",
+              "argocd-cm",
+              "global configuration",
+              "jsonPointers"
+            ]
+          }
+        },
+        {
+          "id": "module-9-operations/level-3-resource-exclusions",
+          "name": "level-3-resource-exclusions",
+          "path": "modules/module-9-operations/level-3-resource-exclusions",
+          "mission": {
+            "name": "The Invisible Kind",
+            "description": "Application `lexicon-site` (repo `platform/lexicon-site`, folder `deploy/`, namespace `lexicon`) is Synced, yet\nits health stays Progressing and the site never comes up: the pod sits in ContainerCreating with\n`MountVolume.SetUp failed for volume \"pages\" : configmap \"lexicon-pages\" not found`. The ConfigMap is in Git,\nnext to the Deployment, but `kubectl -n lexicon get cm` does not have it and `argocd app get lexicon-site`\nlists only two resources and a condition `ExcludedResourceWarning: Resource /ConfigMap lexicon-pages is\nexcluded in the settings`. A few weeks ago the platform team trimmed Argo CD's `resource.exclusions` to\nsave controller memory; nothing else on the platform needs to change.\n",
+            "objective": "Application `lexicon-site` is Synced and Healthy at the current head of `main`, ConfigMap `lexicon-pages` in\nnamespace `lexicon` exists and is managed by Argo CD, the application has no `ExcludedResourceWarning`, and\nService `lexicon-site` in `lexicon` answers `lexicon-site v3.1`. The ConfigMap must not simply be applied by\nhand. Argo CD must not be told to watch everything: noisy kinds such as EndpointSlices stay out of its sight.\n",
+            "xp": 200,
+            "difficulty": "advanced",
+            "expected_time": "15m",
+            "concepts": [
+              "resource.exclusions",
+              "argocd-cm",
+              "ExcludedResourceWarning",
+              "cluster cache"
+            ]
+          }
+        },
+        {
+          "id": "module-9-operations/level-4-resource-actions",
+          "name": "level-4-resource-actions",
+          "path": "modules/module-9-operations/level-4-resource-actions",
+          "mission": {
+            "name": "Restart Without kubectl",
+            "description": "Finance shipped the new rate card: the ConfigMap `tollbooth-rates` in repo `platform/tollbooth` now says\n`tollbooth rates 2025-Q4`, Argo CD synced it, and `kubectl -n tollbooth get cm tollbooth-rates -o yaml` shows\nthe new value. Application `tollbooth` is Synced and Healthy. Yet Service `tollbooth` in namespace\n`tollbooth` still answers `tollbooth rates 2025-Q3`: the pods read the value from the environment when\nthey started. The pods must be restarted, but the on-call engineer has only Argo CD access for this\ncluster, no kubectl rights in production, and nothing in Git needs to change.\n",
+            "objective": "Every pod of Deployment `tollbooth` in namespace `tollbooth` was created after the mission started and\nService `tollbooth` answers `tollbooth rates 2025-Q4`. The restart went through Argo CD (the application's\nresource action, as the UI offers it), the Git repo is unchanged, and Application `tollbooth` is still Synced\nand Healthy at the current head of `main`.\n",
+            "xp": 150,
+            "difficulty": "intermediate",
+            "expected_time": "10m",
+            "concepts": [
+              "resource actions",
+              "restart",
+              "argocd app actions",
+              "Deployment"
+            ]
+          }
+        },
+        {
+          "id": "module-9-operations/level-5-custom-action",
+          "name": "level-5-custom-action",
+          "path": "modules/module-9-operations/level-5-custom-action",
+          "mission": {
+            "name": "A Button For Maintenance",
+            "description": "Before every release of the ticket backend the on-call engineer of the ferry company must put the public\n`ferry-booking` Deployment (Application `ferry-booking`, namespace `ferry`) into maintenance mode: the gateway\nteam's tooling shows a banner while the Deployment carries the annotation `ferry.argomissions.io/maintenance: \"on\"`\nand drops it when the annotation is gone. Today that is a `kubectl annotate` from a laptop, which the security\nteam wants to end: on-call only has Argo CD. `argocd app actions list ferry-booking --kind Deployment\n--resource-name ferry-booking` offers `scale`, `pause`, `restart` and `resume`, nothing for maintenance. The\nannotation is operational state and must never be committed to Git.\n",
+            "objective": "For Deployment `ferry-booking` Argo CD offers two actions, `maintenance-on` and `maintenance-off`, next to the\nbuilt-in `restart` that on-call still needs. An action is disabled when it would change nothing:\n`maintenance-on` while maintenance is on, `maintenance-off` while it is off. Maintenance mode has been\nswitched on through the `maintenance-on` action (the Deployment carries the annotation, written by Argo CD),\nthe Git repo is unchanged, and Application `ferry-booking` is Synced and Healthy.\n",
+            "xp": 300,
+            "difficulty": "expert",
+            "expected_time": "25m",
+            "concepts": [
+              "custom resource actions",
+              "Lua",
+              "resource.customizations.actions",
+              "discovery.lua",
+              "mergeBuiltinActions"
+            ]
+          }
+        },
+        {
+          "id": "module-9-operations/level-6-cmp-plugin",
+          "name": "level-6-cmp-plugin",
+          "path": "modules/module-9-operations/level-6-cmp-plugin",
+          "mission": {
+            "name": "Bring Your Own Tool",
+            "description": "The label printing service is described by a single `key=value` file, `deploy/app.conf`, in the Gitea repo\n`platform/label-printer`. The platform team wrote a config management plugin, `kv-render`, that turns that\nfile into a Deployment and a Service; it runs as a sidecar of `argocd-repo-server` and its configuration is\nthe ConfigMap `kv-render-plugin` in namespace `argocd`. The Application `label-printer` (automated sync,\ndestination namespace `labels-print`) reports Synced and Healthy, yet `argocd app manifests label-printer`\nprints nothing and no pod runs. A clone of the repo is in your workspace.\n",
+            "objective": "Application `label-printer` is Synced and Healthy at the current head of `main`, rendered by a config\nmanagement plugin (source type Plugin) from `deploy/app.conf`, and its last sync was done by Argo CD.\nDeployment `label-printer` in namespace `labels-print` has 2 ready pods and the Service of the same name\nanswers `label-printer v2.1`. The repo must still describe the service with `app.conf` only, no hand-written\nmanifests.\n",
+            "xp": 300,
+            "difficulty": "expert",
+            "expected_time": "25m",
+            "concepts": [
+              "config management plugin",
+              "CMP sidecar",
+              "discover",
+              "repo-server",
+              "plugin.yaml"
+            ]
+          }
+        },
+        {
+          "id": "module-9-operations/level-7-notifications",
+          "name": "level-7-notifications",
+          "path": "modules/module-9-operations/level-7-notifications",
+          "mission": {
+            "name": "Tell Me When It Breaks",
+            "description": "The Application `payout-worker` (Gitea repo `platform/payout-worker`, folder `deploy/`, namespace `payouts`)\nhas been failing its syncs since a bad release (`Service \"payout-worker\" is invalid: spec.ports[0].port:\nInvalid value: 0: must be between 1 and 65535, inclusive`), and nobody noticed for two days: Argo CD only tells\npeople who look at it. The on-call chat bridge is already running in the cluster as Service `chat-hook` in namespace\n`ops-hooks` and accepts JSON `POST` requests on `/hooks/deploys`; it records every request it receives.\n`argocd-notifications-controller` is running, but `argocd-notifications-cm` is empty. A clone of the repo is\nin your workspace.\n",
+            "objective": "Argo CD notifies `chat-hook` when a sync of `payout-worker` fails: the receiver has logged a `POST` to\n`/hooks/deploys` whose body names the application and says the sync failed. The configuration lives in\nArgo CD's notifications ConfigMap (a webhook service for the receiver, a template, a trigger) and\n`payout-worker` is subscribed to it. Fixing the release itself is not part of this mission.\n",
+            "xp": 250,
+            "difficulty": "advanced",
+            "expected_time": "20m",
+            "concepts": [
+              "argocd-notifications-cm",
+              "webhook service",
+              "template",
+              "trigger",
+              "subscription annotation"
+            ]
+          }
+        },
+        {
+          "id": "module-9-operations/level-8-diff-normalization",
+          "name": "level-8-diff-normalization",
+          "path": "modules/module-9-operations/level-8-diff-normalization",
+          "mission": {
+            "name": "The Defaulted Field",
+            "description": "Application `ops-statusboard` (Gitea repo `platform/statusboard-config`, folder `deploy/`, namespace `boards`)\ndeploys the on-call `StatusBoard` custom resource. Every sync succeeds, and a minute later the app is\nOutOfSync again, forever. Nobody changed the board in the cluster and `kubectl` shows the three panels exactly\nas in Git. `argocd app diff ops-statusboard` still prints one line that exists only on the live side:\n`<     refresh: 30s`. A clone of the repo is in your\nworkspace.\n",
+            "objective": "Application `ops-statusboard` is Synced and Healthy at the current head of `main` after a sync by Argo CD and\nstays that way: the persistent difference is gone without hiding the rest of the `StatusBoard` from the\ncomparison. StatusBoard `oncall` in namespace `boards` still has its three panels and is managed by Argo CD.\n",
+            "xp": 200,
+            "difficulty": "advanced",
+            "expected_time": "15m",
+            "concepts": [
+              "diff",
+              "defaulting",
+              "CRD",
+              "ignoreDifferences",
+              "normalization"
+            ]
+          }
+        },
+        {
+          "id": "module-9-operations/level-9-orphan-hunt-cli",
+          "name": "level-9-orphan-hunt-cli",
+          "path": "modules/module-9-operations/level-9-orphan-hunt-cli",
+          "mission": {
+            "name": "Forensics With The CLI",
+            "description": "Since this week's releases, partner shops report that the `rates-service` API quotes prices in the wrong\ncurrency: `fx-rates v1.2 currency=USD source=ecb`, where it should say `currency=EUR`. Nothing is red:\nthe Application `rates-service` (Gitea repo `platform/rates-service`, folder `deploy/`, namespace `fx-rates`,\nautomated sync) is Synced and Healthy. Five releases have gone out in the last days and nobody remembers which\nchange touched the currency. A clone of the repo is in your workspace.\n",
+            "objective": "Application `rates-service` is Synced and Healthy at the current head of `main`, deployed by Argo CD, and\nthe Service `rates-service` in namespace `fx-rates` answers `fx-rates v1.2 currency=EUR source=ecb` with\n2 ready pods. The v1.2 release and the later cache TTL change (`CACHE_TTL=600`) must still be in Git, and the\nGit history must keep every commit that was released.\n",
+            "xp": 200,
+            "difficulty": "intermediate",
+            "expected_time": "15m",
+            "concepts": [
+              "argocd app history",
+              "app manifests --revision",
+              "app diff --revision",
+              "fix forward"
+            ]
+          }
+        },
+        {
+          "id": "module-9-operations/level-10-reconcile-timeout",
+          "name": "level-10-reconcile-timeout",
+          "path": "modules/module-9-operations/level-10-reconcile-timeout",
+          "mission": {
+            "name": "Why So Slow?",
+            "description": "Someone set `timeout.reconciliation: 24h` in `argocd-cm` \"to save CPU\", and the controller and repo-server were\nrestarted so it is live. The lobby display board (Application `lobby-board`, Gitea repo `platform/lobby-board`,\nautomated sync, namespace `lobby`) shows Synced and Healthy and still answers `lobby-board v1.0`, yet release\nv1.1 was pushed to `main` a while ago and Argo CD has not noticed. Pressing Refresh makes it appear, but\nnobody wants to press Refresh after every push. A clone of the repo is in your workspace.\n",
+            "objective": "Argo CD polls Git again on a sane schedule: `timeout.reconciliation` in `argocd-cm` is between 30 seconds and\n10 minutes (or unset), and both the application controller and the repo-server are actually running with that\nvalue. `lobby-board` is Synced and Healthy at the current head of `main`, its last sync deployed that commit,\nand the Service `lobby-board` in namespace `lobby` answers `lobby-board v1.1`.\n",
+            "xp": 150,
+            "difficulty": "intermediate",
+            "expected_time": "10m",
+            "concepts": [
+              "timeout.reconciliation",
+              "argocd-cm",
+              "polling",
+              "webhook",
+              "component restart"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "module-10-wargames",
+      "xp": 3400,
+      "levels": [
+        {
+          "id": "module-10-wargames/level-1-black-friday",
+          "name": "level-1-black-friday",
+          "path": "modules/module-10-wargames/level-1-black-friday",
+          "mission": {
+            "name": "Black Friday Freeze",
+            "description": "PAGER, 06:10 — storefront release train is stuck, doors open at 09:00.\nProject `blackfriday` runs two Applications from Gitea: `bf-cart` (repo `platform/bf-cart`, namespace `bf-cart`)\nand the new sale banner `bf-promo` (repo `platform/bf-promo`, namespace `bf-promo`). Timeline: Monday the\nfreeze went in; Tuesday the approved `bf-cart` v9.0 landed on `main`; since then `argocd app get bf-cart` is\n`OutOfSync` and a manual sync answers `cannot sync: blocked by sync window`. `bf-promo` has never deployed\nat all: sync status `Unknown` with `InvalidSpecError: application destination server\n'https://kubernetes.default.svc' and namespace 'bf-promo' do not match any of the allowed destinations in\nproject 'blackfriday'`. Also, the platform team's autoscaler `load-scaler` (namespace `bf-scaler`, not yours,\nmust keep running) has pushed `bf-cart` to 6 replicas under load, while Git says 2.\nOn-call already tried: waiting, retrying the sync from the UI, and a long look at the freeze. Nobody dared\nto touch the project in the middle of the night. Clones of both repos are in your workspace.\n",
+            "objective": "Both Applications are Synced and Healthy at the current head of their repos: Service `bf-cart` in `bf-cart`\nanswers `bf-cart v9.0 black-friday` and Service `bf-promo` in `bf-promo` answers `bf-promo v4.0 sale-banner`.\nProject `blackfriday` keeps a deny sync window (the freeze stays, an approved manual sync must work) and still\nlists its destinations (no wildcard namespace). `bf-cart` keeps self-heal on and holds the 6 replicas the\nautoscaler wants without its Deployment spec being rewritten back and forth, and `load-scaler` still runs.\n",
+            "xp": 400,
+            "difficulty": "expert",
+            "expected_time": "30m",
+            "concepts": [
+              "sync windows",
+              "manualSync",
+              "ignoreDifferences",
+              "RespectIgnoreDifferences",
+              "AppProject destinations",
+              "incident triage"
+            ]
+          }
+        },
+        {
+          "id": "module-10-wargames/level-2-new-cluster-day",
+          "name": "level-2-new-cluster-day",
+          "path": "modules/module-10-wargames/level-2-new-cluster-day",
+          "mission": {
+            "name": "First Day On The New Cluster",
+            "description": "PAGER, Monday 08:00 — Tidewater payments moved to a new cluster over the weekend. The old one is gone; Argo CD\non the new one is installed and completely empty: `argocd app list` shows nothing, `argocd proj list` only\n`default`. Everything that ran before is described in the Gitea repo `platform/tidewater-gitops` (its README\nhas the new-cluster runbook: one root Application from `bootstrap/`, then the root manages `platform/`:\nthe AppProject `tidewater` and the three components `tidewater-ledger`, `tidewater-batch`,\n`tidewater-gateway`). Since the security review the repo is private. Platform left a handoff note in\nyour workspace (`handoff.md`) with the read-only machine user for Argo CD.\nOn-call already tried: reading the README, applying the root from `bootstrap/` (\"it says Unknown\"), and\ncreating one namespace by hand to see if that helps. A clone of the repo is in your workspace.\n",
+            "objective": "Application `tidewater-root` (namespace `argocd`) reads `platform/tidewater-gitops`, is Synced and Healthy at\nthe current head of `main`, and manages AppProject `tidewater` and Applications `tidewater-ledger`,\n`tidewater-batch` and `tidewater-gateway`, all Synced and Healthy at head. Service `tidewater-ledger` in namespace\n`tidewater-ledger` answers `tidewater-ledger v3.1`, `tidewater-batch` in `tidewater-jobs` answers\n`tidewater-batch v1.8`, `tidewater-gateway` in `tidewater-edge` answers `tidewater-gateway v2.0`. The repo stays\nprivate, Argo CD reads it as the read-only machine user (never as `player`), project `tidewater` stays a\nboundary (no wildcard namespace), and the namespaces come from Git: this cluster must be rebuildable from the\nrepository alone.\n",
+            "xp": 400,
+            "difficulty": "expert",
+            "expected_time": "30m",
+            "concepts": [
+              "bootstrap",
+              "app of apps",
+              "repository credentials",
+              "CreateNamespace",
+              "AppProject destinations",
+              "GitOps rebuild"
+            ]
+          }
+        },
+        {
+          "id": "module-10-wargames/level-3-helm-migration-gone-wrong",
+          "name": "level-3-helm-migration-gone-wrong",
+          "path": "modules/module-10-wargames/level-3-helm-migration-gone-wrong",
+          "mission": {
+            "name": "The Chart Migration",
+            "description": "PAGER, Thursday 22:40 — change window for the inventory database migration is open and the on-call is stuck.\n`stockroom-db` used to be plain manifests; the migration PR switched Application `stockroom-db-v2` (namespace\n`stockroom`, repo `platform/stockroom-db`) to the Helm chart in `chart/`, with production values, and set the\nsync policy to manual because it owns a volume. Since the switch `argocd app get stockroom-db-v2` shows sync\nstatus `Unknown` and a `ComparisonError` that ends with `values/prod.yaml: no such file or directory`.\nConsumers still call `http://stockroom-db.stockroom` and the volume `stockroom-db-data` holds the inventory data\n(`/seq` on the service shows it); the last chart migration, on another team, silently started the database on an\nempty volume. On-call already tried: syncing from the UI (same error), and re-reading the PR. Nobody dares to\npress Sync with prune. A clone of the repo is in your workspace.\n",
+            "objective": "Application `stockroom-db-v2` keeps deploying the Helm chart (path `chart`) and is Synced and Healthy at the\ncurrent head of `main`, deployed by a Succeeded sync of that head. Deployment and Service are named\n`stockroom-db` in namespace `stockroom` (managed by the Application, nothing renamed left over), the service\nanswers `stockroom-db prod 3.0` on `/` and the original inventory data `seq=4821 shipments=1873` on `/seq`.\nThe original PersistentVolumeClaim `stockroom-db-data` (same UID as when the mission started) is still the\nvolume the database uses, and no extra empty claim exists.\n",
+            "xp": 400,
+            "difficulty": "expert",
+            "expected_time": "30m",
+            "concepts": [
+              "Helm",
+              "valueFiles",
+              "releaseName",
+              "helm parameters",
+              "PVC",
+              "prune",
+              "migration safety"
+            ]
+          }
+        },
+        {
+          "id": "module-10-wargames/level-4-appset-outage",
+          "name": "level-4-appset-outage",
+          "path": "modules/module-10-wargames/level-4-appset-outage",
+          "mission": {
+            "name": "The Generator Ate The Fleet",
+            "description": "PAGER, 03:12 — telemetry is dark. The Orbit fleet (ingest, rollup, alerts) is generated by the ApplicationSet\n`orbit-fleet`, one Application `orbit-<service>` per folder of `services/` in the Gitea repo `platform/orbit-services`.\nThe ApplicationSet itself is deployed by the Application `orbit-control` from the repo `platform/orbit-control`\n(folder `appsets/`, automated with prune and self-heal). Timeline: 02:55 a \"tidy-up\" was merged to `orbit-control`;\n02:56 `argocd app list` lost all three `orbit-*` Applications; 02:57 their workloads were deleted and namespaces\n`orbit-ingest`, `orbit-rollup`, `orbit-alerts` are empty. `kubectl -n argocd describe applicationset orbit-fleet`\nshows no error condition. On-call already tried: pausing the automation of `orbit-control` \"so it stops fighting us\",\ntightening the repositories allowed in project `orbit` \"until things calm down\", and drafting a force-push that\nresets `main` to yesterday: the audit policy says Git history is never rewritten. Clones of both repos are in your workspace.\n",
+            "objective": "ApplicationSet `orbit-fleet` generates `orbit-ingest`, `orbit-rollup` and `orbit-alerts` again (each owned by\nthe ApplicationSet, Synced and Healthy at the head of `orbit-services/main`, in project `orbit`) and each Service\nanswers `orbit-<service> v1` in namespace `orbit-<service>`. Application `orbit-control` is Synced and Healthy at the\nhead of `orbit-control/main` (the fix goes through Git, history only grows: the offending commit stays in the log).\nThe next generator mistake must not delete workloads: deleting a generated Application must not cascade into\nits namespace. Project `orbit` stays restricted to its own repositories and namespaces.\n",
+            "xp": 450,
+            "difficulty": "expert",
+            "expected_time": "35m",
+            "concepts": [
+              "ApplicationSet",
+              "git generator",
+              "git revert",
+              "preserveResourcesOnDeletion",
+              "resources-finalizer",
+              "AppProject sourceRepos",
+              "ownership"
+            ]
+          }
+        },
+        {
+          "id": "module-10-wargames/level-5-security-audit",
+          "name": "level-5-security-audit",
+          "path": "modules/module-10-wargames/level-5-security-audit",
+          "mission": {
+            "name": "Audit Findings",
+            "description": "The external auditor's report on the custody platform (Gitea repos `platform/custody-api` and\n`platform/custody-batch`, Applications of the same names in project `custody`, namespace `custody`) lists four\nfindings; everything is \"green\" today, which is exactly what worries them. Evidence: (1) last week `sam`, a\ndeveloper, deleted an Application in the UI and nobody could say why he was allowed to; (2) a database password\nis committed in `custody-api` and the repo is cloned on 40 laptops; (3) Argo CD logs in to Git with the human\nadmin account `player`, one secret per repository; (4) the project `custody` can deploy any cluster-wide kind\n(\"`*/*`\"). Yesterday an engineer tried to fix (2) by deleting the Secret with kubectl: Argo CD put it back in\nseconds. The release pipeline logs in as `deploy-bot`. Notes with the accounts are in `audit-notes.md` in your\nworkspace, clones of both repos are next to it.\n",
+            "objective": "All four findings are closed and nothing broke: `sam` can only look, `kim` is still an administrator and\n`deploy-bot` can get and sync the Applications of project `custody` and nothing else; no database password is in\nthe head of `custody-api` and the live Secret `custody-db` holds a different (rotated) password; Argo CD reaches\nboth private repositories through one credential template for the machine user `argo-reader`, never as\n`player`; project `custody` allows exactly the cluster-wide kinds its repositories contain. Applications\n`custody-api` and `custody-batch` are Synced and Healthy at the head of `main` and their Services answer\n`custody-api v3.1` and `custody-batch v1.2`.\n",
+            "xp": 400,
+            "difficulty": "expert",
+            "expected_time": "30m",
+            "concepts": [
+              "RBAC default policy",
+              "local accounts",
+              "secrets in Git",
+              "repo-creds",
+              "AppProject whitelist",
+              "audit"
+            ]
+          }
+        },
+        {
+          "id": "module-10-wargames/level-6-hooks-and-waves",
+          "name": "level-6-hooks-and-waves",
+          "path": "modules/module-10-wargames/level-6-hooks-and-waves",
+          "mission": {
+            "name": "The Migration That Ate Monday",
+            "description": "PAGE 06:40 - release v7 of `shiftboard` (staff rostering; Gitea repo `platform/shiftboard`, Applications\n`shiftboard` from `deploy/` and `rota-crds` from `crds/`, namespace `shiftboard`) was started by hand and stopped:\nthe sync of `shiftboard` is `Failed` and v6 still answers. The first error was\n`Job.batch \"rota-migrate\" is invalid: spec.template: Invalid value: ... field is immutable`.\n06:55 - on-call synced again; this time the PreSync migration hook failed with `Job has reached the specified\nbackoff limit` and the sync was `Failed` again. 07:30 - the rota for Monday is still the old one, the weekend\nshifts have no policy, and the release manager wants release v7 live, plus a pipeline that does not need a\nbabysitter next release. On-call did not touch the repo. A clone of it is in your workspace.\n",
+            "objective": "Application `shiftboard` (namespace `argocd`) is Synced and Healthy at the current head of `main`, deployed by\na Succeeded sync of that head that ran the migration Job `rota-migrate` and the PostSync smoke test\n`shiftboard-smoke` to completion. ConfigMap `schema-version` in `shiftboard` records `v7`, ShiftPolicy\n`weekend` has `restDays: 2` in the cluster, Service `shiftboard` answers `shiftboard v7`, and `rota-crds` is Synced and\nHealthy at head. The repo is arranged so that the next release does not trip over the same four things,\nand the smoke test still tests the service.\n",
+            "xp": 450,
+            "difficulty": "expert",
+            "expected_time": "35m",
+            "concepts": [
+              "hook delete policy",
+              "sync waves",
+              "PreSync",
+              "PostSync",
+              "CRD",
+              "automated sync",
+              "multi-fault incident"
+            ]
+          }
+        },
+        {
+          "id": "module-10-wargames/level-7-drift-storm",
+          "name": "level-7-drift-storm",
+          "path": "modules/module-10-wargames/level-7-drift-storm",
+          "mission": {
+            "name": "Drift Storm",
+            "description": "PAGE 02:10 - the stormwatch platform (Gitea repo `platform/stormwatch`: `apps/` is read by the root Application\n`stormwatch-root`, which creates `sw-ingest` and `sw-alerts`; namespace `stormwatch`) has been \"flapping\" all\nnight. `argocd app list` shows the root and `sw-ingest` OutOfSync, `sw-ingest` has not been Synced for longer than\na minute since the mesh team's controller went live, and the rain sensors answer `sw-ingest v2.1-debug`: someone\ndebugged the Deployment in place. `sw-alerts` still serves `sw-alerts v1.0` although release v1.1 has been in\nGit since the evening: during the storm somebody rolled it back with `argocd app set`. Nobody remembers who or\nwhen, and the root, which is synced by hand, never undid it. A clone of the repo is in your workspace.\n",
+            "objective": "`stormwatch-root`, `sw-ingest` and `sw-alerts` are Synced and Healthy at the current head of `main`, the children\nare managed by the root and `sw-alerts` follows `main` again. Hand edits are undone automatically from now on\n(self-heal on the root and on both children, in Git and live). The mesh team's controller `mesh-stamper`\n(namespace `stormwatch-mesh`) keeps stamping `sw-ingest` and Argo CD does not mind. ConfigMap `thresholds` has one\nowner in Git and holds `rain_mm: \"40\"` and `wind_kmh: \"90\"`. Services answer `sw-ingest v2.1` and `sw-alerts v1.1`.\n",
+            "xp": 400,
+            "difficulty": "expert",
+            "expected_time": "30m",
+            "concepts": [
+              "app-of-apps",
+              "self-heal",
+              "ignoreDifferences",
+              "shared resource",
+              "drift",
+              "multi-fault incident"
+            ]
+          }
+        },
+        {
+          "id": "module-10-wargames/level-8-grand-finale",
+          "name": "level-8-grand-finale",
+          "path": "modules/module-10-wargames/level-8-grand-finale",
+          "mission": {
+            "name": "Mission Control",
+            "description": "PAGE 05:30 - the Meridian transit-signage platform (Gitea repo `platform/meridian-platform`) was rebuilt from Git\novernight: Argo CD, then one root Application, `meridian-root`, reading `bootstrap/`. The root says `Synced`.\nNothing else is right. `argocd app list` shows the root and `meridian-core`, but `meridian-core` has no sync status\nand says its project `meridian-core` does not exist; the ApplicationSet `meridian-edge`, which should create the\nsignage Applications for the districts north, south and harbor, reports\n`function \"district\" not defined`; no signage runs in `meridian-north`, `meridian-south` or `meridian-harbor`.\nOn-call re-synced the root three times and restarted the ApplicationSet controller. Nobody has touched Git. The\nrest of the morning shift starts at 07:00. A clone of the repo is in your workspace.\n",
+            "objective": "The platform is up and reproducible from Git alone. `meridian-root` is Synced and Healthy at the current head of\n`main`, maintains the AppProjects `meridian-core` and `meridian-edge`, the Application `meridian-core` and the\nApplicationSet `meridian-edge`, and in Git the projects are applied strictly before what uses them. The\nApplicationSet generates `meridian-edge-north`, `meridian-edge-south` and `meridian-edge-harbor` (each deploying\n`edge/` to `meridian-<district>`, Synced and Healthy at head; the Services answer `meridian-edge v3.2`). `meridian-core`\nis Synced and Healthy at head, deployed by a Succeeded sync that ran its PostSync smoke test\n`meridian-core-smoke`, and creates its own namespace; Service `meridian-core` answers `meridian-core v5.0`. The\nprojects stay narrow: no wildcard destinations or sources.\n",
+            "xp": 500,
+            "difficulty": "expert",
+            "expected_time": "40m",
+            "concepts": [
+              "app-of-apps",
+              "ApplicationSet",
+              "AppProject",
+              "sync waves",
+              "hooks",
+              "CreateNamespace",
+              "multi-fault incident"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

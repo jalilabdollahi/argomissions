@@ -1,0 +1,4 @@
+data:
+  resource.customizations.ignoreDifferences.apps_Deployment: |
+    jsonPointers:
+    - /metadata/labels/complyd.argomissions.io~1scan

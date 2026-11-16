@@ -1,0 +1,2 @@
+Add `- region: eu-west` to `spec.generators[0].list.elements` (edit geo-edge-appset.yaml and `kubectl apply -f`
+it, or `kubectl edit applicationset geo-edge`). Do not create the Application yourself: the ApplicationSet must own it.

@@ -1,0 +1,5 @@
+argocd app set sensor-hub --sync-retry-limit 8 --sync-retry-backoff-duration 10s \
+  --sync-retry-backoff-factor 2 --sync-retry-backoff-max-duration 60s
+argocd app sync sensor-hub
+(YAML: spec.syncPolicy.retry: {limit: 8, backoff: {duration: 10s, factor: 2, maxDuration: 1m}};
+limit -1 retries without end.)

@@ -1,0 +1,15 @@
+name: "Test Fixtures In Production"
+description: |
+  Application `collector` deploys folder `deploy/` of the Gitea repo `platform/telemetry-agents` (branch `main`)
+  to namespace `telemetry`, with automated sync and pruning. It is Synced and Healthy, but the namespace is
+  crowded: `kubectl get pods -n telemetry` shows `fixture-loadgen` and `fixture-fake-source` next to the real
+  `metrics-collector`. Those come from `deploy/tests/`, YAML our CI loads into a scratch cluster. CI still
+  needs those files in the repo. A clone is in your workspace.
+objective: |
+  Application `collector` is Synced and Healthy at the current head of `main`, no `fixture-*` object exists in
+  namespace `telemetry`, and Service `metrics-collector` still answers `metrics-collector v5.0`. The fixture
+  files stay in the repo (`deploy/tests/fixture-*.yaml`).
+xp: 150
+difficulty: intermediate
+expected_time: 10m
+concepts: [directory.exclude, directory.include, recurse, prune]

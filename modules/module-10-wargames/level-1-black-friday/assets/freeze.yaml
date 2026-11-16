@@ -1,0 +1,8 @@
+spec:
+  syncWindows:
+  - kind: deny
+    schedule: "* * * * *"
+    duration: 24h
+    applications: ["*"]
+    namespaces: ["*"]
+    clusters: ["*"]

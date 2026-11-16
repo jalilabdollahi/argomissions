@@ -1,0 +1,7 @@
+Independent faults (one more appears only after you fix the first ones):
+1. The freeze is a deny window with no exception: not even an approved, human-started sync gets through.
+2. bf-promo's destination namespace is not among the project's destinations (it is a new service).
+3. Git pins bf-cart's replicas to 2 while another controller owns that field: after the first deploy they would fight.
+4. bf-promo is a manual-sync Application and its first release has never been shipped; when you try, Argo CD may
+   refuse a Namespace object: read the sync result, the project decides what an app may create.
+Keep the freeze, keep the autoscaler, keep self-heal, keep the project a boundary.

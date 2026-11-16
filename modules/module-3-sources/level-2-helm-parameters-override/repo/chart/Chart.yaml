@@ -1,0 +1,6 @@
+apiVersion: v2
+name: media-gateway
+description: Media edge gateway
+type: application
+version: 1.4.0
+appVersion: "2.0"

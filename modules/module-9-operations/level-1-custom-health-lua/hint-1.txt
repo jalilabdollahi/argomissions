@@ -1,0 +1,3 @@
+Argo CD has no built-in health check for this CRD: ask it for the health of the resources
+  argocd app get vaultline
+Compare the HEALTH column with what the operator wrote in .status (kubectl -n vaultline get backups -o yaml).

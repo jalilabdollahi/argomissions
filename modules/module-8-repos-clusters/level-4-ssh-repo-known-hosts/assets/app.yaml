@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: fleet-agent
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: ssh://git@gitea.gitea.svc.cluster.local:22/platform/fleet-agent.git
+    targetRevision: main
+    path: agent
+  destination:
+    name: in-cluster
+    namespace: fleet
+  syncPolicy:
+    automated: {}

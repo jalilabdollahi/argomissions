@@ -1,0 +1,4 @@
+The `discover.find.glob` in plugin.yaml does not match the file name in the repo. Correct it in the ConfigMap.
+The sidecar reads plugin.yaml only when it starts, so the repo-server pod must be restarted afterwards:
+  kubectl -n argocd rollout restart deploy/argocd-repo-server
+Then refresh the Application (automated sync does the rest).

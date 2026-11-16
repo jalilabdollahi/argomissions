@@ -1,0 +1,3 @@
+Application `lighthouse-bootstrap`, project default, repoURL the in-cluster Gitea URL, path `platform`,
+`directory: {recurse: true, exclude: 'apps/_archive/*'}`, destination argocd namespace of the in-cluster server.
+Apply it with kubectl (or argocd app create), sync, and wait for the three children.

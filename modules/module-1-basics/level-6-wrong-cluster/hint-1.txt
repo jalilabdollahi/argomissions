@@ -1,0 +1,3 @@
+The condition says which cluster could not be found. Ask Argo CD which clusters it does know:
+  argocd app get telemetry
+  argocd cluster list

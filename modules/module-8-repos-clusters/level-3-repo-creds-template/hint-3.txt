@@ -1,0 +1,3 @@
+Create a template for the organisation's URL, as Argo CD reaches Gitea in the cluster, ending at `/platform`:
+  argocd repocreds add http://gitea.gitea.svc.cluster.local:3000/platform --username ... --password ...
+Then hard-refresh the Applications. (Declaratively: a Secret labelled secret-type=repo-creds.)

@@ -1,0 +1,2 @@
+Tell the directory source to descend into subfolders: `directory.recurse: true` in the Application
+(`argocd app set inventory --directory-recurse`). The Application is OutOfSync afterwards, so sync it.

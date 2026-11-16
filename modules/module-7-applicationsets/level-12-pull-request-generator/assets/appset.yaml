@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: pulse-previews
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+  - pullRequest:
+      requeueAfterSeconds: 30
+      gitea:
+        owner: platform
+        repo: pulse-web
+        api: http://gitea.gitea.svc.cluster.local:3000
+        tokenRef:
+          secretName: gitea-pr-token
+          key: token
+        labels:
+        - preview
+  template:
+    metadata:
+      name: 'pulse-pr-{{.number}}'
+    spec:
+      project: default
+      source:
+        repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/pulse-web.git
+        targetRevision: '{{.head_sha}}'
+        path: deploy
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: 'pulse-pr-{{.number}}'
+      syncPolicy:
+        automated:
+          prune: true
+        syncOptions:
+        - CreateNamespace=true

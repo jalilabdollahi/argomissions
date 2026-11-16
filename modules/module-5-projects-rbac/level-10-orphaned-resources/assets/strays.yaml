@@ -1,0 +1,39 @@
+# Created by hand with kubectl, nobody remembers when. Not in Git, not owned by any Application.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: legacy-indexer
+  namespace: search
+  labels: {app: legacy-indexer}
+  annotations:
+    note: "load test from the March migration"
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: legacy-indexer}
+  template:
+    metadata:
+      labels: {app: legacy-indexer}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: indexer
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=legacy-indexer", "-listen=:5678"]
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}
+---
+# Documented exception: the TLS certificate is issued and rotated by hand by the security team.
+apiVersion: v1
+kind: Secret
+metadata:
+  name: search-tls-manual
+  namespace: search
+  annotations:
+    owner: security-team
+    note: "certificate rotated by hand, must stay - see runbook SEC-114"
+type: Opaque
+stringData:
+  tls.crt: placeholder
+  tls.key: placeholder

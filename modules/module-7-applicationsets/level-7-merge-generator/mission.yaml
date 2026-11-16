@@ -1,0 +1,17 @@
+name: "Overrides Ignored"
+description: |
+  The ApplicationSet `parcel-api` (namespace `argocd`) generates one Application per environment from the Helm
+  chart in the Gitea repo `platform/parcel-api`: `parcel-api-dev`, `parcel-api-stage` and `parcel-api-prod`.
+  A merge generator combines a base list of environments with a short list of per-environment overrides, and
+  `prod` is meant to be the odd one out: three replicas and the banner `parcel-api prod priority-lane`.
+  Every Application is Synced and Healthy and the ApplicationSet reports no error, yet production runs a single
+  pod and still answers `parcel-api prod`. A copy of the manifest is in your workspace (`parcel-api-appset.yaml`).
+objective: |
+  The ApplicationSet `parcel-api` still generates `parcel-api-dev`, `parcel-api-stage` and `parcel-api-prod`
+  (owned by it) with a merge generator, all Synced and Healthy at the head of `main`. Deployment `parcel-api`
+  in `parcel-prod` runs 3 ready replicas and its Service answers `parcel-api prod priority-lane`; `dev` and
+  `stage` keep one replica and answer `parcel-api dev` and `parcel-api stage`.
+xp: 250
+difficulty: advanced
+expected_time: 20m
+concepts: [ApplicationSet, merge generator, mergeKeys, list generator, Helm parameters]

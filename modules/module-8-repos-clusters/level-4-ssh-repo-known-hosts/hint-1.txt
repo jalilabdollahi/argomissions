@@ -1,0 +1,4 @@
+Read the exact error and then look at what Argo CD trusts:
+  argocd app get fleet-agent
+  argocd cert list --cert-type ssh
+The deploy key itself is fine: the failure happens before authentication, while the client checks the server.

@@ -1,0 +1,4 @@
+Before syncing anything, see what a sync would do and in which order:
+  argocd app diff chat-relay
+  cat chat-relay/deploy/handover-check.yaml
+Pruning happens in the same wave as the applies unless you tell Argo CD otherwise.

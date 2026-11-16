@@ -1,0 +1,7 @@
+apiVersion: sensors.argomissions.io/v1
+kind: Probe
+metadata:
+  name: boiler-temp
+spec:
+  interval: 30s
+  unit: celsius

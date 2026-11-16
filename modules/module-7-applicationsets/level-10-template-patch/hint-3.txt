@@ -1,0 +1,9 @@
+`templatePatch` is a string that is rendered per element and merged over the template. Use a Go template
+condition on the element's `env`:
+  templatePatch: |
+    {{- if eq .env "prod" }}
+    spec:
+      syncPolicy:
+        automated:
+          prune: true
+    {{- end }}

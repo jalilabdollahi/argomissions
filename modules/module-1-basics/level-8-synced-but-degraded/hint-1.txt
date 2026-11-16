@@ -1,0 +1,5 @@
+"Synced" only says the cluster matches Git. It says nothing about whether what matched actually works.
+Look at the health and at the pod itself:
+  argocd app get notifier
+  kubectl -n messaging get pods
+  kubectl -n messaging describe pod

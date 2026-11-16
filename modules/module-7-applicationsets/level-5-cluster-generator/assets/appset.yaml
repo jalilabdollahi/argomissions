@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: quota-fleet
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+  - clusters:
+      selector:
+        matchLabels:
+          env: staging
+  template:
+    metadata:
+      name: 'quota-{{.name}}'
+    spec:
+      project: default
+      source:
+        repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/quota-service.git
+        targetRevision: main
+        path: deploy
+      destination:
+        name: '{{.name}}'
+        namespace: quota
+      syncPolicy:
+        automated: {}
+        syncOptions:
+        - CreateNamespace=true

@@ -1,0 +1,5 @@
+Look at what differs, in more than one Application:
+  argocd app diff tallyline-ingest
+  argocd app diff tallyline-gateway
+Is it the same difference everywhere? Then ask who writes it:
+  kubectl -n tallyline-ingest get deploy tallyline-ingest -o yaml   (look at metadata.managedFields)

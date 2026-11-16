@@ -1,0 +1,6 @@
+apiVersion: rostering.argomissions.io/v1
+kind: ShiftPolicy
+metadata:
+  name: weekend
+spec:
+  maxHours: 10

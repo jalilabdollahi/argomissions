@@ -1,0 +1,10 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inventory-sync
+spec:
+  template:
+    spec:
+      containers:
+      - name: sync
+        args: ["-text=inventory-sync staging", "-listen=:5678"]

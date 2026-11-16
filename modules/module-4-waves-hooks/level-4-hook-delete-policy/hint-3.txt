@@ -1,0 +1,5 @@
+The policy must let Argo CD clean up the old run: either remove the previous run before creating a new one, or
+remove it as soon as it has succeeded (the values are BeforeHookCreation, HookSucceeded, HookFailed). Fix the
+annotation in Git, push, then sync:
+  argocd app sync helpdesk-api --refresh
+(Just syncing again passes once, because the failed run was deleted, and the next release fails again.)

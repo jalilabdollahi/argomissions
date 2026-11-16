@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: tenant-portals
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+  - git:
+      repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/tenant-stack.git
+      revision: main
+      files:
+      - path: tenants/*/config.json
+  template:
+    metadata:
+      name: 'tenant-{{.tenant}}'
+    spec:
+      project: default
+      source:
+        repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/tenant-stack.git
+        targetRevision: main
+        path: chart
+        helm:
+          parameters:
+          - name: message
+            value: '{{.message}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{.namespace}}'
+      syncPolicy:
+        automated: {}
+        syncOptions:
+        - CreateNamespace=true

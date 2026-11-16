@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sensor-hub
+spec:
+  selector: {app: sensor-hub}
+  ports:
+  - port: 80
+    targetPort: 5678

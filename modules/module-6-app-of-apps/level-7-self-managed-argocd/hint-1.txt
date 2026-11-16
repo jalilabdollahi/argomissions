@@ -1,0 +1,4 @@
+Find out who owns the ConfigMap and what happened to your edit:
+  kubectl -n argocd get configmap argocd-rbac-cm -o yaml | grep -i tracking
+  argocd app get argocd-settings
+Look at the Application's sync policy and at its history.

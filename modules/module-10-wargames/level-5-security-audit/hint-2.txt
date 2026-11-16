@@ -1,0 +1,7 @@
+  1. `policy.default: role:admin` makes every account an admin; the default role applies to every account, so the
+     pipeline, the developer and the lead each need explicit policy.
+  2. A Secret manifest with a password in Git: removing it from Git is not enough (history, laptops), and Argo CD
+     prunes the live Secret when the manifest goes away.
+  3. One `repository` secret per repo with the human admin login; the machine user also needs to be allowed to
+     read each repo in Gitea.
+  4. `clusterResourceWhitelist: */*` in project custody; look at what the repos actually deploy cluster-wide.

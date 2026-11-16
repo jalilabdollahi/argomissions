@@ -1,0 +1,4 @@
+No error means Helm accepted the values; find out whether it used them:
+  argocd app manifests search-suggest | grep -E "replicas|text"
+  kubectl -n argocd get application search-suggest -o jsonpath='{.spec.source.helm}'
+Then compare the key names with chart/values.yaml.

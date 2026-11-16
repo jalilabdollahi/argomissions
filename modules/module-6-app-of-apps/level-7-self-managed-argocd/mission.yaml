@@ -1,0 +1,18 @@
+name: "The Permission That Vanishes"
+description: |
+  Argo CD's own configuration is managed by Argo CD: Application `argocd-settings` (repo `platform/argocd-settings`,
+  folder `config/`, self-heal on) applies the ConfigMaps `argocd-cm` and `argocd-rbac-cm` in namespace `argocd`.
+  The payments on-call engineers (SSO group `payments-oncall`) need to be able to sync applications of project
+  `default` during incidents. An SRE added the permission with `kubectl edit configmap argocd-rbac-cm` and told them
+  it was done, but a few seconds later the line was gone again and they got `permission denied` once more. Nobody
+  touched Git. A clone of the repo is in your workspace.
+objective: |
+  Members of `payments-oncall` may `sync` applications in project `default` (and nothing destructive: they may not
+  delete them), while the auditors' read-only access stays as it is. The change lives in Git and has been applied by
+  Application `argocd-settings` itself (Synced at the current head of `main`, deployed by a Succeeded sync of that
+  head, self-heal still on), and the cluster's own settings keep working: the URL, `admin.enabled` and the 60 s
+  reconciliation timeout are untouched.
+xp: 250
+difficulty: advanced
+expected_time: 20m
+concepts: [self-managed Argo CD, argocd-rbac-cm, self-heal, GitOps for configuration]

@@ -1,0 +1,4 @@
+`spec.orphanedResources` on an AppProject switches monitoring on: Argo CD then lists the resources of the
+Application's destination namespaces that no Application owns, and `warn: true` adds a condition to the
+Application. After you see the list, delete what is really stray; for the documented exception use the
+`ignore` list of the same setting (group, kind, name; wildcards are allowed, but keep the rule narrow).

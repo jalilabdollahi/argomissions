@@ -1,0 +1,3 @@
+Read the error, then compare it with the branches the repo really has:
+  argocd app get invoices
+  cd invoices && git branch -a

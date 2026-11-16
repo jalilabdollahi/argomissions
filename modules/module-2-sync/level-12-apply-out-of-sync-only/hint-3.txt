@@ -1,0 +1,4 @@
+Set the option first, then sync:
+  argocd app set region-configs --sync-option ApplyOutOfSyncOnly=true
+  argocd app sync region-configs
+(YAML: spec.syncPolicy.syncOptions: [ApplyOutOfSyncOnly=true])

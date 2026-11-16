@@ -1,0 +1,3 @@
+A `directories` entry can carry `exclude: true`. Add an entry with path `apps/shared` and `exclude: true` under
+the existing `apps/*` entry (full path, as in the include), apply the ApplicationSet, and the generated
+`studio-shared` Application is removed by the controller. Moving the folder out of `apps/` in Git works too.

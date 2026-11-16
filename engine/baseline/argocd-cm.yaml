@@ -1,0 +1,15 @@
+# Restored before every level (levels may change argocd-cm). Keep in sync with docs/LEVEL_SPEC.md.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: argocd-cm
+    app.kubernetes.io/part-of: argocd
+data:
+  url: http://localhost:9080
+  admin.enabled: "true"
+  # Faster than the 180s default so a push shows up within a minute. A hard refresh is instant.
+  timeout.reconciliation: 60s
+  timeout.reconciliation.jitter: 0s

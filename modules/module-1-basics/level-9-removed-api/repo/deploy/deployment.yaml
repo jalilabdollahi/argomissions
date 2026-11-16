@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: billing
+  labels: {app: billing}
+spec:
+  replicas: 2
+  selector:
+    matchLabels: {app: billing}
+  template:
+    metadata:
+      labels: {app: billing}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: api
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=billing v3.1", "-listen=:5678"]
+        ports:
+        - containerPort: 5678
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

@@ -1,0 +1,15 @@
+name: "The Test That Fails The Sync"
+description: |
+  `booking-web` (Gitea repo `platform/booking-web`, folder `deploy/`, namespace `booking`) has a PostSync smoke
+  test, Job `booking-web-smoke-test`, that calls the Service after every sync. The sync of the Application
+  `booking-web` ends with operation `Failed` and the message `one or more synchronization tasks completed
+  unsuccessfully`, and the CI pipeline that waits for a green sync is red. Yet the pod runs and
+  `booking-web v1.4` is served; customers are not affected. A clone of the repo is in your workspace.
+objective: |
+  Application `booking-web` (namespace `argocd`) is Synced and Healthy at the current head of `main`, and its
+  last sync operation Succeeded at that commit, including a PostSync smoke test that ran and passed against
+  the Service. Service `booking-web` in namespace `booking` still answers `booking-web v1.4` on port 80.
+xp: 200
+difficulty: intermediate
+expected_time: 15m
+concepts: [PostSync hook, smoke test, operationState, hook failure]

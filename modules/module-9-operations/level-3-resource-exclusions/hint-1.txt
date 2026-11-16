@@ -1,0 +1,5 @@
+The pod waits for a ConfigMap that is in Git. Compare Git, Argo CD and the cluster:
+  argocd app get lexicon-site        (resources listed, conditions)
+  argocd app manifests lexicon-site
+  kubectl -n lexicon get cm
+Read the condition message at the top of `argocd app get` carefully.

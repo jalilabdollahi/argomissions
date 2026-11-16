@@ -1,0 +1,8 @@
+Five independent faults:
+  1. app-of-apps: the AppProject manifests are in a subfolder of `bootstrap/` that the root does not read; and
+     nothing in Git makes projects come before the Applications that use them
+  2. ApplicationSet: `goTemplate: true` with templates written in the old `{{district}}` syntax
+  3. projects: `meridian-edge` admits north and south but not harbor
+  4. core release: the Application does not create namespace `meridian-core`
+  5. hooks: the PostSync smoke test of `meridian-core` calls a port the Service does not expose
+The order you meet them: 1 and 2 first, then 4 and 3, and 5 only when the sync gets that far.

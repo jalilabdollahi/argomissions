@@ -1,0 +1,2 @@
+The override has to go. `argocd app unset --help` shows how to drop a Helm parameter; the Application then
+renders only from Git again. Let the new render roll out and check what the Service answers.

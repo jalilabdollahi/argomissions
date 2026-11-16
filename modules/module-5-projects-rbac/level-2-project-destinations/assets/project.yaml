@@ -1,0 +1,12 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: clinic
+  namespace: argocd
+spec:
+  description: Clinic IT
+  sourceRepos:
+  - http://gitea.gitea.svc.cluster.local:3000/platform/rx-dispatch.git
+  destinations:
+  - server: https://kubernetes.default.svc
+    namespace: clinic-*

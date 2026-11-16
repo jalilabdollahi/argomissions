@@ -1,0 +1,2 @@
+The Application points at `kustomize/base`. Argo CD builds exactly the directory it is given, and a base on its own
+has no environment-specific changes. The production changes live in an overlay that references the base.

@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: custody-api
+  namespace: argocd
+spec:
+  project: custody
+  source:
+    repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/custody-api.git
+    targetRevision: main
+    path: deploy
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: custody
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: custody-batch
+  namespace: argocd
+spec:
+  project: custody
+  source:
+    repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/custody-batch.git
+    targetRevision: main
+    path: deploy
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: custody
+  syncPolicy:
+    automated:
+      prune: true

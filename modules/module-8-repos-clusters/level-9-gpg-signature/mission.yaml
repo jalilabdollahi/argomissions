@@ -1,0 +1,19 @@
+name: "Unsigned Commit Rejected"
+description: |
+  Project `treasury` only deploys commits signed with the team's release key (`spec.signatureKeys`), and Argo CD
+  has the public key in its keyring. Application `treasury-core` (repo `platform/treasury-core`, branch `main`)
+  was fine until a colleague pushed "treasury-core v2: same-day settlement window". Now `argocd app get
+  treasury-core` shows `ComparisonError: GIT/GPG: Failed verifying revision ... by 'ArgoMissions Player
+  <player@argomissions.local>': unsigned (key_id=)`, the app is OutOfSync and a sync is refused. The release
+  key's private half lives in a keyring that git in your workspace already uses (the wrapper `gpg-release` next to
+  the clone), so you can sign.
+objective: |
+  The head of `main` in `treasury-core` carries a valid signature from the release key, project `treasury` still
+  accepts that key and only that key, and Application `treasury-core` is Synced and Healthy at the head of `main`
+  after a sync Argo CD ran itself. The v2 settlement window (`T+0`) reaches the cluster and Service `treasury-core` in
+  namespace `treasury` answers `treasury-core v2`.
+xp: 300
+difficulty: expert
+expected_time: 25m
+requires: [gpg]
+concepts: [signatureKeys, GnuPG, commit signing, argocd gpg, AppProject]

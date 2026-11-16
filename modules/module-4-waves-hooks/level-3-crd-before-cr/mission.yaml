@@ -1,0 +1,18 @@
+name: "Unknown Kind On First Sync"
+description: |
+  The plant monitoring stack lives in the Gitea repo `platform/sensor-hub`: `crds/` holds the `Probe`
+  CustomResourceDefinition (API group `sensors.argomissions.io`), `hub/` holds the first `Probe` instance. Two
+  Argo CD Applications read them: `sensor-crds` and `sensor-hub`, both to namespace `sensors`. The team synced
+  `sensor-hub` first and the operation `Failed` with
+  `one or more synchronization tasks are not valid: failed to discover server resources for group version
+  sensors.argomissions.io/v1: the server could not find the requested resource`. `sensor-crds` was never
+  synced. A clone of the repo is in your workspace.
+objective: |
+  Both Applications (`sensor-crds`, `sensor-hub`, namespace `argocd`) are Synced and Healthy at the current head
+  of `main`, their last sync operations Succeeded, the CRD `probes.sensors.argomissions.io` is managed by
+  `sensor-crds` (not applied by hand), and the `Probe` named `boiler-temp` exists in namespace `sensors` and is
+  owned by `sensor-hub`.
+xp: 200
+difficulty: intermediate
+expected_time: 15m
+concepts: [CustomResourceDefinition, custom resource, sync order, dry run, SkipDryRunOnMissingResource]

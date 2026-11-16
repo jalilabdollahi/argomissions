@@ -1,0 +1,2 @@
+Set `targetRevision` of `apps/api.yaml` in courier-fleet to `hotfix-routing`, leave `apps/web.yaml` alone, commit
+and push. The root applies it, the child follows the branch. Once the hotfix is merged the same file goes back to `main`.

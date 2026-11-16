@@ -1,0 +1,4 @@
+Green does not mean "everything is there". Ask Argo CD what it manages and what it rendered:
+  argocd app get inventory
+  argocd app manifests inventory
+Then compare with the folders in your clone: `find inventory-stack/deploy -type f`.

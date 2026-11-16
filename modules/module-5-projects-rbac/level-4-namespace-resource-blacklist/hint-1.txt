@@ -1,0 +1,4 @@
+Read the policy before touching it:
+  argocd proj get mailroom
+  kubectl -n argocd get appproject mailroom -o yaml     # the annotation explains why
+The blacklist was added on purpose by someone else.

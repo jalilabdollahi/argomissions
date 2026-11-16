@@ -1,0 +1,16 @@
+name: "Annotation Too Long"
+description: |
+  The network team publishes the full CMDB export (about 9,000 hosts, roughly 400 KB) as ConfigMap `host-inventory`
+  in the repo `platform/host-registry` (folder `deploy/`), served by the `host-registry` Deployment in namespace `netops`.
+  The `host-registry` Application has never synced: Argo CD stops at the ConfigMap with
+  `ConfigMap "host-inventory" is invalid: metadata.annotations: Too long: may not be more than 262144 bytes`.
+  The pod waits for a ConfigMap that does not exist. A clone of the repo is in your workspace.
+objective: |
+  Application `host-registry` (namespace `argocd`) is Synced and Healthy at the current head of `main`, and its
+  last sync succeeded. ConfigMap `host-inventory` in `netops` holds the complete export (all 9,000 hosts, still
+  in Git), the application declares how it is applied so the next sync succeeds too, and Service `host-registry`
+  answers `host-registry v1.0`.
+xp: 200
+difficulty: intermediate
+expected_time: 15m
+concepts: [ServerSideApply, last-applied-configuration, sync options, annotations limit]

@@ -1,0 +1,17 @@
+name: "Secrets Are Blocked"
+description: |
+  The mailroom team's `mail-relay` Application (project `mailroom`, repo `mail-relay`, folder `deploy/`) will not
+  sync. `argocd app get mail-relay` ends in
+  `one or more synchronization tasks are not valid: resource :Secret is not permitted in project mailroom`,
+  and not even the Deployment is created. The repo holds a Secret `relay-credentials` (key `token`), a Deployment
+  that reads it and a Service. A note on the project says: "SEC-114: Secret objects are provided by the platform
+  team, never rendered from Git". A clone of the repo is in your workspace.
+objective: |
+  Application `mail-relay` stays in project `mailroom`, which keeps refusing Secret objects, and is Synced and
+  Healthy at the head of `mail-relay/main` after a successful Argo CD sync. Secret `relay-credentials` (key `token`)
+  exists in namespace `mailroom` but is not managed by Argo CD, the repo contains no Secret and no copy of the
+  credential, and Service `mail-relay` answers `mail-relay v3.2`.
+xp: 150
+difficulty: intermediate
+expected_time: 10m
+concepts: [AppProject, namespaceResourceBlacklist, Secret, security policy]

@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: beacon-api
+  labels: {app: beacon-api}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: beacon-api}
+  template:
+    metadata:
+      labels: {app: beacon-api}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: api
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=beacon-api v3.1", "-listen=:5678"]
+        ports:
+        - containerPort: 5678
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

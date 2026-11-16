@@ -1,0 +1,16 @@
+name: "The Defaulted Field"
+description: |
+  Application `ops-statusboard` (Gitea repo `platform/statusboard-config`, folder `deploy/`, namespace `boards`)
+  deploys the on-call `StatusBoard` custom resource. Every sync succeeds, and a minute later the app is
+  OutOfSync again, forever. Nobody changed the board in the cluster and `kubectl` shows the three panels exactly
+  as in Git. `argocd app diff ops-statusboard` still prints one line that exists only on the live side:
+  `<     refresh: 30s`. A clone of the repo is in your
+  workspace.
+objective: |
+  Application `ops-statusboard` is Synced and Healthy at the current head of `main` after a sync by Argo CD and
+  stays that way: the persistent difference is gone without hiding the rest of the `StatusBoard` from the
+  comparison. StatusBoard `oncall` in namespace `boards` still has its three panels and is managed by Argo CD.
+xp: 200
+difficulty: advanced
+expected_time: 15m
+concepts: [diff, defaulting, CRD, ignoreDifferences, normalization]

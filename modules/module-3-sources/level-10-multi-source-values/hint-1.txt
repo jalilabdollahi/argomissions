@@ -1,0 +1,4 @@
+The error is in the Application's conditions:
+  argocd app get pricing
+  kubectl -n argocd get application pricing -o yaml | less
+Compare the names it mentions with the two entries under `spec.sources`.

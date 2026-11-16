@@ -1,0 +1,61 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kv-render-plugin
+  namespace: argocd
+  labels:
+    argomissions.io/cleanup: "true"
+data:
+  plugin.yaml: |
+    apiVersion: argoproj.io/v1alpha1
+    kind: ConfigManagementPlugin
+    metadata:
+      name: kv-render
+    spec:
+      discover:
+        find:
+          glob: "**/app.config"
+      generate:
+        command: [sh, -c]
+        args:
+          - |
+            conf() { grep "^$1=" app.conf | head -n1 | cut -d= -f2-; }
+            cat <<MANIFESTS
+            apiVersion: apps/v1
+            kind: Deployment
+            metadata:
+              name: $(conf name)
+              labels:
+                app: $(conf name)
+            spec:
+              replicas: $(conf replicas)
+              selector:
+                matchLabels:
+                  app: $(conf name)
+              template:
+                metadata:
+                  labels:
+                    app: $(conf name)
+                spec:
+                  terminationGracePeriodSeconds: 2
+                  containers:
+                    - name: app
+                      image: hashicorp/http-echo:1.0
+                      imagePullPolicy: IfNotPresent
+                      args: ["-text=$(conf text)", "-listen=:$(conf port)"]
+                      ports:
+                        - containerPort: $(conf port)
+                      resources:
+                        requests: {cpu: 10m, memory: 16Mi}
+            ---
+            apiVersion: v1
+            kind: Service
+            metadata:
+              name: $(conf name)
+            spec:
+              selector:
+                app: $(conf name)
+              ports:
+                - port: 80
+                  targetPort: $(conf port)
+            MANIFESTS

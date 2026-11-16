@@ -1,0 +1,4 @@
+A custom resource (kind Probe) can only be applied when its CustomResourceDefinition exists. The CRD is in the
+other Application, `sensor-crds`, which nobody synced, so the Kubernetes API has never heard of
+sensors.argomissions.io/v1. Argo CD cannot order two separate Applications by itself; inside one Application it
+would have put the CRD first.

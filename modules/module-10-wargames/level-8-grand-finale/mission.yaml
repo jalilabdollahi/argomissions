@@ -1,0 +1,23 @@
+name: "Mission Control"
+description: |
+  PAGE 05:30 - the Meridian transit-signage platform (Gitea repo `platform/meridian-platform`) was rebuilt from Git
+  overnight: Argo CD, then one root Application, `meridian-root`, reading `bootstrap/`. The root says `Synced`.
+  Nothing else is right. `argocd app list` shows the root and `meridian-core`, but `meridian-core` has no sync status
+  and says its project `meridian-core` does not exist; the ApplicationSet `meridian-edge`, which should create the
+  signage Applications for the districts north, south and harbor, reports
+  `function "district" not defined`; no signage runs in `meridian-north`, `meridian-south` or `meridian-harbor`.
+  On-call re-synced the root three times and restarted the ApplicationSet controller. Nobody has touched Git. The
+  rest of the morning shift starts at 07:00. A clone of the repo is in your workspace.
+objective: |
+  The platform is up and reproducible from Git alone. `meridian-root` is Synced and Healthy at the current head of
+  `main`, maintains the AppProjects `meridian-core` and `meridian-edge`, the Application `meridian-core` and the
+  ApplicationSet `meridian-edge`, and in Git the projects are applied strictly before what uses them. The
+  ApplicationSet generates `meridian-edge-north`, `meridian-edge-south` and `meridian-edge-harbor` (each deploying
+  `edge/` to `meridian-<district>`, Synced and Healthy at head; the Services answer `meridian-edge v3.2`). `meridian-core`
+  is Synced and Healthy at head, deployed by a Succeeded sync that ran its PostSync smoke test
+  `meridian-core-smoke`, and creates its own namespace; Service `meridian-core` answers `meridian-core v5.0`. The
+  projects stay narrow: no wildcard destinations or sources.
+xp: 500
+difficulty: expert
+expected_time: 40m
+concepts: [app-of-apps, ApplicationSet, AppProject, sync waves, hooks, CreateNamespace, multi-fault incident]

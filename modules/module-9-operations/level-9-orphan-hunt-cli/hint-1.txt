@@ -1,0 +1,4 @@
+Argo CD remembers every revision it deployed:
+  argocd app history rates-service
+Pick two entries and compare what Argo CD rendered for them:
+  argocd app manifests rates-service --revision <sha>

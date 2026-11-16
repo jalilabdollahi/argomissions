@@ -1,0 +1,20 @@
+name: "Waves That Do Not Wait"
+description: |
+  The Beacon telemetry platform is deployed with an app-of-apps: root Application `beacon-root` (repo
+  `platform/beacon-fleet`, folder `apps/`) creates the child Applications `beacon-db` (sync-wave 1) and `beacon-api`
+  (sync-wave 2). The database needs about half a minute before it serves, and the runbook says the API must not even
+  exist until it does. Yet on a fresh bring-up `argocd app get beacon-root` shows both children created within a
+  second of each other, and `beacon-api` was Healthy while `beacon-db` was still `Progressing`. The waves are in Git,
+  exactly as the runbook says, and the root sync reported `successfully synced (all tasks run)`.
+objective: |
+  The ordering is enforced by Argo CD itself, not by luck: Argo CD must assess the health of the child Applications
+  (an Application whose status is Progressing or Degraded must be reported as such, an Application resource must
+  not count as Healthy by default). After a fresh bring-up of the platform from `beacon-root`, Application
+  `beacon-api` was created only after `beacon-db`'s workload was available. `beacon-root`, `beacon-db` and
+  `beacon-api` are Synced and Healthy, the children are owned by the root, the waves are still in Git, and
+  Services `beacon-db` (namespace `beacon-data`) and `beacon-api` (namespace `beacon-edge`) answer
+  `beacon-db v3.1` and `beacon-api v3.1`.
+xp: 300
+difficulty: advanced
+expected_time: 25m
+concepts: [app of apps, sync waves, Application health, resource customizations, Lua, argocd-cm]

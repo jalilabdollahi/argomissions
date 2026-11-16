@@ -1,0 +1,2 @@
+The value for a single repository's credentials is `repository` (and `repo-creds` for a URL-prefix template).
+Fix the label (kubectl label --overwrite) or re-register the repo, then hard-refresh the Application.

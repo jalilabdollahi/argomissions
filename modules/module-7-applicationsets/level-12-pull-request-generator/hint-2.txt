@@ -1,0 +1,3 @@
+The generator lists the open pull requests and keeps only those that have every label in `labels`. No error is
+reported when none match: "no pull request wants a preview" is a legitimate answer. Compare the label the
+ApplicationSet asks for with the labels the open pull requests really carry.

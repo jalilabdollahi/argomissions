@@ -1,0 +1,14 @@
+name: "The Ghost Worker"
+description: |
+  The media team retired the `legacy-worker` Deployment: the commit "retire legacy worker" removed it from repo
+  `platform/media` (folder `deploy/`), and the release manager synced Application `media` right after. The sync
+  succeeded — yet `legacy-worker` is still running in namespace `media-prod`, eating CPU, and the Application
+  still says `OutOfSync`. Git no longer mentions the worker, so nobody can say what the cluster is waiting for.
+objective: |
+  Deployment `legacy-worker` no longer exists in namespace `media-prod`. The rest of the application is
+  untouched (Deployment and Service `media-web` keep running without being recreated), and Application `media`
+  (project `default`) is Synced and Healthy at the current head of `main`. Service `media-web` answers `media v4.0`.
+xp: 150
+difficulty: intermediate
+expected_time: 10m
+concepts: [pruning, OutOfSync, sync options, orphaned resources]

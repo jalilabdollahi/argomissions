@@ -1,0 +1,30 @@
+# Cut-over runbook step: once the new Service is ready, clients are moved over one by one. Until the last client
+# has moved, BOTH names must answer. This Job runs after the first wave and records what it sees.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: handover-check
+  annotations:
+    argocd.argoproj.io/hook: Sync
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: check
+        image: busybox:1.36
+        imagePullPolicy: IfNotPresent
+        command:
+        - sh
+        - -c
+        - |
+          old=down; new=down
+          wget -q -T 3 -O- http://relay >/dev/null 2>&1 && old=up
+          wget -q -T 3 -O- http://relay-gateway >/dev/null 2>&1 && new=up
+          echo "handover: old Service relay=$old, new Service relay-gateway=$new"
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

@@ -1,0 +1,16 @@
+name: "Config Field Typo"
+description: |
+  Every customer of the portal product is described by a file `tenants/<name>/config.json` in the Gitea repo
+  `platform/tenant-stack`, and the ApplicationSet `tenant-portals` turns each file into an Application. Last week
+  `globex` was onboarded and since then nothing is generated for anyone: `argocd app list` is empty and the
+  ApplicationSet is Degraded with "failed to execute go template {{.namespace}}: template: base:1:2: executing
+  \"base\" at <.namespace>: map has no entry for key \"namespace\"". A clone of the repo is in your workspace.
+objective: |
+  The ApplicationSet `tenant-portals` generates one Application per tenant, `tenant-acme`, `tenant-globex` and
+  `tenant-initech`, each owned by the ApplicationSet, deploying the `chart` folder to namespace `tenant-<name>`.
+  All three are Synced and Healthy at the current head of `tenant-stack`, and Service `tenant-portal` in each
+  namespace answers the `message` from that tenant's config (for example `portal globex silver`).
+xp: 200
+difficulty: intermediate
+expected_time: 15m
+concepts: [ApplicationSet, git file generator, config.json, missingkey, goTemplate]

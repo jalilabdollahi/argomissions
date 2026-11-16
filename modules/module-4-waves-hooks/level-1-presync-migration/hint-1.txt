@@ -1,0 +1,4 @@
+Find out what a sync of this release would do, and in which order:
+  argocd app diff payroll-api
+  argocd app get payroll-api          # which resources, which sync phase
+Open migrate-job.yaml in your clone and compare it with the Deployment.

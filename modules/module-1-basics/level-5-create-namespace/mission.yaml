@@ -1,0 +1,15 @@
+name: "No Room At The Inn"
+description: |
+  The `ledger` service is deployed by Argo CD from the Gitea repo `platform/ledger` (folder `deploy/`, branch
+  `main`) into namespace `ledger`. The first sync was attempted this morning and failed:
+  `one or more objects failed to apply, reason: namespaces "ledger" not found`. Nobody created that namespace
+  on this cluster, and the platform team wants the Application to deploy to a brand-new cluster without a
+  checklist of manual steps. A clone of the repo is in your workspace.
+objective: |
+  Application `ledger` (namespace `argocd`) is configured to create its destination namespace itself. It is
+  Synced and Healthy at the current head of `main`, namespace `ledger` exists, and Service `ledger` in it
+  answers `ledger v1.0`.
+xp: 100
+difficulty: beginner
+expected_time: 10m
+concepts: [syncOptions, CreateNamespace, sync failure, destination namespace]

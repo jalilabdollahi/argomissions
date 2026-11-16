@@ -1,0 +1,2 @@
+Application `argocd-settings` has self-heal on: whenever the live ConfigMap differs from Git, Argo CD puts the
+Git version back within seconds. The ConfigMap is not the source of truth; the repo `argocd-settings` is.

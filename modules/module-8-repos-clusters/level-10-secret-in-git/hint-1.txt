@@ -1,0 +1,5 @@
+Look at what Git and the cluster hold, and who owns the live Secret:
+  git -C smtp-gateway log --stat
+  kubectl -n smtp-gw get secret smtp-credentials -o yaml      # note the annotations
+  argocd app resources smtp-gateway
+Removing a line from Git does not change a password that has already been published.

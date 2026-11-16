@@ -1,0 +1,6 @@
+argocd app set gallery-web --auto-prune
+or in the Application YAML:
+  syncPolicy:
+    automated:
+      prune: true
+Deleting the Service by hand only treats this one instance.

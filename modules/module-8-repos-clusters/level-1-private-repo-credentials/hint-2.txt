@@ -1,0 +1,3 @@
+The repo-server reads Git as an anonymous client, because Argo CD has no credentials stored for this URL.
+The machine user's name and password are in workspace/handoff.md. Argo CD keeps repository credentials in
+its own configuration, not in the Application.

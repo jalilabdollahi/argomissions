@@ -1,0 +1,4 @@
+The condition on the Application has the exact error:
+  argocd app get notify
+Then check what is really in the repo: `ls notify-platform/charts` and
+`cat notify-platform/charts/notify/Chart.yaml`.

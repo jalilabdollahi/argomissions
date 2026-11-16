@@ -1,0 +1,4 @@
+The worker crashes because the last commit gave it flags it does not understand (see the container logs).
+Argo CD can put an older release back (`argocd app rollback`), but that only moves the cluster: Git still ends
+with the bad commit, so the Application is OutOfSync and not at the head of `main`. Other people already pulled
+`main`, so rewriting it is out as well.

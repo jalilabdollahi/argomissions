@@ -1,0 +1,7 @@
+apiVersion: vaultline.argomissions.io/v1
+kind: Backup
+metadata:
+  name: weekly-archive
+spec:
+  schedule: "0 3 * * 0"
+  target: s3://vaultline-prod/archive

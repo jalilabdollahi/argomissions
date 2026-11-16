@@ -1,0 +1,19 @@
+name: "A Button For Maintenance"
+description: |
+  Before every release of the ticket backend the on-call engineer of the ferry company must put the public
+  `ferry-booking` Deployment (Application `ferry-booking`, namespace `ferry`) into maintenance mode: the gateway
+  team's tooling shows a banner while the Deployment carries the annotation `ferry.argomissions.io/maintenance: "on"`
+  and drops it when the annotation is gone. Today that is a `kubectl annotate` from a laptop, which the security
+  team wants to end: on-call only has Argo CD. `argocd app actions list ferry-booking --kind Deployment
+  --resource-name ferry-booking` offers `scale`, `pause`, `restart` and `resume`, nothing for maintenance. The
+  annotation is operational state and must never be committed to Git.
+objective: |
+  For Deployment `ferry-booking` Argo CD offers two actions, `maintenance-on` and `maintenance-off`, next to the
+  built-in `restart` that on-call still needs. An action is disabled when it would change nothing:
+  `maintenance-on` while maintenance is on, `maintenance-off` while it is off. Maintenance mode has been
+  switched on through the `maintenance-on` action (the Deployment carries the annotation, written by Argo CD),
+  the Git repo is unchanged, and Application `ferry-booking` is Synced and Healthy.
+xp: 300
+difficulty: expert
+expected_time: 25m
+concepts: [custom resource actions, Lua, resource.customizations.actions, discovery.lua, mergeBuiltinActions]

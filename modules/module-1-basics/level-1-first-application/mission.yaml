@@ -1,0 +1,14 @@
+name: "Hello, GitOps"
+description: |
+  The SRE team moved the public `status-page` service to GitOps. Its manifests are in the Gitea repo
+  `platform/status-page` (folder `deploy/`, branch `main`), and namespace `status` has been created for it.
+  But nobody ever told Argo CD about the repo: `argocd app list` is empty and nothing runs in `status`.
+  A clone of the repo is in your workspace. The Argo CD UI is at http://localhost:9080 (admin / argomissions).
+objective: |
+  An Argo CD Application named `status-page` (namespace `argocd`, project `default`) deploys folder `deploy/`
+  of the `status-page` repo to namespace `status` of the in-cluster destination. It is Synced and Healthy at
+  the current head of `main`, and Service `status-page` in `status` answers `status-page v1.0`.
+xp: 100
+difficulty: beginner
+expected_time: 10m
+concepts: [Application, source, destination, sync, in-cluster URL]

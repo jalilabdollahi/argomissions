@@ -1,0 +1,4 @@
+Argo CD only knows how to judge Kinds it ships a health check for. For any other CRD the HEALTH is empty and
+counts as healthy. You can teach it with a Lua script in the argocd-cm ConfigMap: look at the keys that start
+with resource.customizations.health. in the Argo CD docs (operator manual, 'Resource Health').
+The script receives the live object as 'obj' and returns a table with 'status' (and optionally 'message').

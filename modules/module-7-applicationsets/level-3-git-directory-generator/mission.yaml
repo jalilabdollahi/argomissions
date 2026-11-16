@@ -1,0 +1,17 @@
+name: "Too Many Apps"
+description: |
+  The media studio keeps one folder per service under `apps/` in the Gitea repo `platform/studio-platform`, and
+  the ApplicationSet `studio` turns every folder into an Application in namespace `studio`. The three services
+  (`render`, `thumbnails`, `captions`) are fine, but `argocd app list` shows a fourth Application, `studio-shared`,
+  Synced and Healthy but pointless: it deploys a ConfigMap `studio-defaults` into namespace `studio`. Nobody
+  asked for it: `apps/shared/` only holds build defaults that the CI pipeline reads, not a service.
+  A copy of the ApplicationSet manifest and a clone of the repo are in your workspace.
+objective: |
+  The ApplicationSet `studio` generates exactly three Applications, `studio-render`, `studio-thumbnails` and
+  `studio-captions`, each owned by the ApplicationSet and deploying its folder to namespace `studio`. There is no
+  Application for `apps/shared` and ConfigMap `studio-defaults` is gone from `studio`. All three are Synced and Healthy, and Service `<service>` in `studio` answers
+  `studio <service> v1`.
+xp: 200
+difficulty: intermediate
+expected_time: 15m
+concepts: [ApplicationSet, git directory generator, exclude, generated Applications]

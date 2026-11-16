@@ -1,0 +1,5 @@
+Argo CD has one handler per Git provider, chosen from the request headers, and one secret key per handler:
+`webhook.github.secret`, `webhook.gitlab.secret`, `webhook.bitbucket.uuid`, `webhook.gogs.secret`, ...
+There is no `webhook.gitea.secret`. Gitea's push events carry Gogs-compatible headers (`X-Gogs-Event`,
+`X-Gogs-Signature`), so Argo CD verifies them with `webhook.gogs.secret` - which holds a leftover value.
+If that key were empty, Argo CD would stop verifying anything.

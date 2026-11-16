@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sensor-crds
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/sensor-hub.git
+    targetRevision: main
+    path: crds
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: sensors
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sensor-hub
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/sensor-hub.git
+    targetRevision: main
+    path: hub
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: sensors
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true

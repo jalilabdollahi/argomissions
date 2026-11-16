@@ -1,0 +1,4 @@
+Ask Argo CD who changed what and what it thinks the child should look like:
+  argocd app get courier-routing            # target revision, what it is deployed from
+  argocd app history courier-routing
+  argocd app get courier-fleet           # who owns the child, and its sync policy

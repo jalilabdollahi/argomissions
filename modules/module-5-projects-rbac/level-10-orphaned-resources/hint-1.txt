@@ -1,0 +1,4 @@
+Argo CD only looks for objects nobody owns if the project asks it to. Look at what the project says, and at
+what Argo CD knows about the namespace:
+  argocd proj get search-platform
+  kubectl -n search get all,secrets

@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: rx-dispatch
+  namespace: argocd
+spec:
+  project: clinic
+  source:
+    repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/rx-dispatch.git
+    targetRevision: main
+    path: deploy
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: pharmacy
+  syncPolicy:
+    automated: {}

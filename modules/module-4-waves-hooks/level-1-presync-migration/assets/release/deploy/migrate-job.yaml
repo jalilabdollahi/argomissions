@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: payroll-schema-migrate
+  labels: {app: payroll-api}
+spec:
+  backoffLimit: 0
+  template:
+    metadata:
+      labels: {app: payroll-schema-migrate}
+    spec:
+      restartPolicy: Never
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: migrate
+        image: busybox:1.36
+        imagePullPolicy: IfNotPresent
+        command: ["sh", "-c", "echo 'applying 0042_add_overtime_rate'; sleep 12; echo 'schema is at 0042'"]
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

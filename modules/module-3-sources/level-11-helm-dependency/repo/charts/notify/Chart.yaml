@@ -1,0 +1,10 @@
+apiVersion: v2
+name: notify
+description: Notification gateway
+type: application
+version: 1.2.0
+appVersion: "4.7"
+dependencies:
+- name: notify-common
+  version: 0.1.0
+  repository: file://../notify-commons

@@ -1,0 +1,4 @@
+One manifest in the repo is written for a Kubernetes version that no longer exists. The API server has no
+`policy/v1beta1` any more, and because Argo CD validates the whole sync before applying anything, that one file
+blocked the Deployment and the Service too.
+  kubectl explain pdb | head -3

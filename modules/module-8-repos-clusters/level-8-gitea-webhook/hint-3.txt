@@ -1,0 +1,5 @@
+Make the key Argo CD reads equal to the hook's secret:
+  kubectl -n argocd get secret argocd-secret -o jsonpath='{.data.webhook\.gitea\.secret}'
+  kubectl -n argocd patch secret argocd-secret --type merge -p '{"data":{"webhook.gogs.secret":"<that base64 value>"}}'
+Argo CD re-reads argocd-secret by itself (no restart). Re-send a delivery from Gitea (the hook's "Test Delivery" button)
+to check. Re-creating the hook in Gitea with Argo CD's value as its secret is also consistent.

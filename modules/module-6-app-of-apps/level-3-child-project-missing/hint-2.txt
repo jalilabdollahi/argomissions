@@ -1,0 +1,3 @@
+The children name a project, `tracing-team`, that nobody created on this cluster: the old cluster had it,
+probably made by hand. The root only deploys what is in its folder of the repo, and no AppProject is in there.
+Fix it where the other cluster state lives: in Git, in the folder the root deploys.

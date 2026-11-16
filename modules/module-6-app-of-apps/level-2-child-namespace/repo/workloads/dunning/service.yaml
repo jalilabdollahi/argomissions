@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dunning-worker
+spec:
+  selector: {app: dunning-worker}
+  ports:
+  - port: 80
+    targetPort: 5678

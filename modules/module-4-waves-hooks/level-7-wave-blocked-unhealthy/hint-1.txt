@@ -1,0 +1,5 @@
+Look at what the running sync is waiting for and why:
+  argocd app get fleet-tracker --show-operation
+  kubectl -n fleet get pods
+  kubectl -n fleet describe pod -l app=tracker-api     # events: what does the readiness probe hit?
+Also compare the sync waves (annotations in deploy/) with what exists in the namespace.

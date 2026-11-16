@@ -1,0 +1,15 @@
+name: "The Secret Argo CD Ignores"
+description: |
+  Last Friday the platform team created a Secret named `repo-parcel-tracker` in the `argocd` namespace holding
+  the read-only Gitea credentials for the private repo `platform/parcel-tracker`. It is right there in
+  `kubectl -n argocd get secret`, with the correct URL, user and password, and yet the `parcel-tracker`
+  Application reports `ComparisonError: ... failed to list refs: authentication required: Unauthorized`,
+  and `argocd repo list` does not show the repository.
+objective: |
+  Application `parcel-tracker` (namespace `argocd`) is Synced and Healthy at the current head of `main`, and
+  Service `parcel-tracker` in namespace `parcels` answers `parcel-tracker v0.9`. The repository stays private
+  and Argo CD reads it as the read-only machine user `argo-reader`.
+xp: 200
+difficulty: intermediate
+expected_time: 15m
+concepts: [repository secret, secret-type label, Argo CD secret discovery]

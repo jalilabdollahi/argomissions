@@ -1,0 +1,6 @@
+Install the CRD through its own Application first (do not kubectl apply it, Argo CD must own it), wait until it
+is Healthy, then sync the instances again:
+  argocd app sync sensor-crds
+  argocd app sync sensor-hub
+(For installs from scratch, teams order this in Git: sync waves on the child Applications of an app of apps, or
+SkipDryRunOnMissingResource=true plus retries on the instances.)

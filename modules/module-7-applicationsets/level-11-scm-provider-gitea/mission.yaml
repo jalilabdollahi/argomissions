@@ -1,0 +1,18 @@
+name: "Every Repo An App"
+description: |
+  The mesh platform team wants every repository named `mesh-*` in the Gitea organization `platform` to be deployed
+  automatically: no Application to write when a new service repo appears. They set up the ApplicationSet
+  `mesh-fleet` (namespace `argocd`) with an SCM provider generator that lists the organization through the Gitea API,
+  authenticated with an access token kept in the Secret `gitea-scm-token`. Three service repos exist
+  (`mesh-pinger`, `mesh-quill`, `mesh-ember`) plus `wiki-notes`, which is not a service. Nothing has been generated:
+  `argocd app list` is empty and the ApplicationSet is in an error state. A copy of the manifest is in your
+  workspace (`mesh-appset.yaml`).
+objective: |
+  ApplicationSet `mesh-fleet` (SCM provider generator on the `platform` organization of Gitea, repositories
+  matching `^mesh-`) generates exactly the Applications `mesh-pinger`, `mesh-quill` and `mesh-ember`, owned by it,
+  deploying `deploy/` of each repo to a namespace of the same name. All three are Synced and Healthy at the head of
+  `main`, each Service answers `<repo> v1` (for example `mesh-pinger v1`), and there is no Application for `wiki-notes`.
+xp: 300
+difficulty: advanced
+expected_time: 25m
+concepts: [ApplicationSet, SCM provider generator, Gitea API, tokenRef, filters, repositoryMatch]

@@ -1,0 +1,3 @@
+`tenants/globex/config.json` spells the key `nameSpace`. Fix the key in Git (the Git config is the input of
+the set), commit, push, and let the ApplicationSet re-read the repo (it polls Git; a refresh annotation
+`argocd.argoproj.io/application-set-refresh=true` makes it immediate).

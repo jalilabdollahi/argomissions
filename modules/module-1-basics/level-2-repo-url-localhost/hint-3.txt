@@ -1,0 +1,4 @@
+Point the Application at the in-cluster address of the same repo:
+  argocd app set orders --repo http://gitea.gitea.svc.cluster.local:3000/platform/orders.git
+Then sync it:
+  argocd app sync orders

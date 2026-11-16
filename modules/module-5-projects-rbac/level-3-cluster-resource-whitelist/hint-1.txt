@@ -1,0 +1,3 @@
+The sync failure names a project policy, not a Kubernetes error. Look at the project:
+  argocd proj get radar
+Look at "Allowed Cluster Resources" and compare it with the kinds the failure message mentions.

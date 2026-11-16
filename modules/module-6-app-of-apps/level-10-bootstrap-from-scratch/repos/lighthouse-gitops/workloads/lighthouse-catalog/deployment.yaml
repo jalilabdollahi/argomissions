@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lighthouse-catalog
+  labels: {app: lighthouse-catalog}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: lighthouse-catalog}
+  template:
+    metadata:
+      labels: {app: lighthouse-catalog}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: web
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=lighthouse-catalog v5.0", "-listen=:5678"]
+        ports:
+        - containerPort: 5678
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

@@ -1,0 +1,4 @@
+Compare what the ApplicationSet should generate for prod with what it did generate:
+  argocd app get parcel-api-prod
+  argocd app manifests parcel-api-prod | grep -A3 'replicas\|args'
+Then read the merge generator in parcel-api-appset.yaml: how does it decide which elements belong together?

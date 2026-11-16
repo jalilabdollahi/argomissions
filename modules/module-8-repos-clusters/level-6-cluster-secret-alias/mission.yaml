@@ -1,0 +1,18 @@
+name: "Register A Second Destination"
+description: |
+  The release team wants the `boarding-pass` API on a destination called `staging`, separate from the built-in
+  `in-cluster` one. A colleague registered it with a cluster Secret `cluster-staging` in namespace `argocd`: the
+  same API server under its DNS name `https://kubernetes.default.svc.cluster.local`, authenticating as the
+  namespace-scoped ServiceAccount `argocd-deployer` of namespace `boarding-stg` (its token Secret lives there).
+  Application `boarding-pass` targets `name: staging`, but it stays Unknown with
+  `... tls: failed to verify certificate: x509: certificate signed by unknown authority` and nothing
+  is deployed. `argocd cluster list` shows `staging` as Failed.
+objective: |
+  Cluster `staging` is connected in Argo CD (`argocd cluster list`), it verifies the API server certificate, and
+  authenticates as ServiceAccount `argocd-deployer` of namespace `boarding-stg`. Application `boarding-pass`
+  still deploys to that `staging` destination (namespace `boarding-stg`), is Synced and Healthy at the current
+  head of `main`, and Service `boarding-pass` in `boarding-stg` answers `boarding-pass v3.1`.
+xp: 250
+difficulty: advanced
+expected_time: 20m
+concepts: [cluster secret, destination name, bearer token, tlsClientConfig, caData, ServiceAccount]

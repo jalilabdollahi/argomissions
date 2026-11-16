@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: collector
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/telemetry-agents.git
+    targetRevision: main
+    path: deploy
+    directory:
+      recurse: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: telemetry
+  syncPolicy:
+    automated:
+      prune: true

@@ -1,0 +1,5 @@
+kubectl -n argocd patch appproject search-platform --type merge -p '{"spec":{"orphanedResources":{"warn":true}}}'
+argocd app get query-service            # the OrphanedResourceWarning condition names the count
+argocd app resources query-service --orphaned
+kubectl -n search delete deployment legacy-indexer
+Then add  ignore: [{group: "", kind: Secret, name: search-tls-manual}]  to orphanedResources.

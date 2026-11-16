@@ -1,0 +1,2 @@
+Argo CD can store credentials once and apply them to every repository whose URL starts with a given prefix:
+a credential template. You do not need one entry per repository.

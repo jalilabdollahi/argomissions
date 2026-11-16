@@ -1,0 +1,15 @@
+name: "Detected As The Wrong Tool"
+description: |
+  The docs team keeps plain Kubernetes manifests (`deployment.yaml`, `service.yaml`) in the folder `deploy/` of
+  the Gitea repo `platform/docs-portal` (branch `main`). Application `docs-portal` (path `deploy`, automated
+  sync, namespace `docs`) is Synced and Healthy, a green tick with no errors, but `kubectl get all -n docs`
+  is empty and the portal does not exist. The Argo CD UI shows the application's tool as Helm, though nobody
+  ever configured Helm. A clone of the repo is in your workspace.
+objective: |
+  Application `docs-portal` treats `deploy/` as plain manifests (its detected source type is Directory, not
+  Helm) and is Synced and Healthy at the current head of `main`. Deployment and Service `docs-portal` run in
+  namespace `docs` under Argo CD, and the service answers `docs-portal v1.8`.
+xp: 200
+difficulty: intermediate
+expected_time: 15m
+concepts: [tool detection, Helm, Directory source, Chart.yaml, source type]

@@ -1,0 +1,16 @@
+name: "The Missing Region"
+description: |
+  The edge team runs one `geo-edge` proxy per region, generated from the ApplicationSet `geo-edge` (namespace
+  `argocd`) and the Helm chart in the Gitea repo `platform/geo-edge`. `argocd app list` shows `geo-edge-us-east`
+  and `geo-edge-ap-south`, both healthy. Customers in Europe are complaining: nothing answers for `eu-west`,
+  there is no Application and no namespace `geo-eu-west`, and the ApplicationSet itself reports no error.
+  A copy of the ApplicationSet manifest is in your workspace (`geo-edge-appset.yaml`).
+objective: |
+  The ApplicationSet `geo-edge` generates three Applications `geo-edge-us-east`, `geo-edge-eu-west` and
+  `geo-edge-ap-south`, each owned by the ApplicationSet, deploying the chart to namespace `geo-<region>` of the
+  in-cluster destination. All three are Synced and Healthy, and Service `geo-edge` in each namespace answers
+  `geo-edge <region>` (for example `geo-edge eu-west`).
+xp: 150
+difficulty: intermediate
+expected_time: 10m
+concepts: [ApplicationSet, list generator, template, generated Applications]

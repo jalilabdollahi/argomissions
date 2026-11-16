@@ -1,0 +1,3 @@
+A matrix generator combines every parameter set of the first generator with every one of the second, and the
+template runs once for each pair. Each Application needs a unique `metadata.name` in `argocd`. Look at which
+parameters the template uses in the name, compared with the ones it uses for the namespace.

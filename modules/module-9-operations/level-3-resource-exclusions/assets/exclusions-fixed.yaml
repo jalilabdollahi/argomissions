@@ -1,0 +1,11 @@
+data:
+  resource.exclusions: |
+    - apiGroups: [""]
+      kinds: ["Endpoints"]
+      clusters: ["*"]
+    - apiGroups: ["discovery.k8s.io"]
+      kinds: ["EndpointSlice"]
+      clusters: ["*"]
+    - apiGroups: ["coordination.k8s.io"]
+      kinds: ["Lease"]
+      clusters: ["*"]

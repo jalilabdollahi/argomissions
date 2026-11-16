@@ -1,0 +1,3 @@
+Add a new commit that undoes the bad one: `git revert HEAD` in your clone, then `git push`.
+Sync the Application to the new head: argocd app sync reports
+(If you want the service back before the push, roll back first, then do the proper fix.)

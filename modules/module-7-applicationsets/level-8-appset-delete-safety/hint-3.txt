@@ -1,0 +1,5 @@
+Two ways, both fine:
+  * set `spec.syncPolicy.preserveResourcesOnDeletion: true` on `kiosk-apps`, wait until the Applications lose the
+    finalizer, then delete the ApplicationSet and apply `kiosk-fleet`;
+  * `kubectl delete applicationset kiosk-apps --cascade=orphan` and apply `kiosk-fleet`, which adopts the apps.
+Compare the Deployment UIDs afterwards.

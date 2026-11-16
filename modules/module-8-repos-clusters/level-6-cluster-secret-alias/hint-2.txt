@@ -1,0 +1,4 @@
+The Secret has a bearer token but nothing that lets Argo CD verify the API server's certificate.
+`tlsClientConfig` is missing from `config`; it takes `caData` (base64 of the cluster CA certificate, PEM).
+The ServiceAccount token Secret `argocd-deployer-token` in `boarding-stg` carries the CA as `ca.crt`.
+Do not switch verification off: `insecure: true` is not the way.

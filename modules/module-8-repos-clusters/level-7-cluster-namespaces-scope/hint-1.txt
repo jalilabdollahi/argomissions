@@ -1,0 +1,5 @@
+Read the full error of the broken Application, then the cluster definition it points at:
+  argocd app get parcel-hub-us
+  argocd cluster list
+  kubectl -n argocd get secret cluster-regional -o jsonpath='{.data.namespaces}' | base64 -d
+Compare what Argo CD says it manages with where the Application deploys.

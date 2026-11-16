@@ -1,0 +1,19 @@
+name: "The Day The Root Was Deleted"
+description: |
+  Root Application `inventory-root` (repo `platform/inventory-gitops`, folder `apps/`, automated sync with prune)
+  creates one child Application per inventory service, and every child carries `resources-finalizer.argocd.argoproj.io`
+  so that retiring a service from Git also removes its workloads. This morning a tidy-up commit, "cleanup: drop unused
+  manifests", deleted `apps/api.yaml`. The root dutifully pruned the child `stock-api` and, thanks to the finalizer,
+  deleted its Deployment and Service too: nothing answers in namespace `inventory-stock`, and the warehouse scanners are
+  failing. `stock-sync` was not part of the commit and is untouched. A clone of the repo is in your workspace.
+objective: |
+  Application `stock-api` is back, managed by `inventory-root`, and the root is Synced and Healthy at the current
+  head of `main`: Service `stock-api` in `inventory-stock` answers `stock-api v6.2`, Service `stock-sync` in
+  `inventory-sync` answers `stock-sync v3.4`, and the Deployment `stock-sync` was never restarted. The history of `main`
+  keeps the accident (nothing is rewritten). Finally every child Application in `apps/` (in Git and live) is protected
+  against both a mistaken removal of its manifest and the deletion of the root, so that the next accident does not take
+  a service down.
+xp: 250
+difficulty: advanced
+expected_time: 20m
+concepts: [app of apps, resources-finalizer, Prune=false, Delete=false, git revert, blast radius]

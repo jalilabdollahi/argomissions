@@ -1,0 +1,3 @@
+A destination is only valid if it matches a cluster registered in Argo CD, exactly: the server URL (or the
+registered name) must be the same string. `argocd cluster list` shows both for the cluster Argo CD runs in.
+Even a URL that points to the same Kubernetes API through another DNS name does not match.

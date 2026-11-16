@@ -1,0 +1,5 @@
+Read what the failed sync says about the resource it could not apply:
+  argocd app get billing
+  argocd app manifests billing
+Ask the cluster which API versions it serves for the kind in question:
+  kubectl api-versions | grep policy

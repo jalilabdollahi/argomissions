@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: trace-collector
+spec:
+  selector: {app: trace-collector}
+  ports:
+  - port: 80
+    targetPort: 5678

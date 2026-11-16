@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tidewater-batch
+  labels: {app: tidewater-batch}
+spec:
+  selector: {app: tidewater-batch}
+  ports:
+  - port: 80
+    targetPort: 5678

@@ -1,0 +1,3 @@
+argocd app actions run tollbooth restart --kind Deployment --resource-name tollbooth
+Wait for the rollout (argocd app get tollbooth shows the Deployment Progressing, then Healthy) and ask the
+Service again. Do not delete pods yourself and do not commit anything: the restart is an operation, not a state.

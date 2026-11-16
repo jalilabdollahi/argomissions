@@ -1,0 +1,66 @@
+# The finance platform's cost-allocation controller. NOT part of the profile-svc repo, not managed by Argo CD.
+# It stamps the live Deployment with a fresh `cost-center` label every few seconds (what a mutating webhook
+# or an allocation operator would do).
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cost-stamper
+  namespace: profiles-finops
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: cost-stamper
+  namespace: profiles
+rules:
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["get", "patch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: cost-stamper
+  namespace: profiles
+subjects:
+- {kind: ServiceAccount, name: cost-stamper, namespace: profiles-finops}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: cost-stamper
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cost-stamper
+  namespace: profiles-finops
+  labels: {app: cost-stamper}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: cost-stamper}
+  template:
+    metadata:
+      labels: {app: cost-stamper}
+    spec:
+      serviceAccountName: cost-stamper
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: stamper
+        image: curlimages/curl:8.10.1
+        imagePullPolicy: IfNotPresent
+        command:
+        - sh
+        - -c
+        - |
+          SA=/var/run/secrets/kubernetes.io/serviceaccount
+          URL=https://kubernetes.default.svc/apis/apps/v1/namespaces/profiles/deployments/profile-svc
+          while true; do
+            curl -s --cacert $SA/ca.crt -H "Authorization: Bearer $(cat $SA/token)" \
+              -X PATCH -H 'Content-Type: application/merge-patch+json' \
+              "$URL?fieldManager=cost-stamper" \
+              -d "{\"metadata\":{\"labels\":{\"cost-center\":\"cc-$(date +%s)\"}}}" >/dev/null
+            sleep 10
+          done
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

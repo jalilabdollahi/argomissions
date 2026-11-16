@@ -1,0 +1,5 @@
+argocd app create status-page \
+  --repo http://gitea.gitea.svc.cluster.local:3000/platform/status-page.git \
+  --path deploy --revision main \
+  --dest-server https://kubernetes.default.svc --dest-namespace status
+Then sync it: argocd app sync status-page   (a new Application starts OutOfSync and does nothing on its own)

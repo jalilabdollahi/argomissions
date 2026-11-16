@@ -1,0 +1,7 @@
+apiVersion: vaultline.argomissions.io/v1
+kind: Backup
+metadata:
+  name: nightly-ledger
+spec:
+  schedule: "0 2 * * *"
+  target: s3://vaultline-prod/ledger

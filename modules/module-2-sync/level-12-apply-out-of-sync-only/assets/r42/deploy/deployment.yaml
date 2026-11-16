@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: edge-banner
+  labels: {app: edge-banner}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: edge-banner}
+  template:
+    metadata:
+      labels: {app: edge-banner}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: web
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=edge-banner r42", "-listen=:5678"]
+        ports:
+        - containerPort: 5678
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

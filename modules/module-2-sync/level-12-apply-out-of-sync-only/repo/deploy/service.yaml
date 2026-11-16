@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: edge-banner
+spec:
+  selector: {app: edge-banner}
+  ports:
+  - port: 80
+    targetPort: 5678

@@ -1,0 +1,4 @@
+Look at what the failed sync tells you about the ConfigMap and measure it:
+  argocd app get host-registry
+  wc -c host-registry/deploy/host-inventory.yaml
+The error is about *annotations*, but the manifest in Git has none. Who adds one?

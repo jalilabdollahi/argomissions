@@ -1,0 +1,16 @@
+name: "Cluster Not Found"
+description: |
+  The `telemetry` service is deployed by Argo CD from the Gitea repo `platform/telemetry` (folder `deploy/`,
+  branch `main`) into namespace `telemetry`, which already exists. The Application was written by hand, and
+  now it shows `Unknown` with this condition: `InvalidSpecError: error getting cluster by server
+  "https://kubernetes.default.svc.cluster.local": rpc error: code = NotFound desc = cluster
+  "https://kubernetes.default.svc.cluster.local" not found`. The repo is fine. A clone of it is in your
+  workspace.
+objective: |
+  Application `telemetry` (namespace `argocd`) deploys to a cluster that Argo CD knows, the one it runs in, in
+  namespace `telemetry`. It is Synced and Healthy at the current head of `main`, and Service `telemetry` in
+  that namespace answers `telemetry v1.7`.
+xp: 100
+difficulty: beginner
+expected_time: 10m
+concepts: [destination, cluster, in-cluster, InvalidSpecError]

@@ -1,0 +1,3 @@
+Argo CD decides what a resource is by its annotations. Read the value of
+`argocd.argoproj.io/hook` on the Job very carefully, letter by letter, and compare it with the hook phases
+Argo CD knows: PreSync, Sync, PostSync, SyncFail, Skip.

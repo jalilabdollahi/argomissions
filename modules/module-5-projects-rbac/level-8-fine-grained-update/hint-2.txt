@@ -1,0 +1,5 @@
+In Argo CD 3.x, `applications, update` and `applications, delete` only apply to the Application object. Acting on
+the resources it manages has its own policy forms:
+  applications, action/<group>/<kind>/<action>, <project>/<app>, allow
+  applications, delete/<group>/<kind>/<namespace>/<name>, <project>/<app>, allow
+`*` works in every segment. Give mira exactly the two things she needs, not wildcards for everything.

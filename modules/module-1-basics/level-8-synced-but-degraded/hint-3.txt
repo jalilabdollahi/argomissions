@@ -1,0 +1,3 @@
+The image tag in deploy/deployment.yaml has a letter where a digit belongs (the tag is a version number).
+Fix it in your clone, commit and push, then sync: argocd app sync notifier
+`kubectl set image` would make the pod run, but Git would still be wrong.

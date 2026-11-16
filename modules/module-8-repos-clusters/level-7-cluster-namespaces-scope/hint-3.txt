@@ -1,0 +1,4 @@
+Extend the scope to exactly the two region namespaces:
+  namespaces: parcel-eu,parcel-us
+Edit Secret `cluster-regional` (kubectl edit, or patch `stringData.namespaces`), or use
+`argocd cluster set regional --namespace parcel-eu --namespace parcel-us`. Then refresh `parcel-hub-us`.

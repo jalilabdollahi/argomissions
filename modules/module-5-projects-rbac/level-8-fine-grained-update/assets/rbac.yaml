@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-rbac-cm
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: argocd-rbac-cm
+    app.kubernetes.io/part-of: argocd
+data:
+  # Written for Argo CD 2.x, copied unchanged into the new cluster.
+  policy.csv: |
+    p, role:loyalty-oncall, applications, get, loyalty/*, allow
+    p, role:loyalty-oncall, applications, sync, loyalty/*, allow
+    p, role:loyalty-oncall, applications, update, loyalty/*, allow
+    p, role:loyalty-oncall, projects, get, loyalty, allow
+    g, mira, role:loyalty-oncall

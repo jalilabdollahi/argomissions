@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: studio
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+  - git:
+      repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/studio-platform.git
+      revision: main
+      directories:
+      - path: apps/*
+  template:
+    metadata:
+      name: 'studio-{{.path.basename}}'
+    spec:
+      project: default
+      source:
+        repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/studio-platform.git
+        targetRevision: main
+        path: '{{.path.path}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: studio
+      syncPolicy:
+        automated: {}
+        syncOptions:
+        - CreateNamespace=true

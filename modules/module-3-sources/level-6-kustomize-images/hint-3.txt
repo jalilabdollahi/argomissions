@@ -1,0 +1,3 @@
+Override the alias for the Application: argocd app set ticket-desk --kustomize-image ticket-desk-web=<image>:<tag>,
+then sync. (Editing the prod overlay in Git and syncing is also a valid change; `kubectl set image` on the live
+Deployment is not - Argo CD will show the Application OutOfSync.)

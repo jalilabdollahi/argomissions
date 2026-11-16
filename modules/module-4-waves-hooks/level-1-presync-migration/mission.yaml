@@ -1,0 +1,16 @@
+name: "Migrate Before You Deploy"
+description: |
+  Release v2 of `payroll-api` is merged on `main` of the Gitea repo `platform/payroll-api`. Besides the new
+  image it ships a database migration, Job `payroll-schema-migrate`, which takes about 12 seconds. On staging
+  last week the same pattern went wrong: Argo CD created the Job and the new Deployment in the same sync, the
+  v2 pods started serving while the schema was still old, and users saw errors until the Job finished. The
+  Application `payroll-api` is `OutOfSync` (v1 is live, the release is not synced yet). A clone of the repo
+  is in your workspace. Production must not repeat staging's mistake.
+objective: |
+  Application `payroll-api` (namespace `argocd`) is Synced and Healthy at the current head of `main`, release v2
+  was deployed by an Argo CD sync, and in that sync Job `payroll-schema-migrate` in namespace `payroll` ran to
+  completion before the Deployment `payroll-api` rolled out. Service `payroll-api` answers `payroll-api v2`.
+xp: 200
+difficulty: intermediate
+expected_time: 15m
+concepts: [resource hooks, PreSync, sync phases, sync waves, Job]

@@ -1,0 +1,4 @@
+Compare what Git says with what runs, and see what Argo CD thinks of the difference:
+  argocd app get search-api
+  argocd app diff search-api
+  argocd app history search-api

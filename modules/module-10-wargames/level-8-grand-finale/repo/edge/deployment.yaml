@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: meridian-edge
+  labels: {app: meridian-edge}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: meridian-edge}
+  template:
+    metadata:
+      labels: {app: meridian-edge}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: web
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=meridian-edge v3.2", "-listen=:5678"]
+        ports:
+        - containerPort: 5678
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: meridian-edge
+spec:
+  selector: {app: meridian-edge}
+  ports:
+  - port: 80
+    targetPort: 5678

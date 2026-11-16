@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: custody-batch
+  labels: {app: custody-batch}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: custody-batch}
+  template:
+    metadata:
+      labels: {app: custody-batch}
+    spec:
+      serviceAccountName: custody-batch
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: web
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=custody-batch v1.2", "-listen=:5678"]
+        ports:
+        - containerPort: 5678
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: custody-batch
+spec:
+  selector: {app: custody-batch}
+  ports:
+  - port: 80
+    targetPort: 5678
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: custody-batch

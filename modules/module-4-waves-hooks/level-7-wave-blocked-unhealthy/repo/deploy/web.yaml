@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tracker-web
+  labels: {app: tracker-web}
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: tracker-web}
+  template:
+    metadata:
+      labels: {app: tracker-web}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: web
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=fleet-tracker v1.3", "-listen=:5678"]
+        ports:
+        - containerPort: 5678
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tracker-web
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  selector: {app: tracker-web}
+  ports:
+  - port: 80
+    targetPort: 5678

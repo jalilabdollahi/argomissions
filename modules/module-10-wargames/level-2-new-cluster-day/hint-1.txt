@@ -1,0 +1,4 @@
+Start with the root: apply the Application from bootstrap/ and read `argocd app get tidewater-root` (conditions, not
+just colours). Then, once it can read the repository, look at every child with `argocd app get` — each failing
+child says something different. `kubectl -n argocd get applications,appprojects` shows what exists.
+Remember the root has self-heal: a hand edit to anything it manages is reverted. Where must changes go?

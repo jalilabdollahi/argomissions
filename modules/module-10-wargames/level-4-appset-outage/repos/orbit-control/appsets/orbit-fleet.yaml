@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: orbit-fleet
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+  - git:
+      repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/orbit-services.git
+      revision: main
+      directories:
+      - path: services/*
+  template:
+    metadata:
+      name: 'orbit-{{.path.basename}}'
+    spec:
+      project: orbit
+      source:
+        repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/orbit-services.git
+        targetRevision: main
+        path: '{{.path.path}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: 'orbit-{{.path.basename}}'
+      syncPolicy:
+        automated: {}
+        syncOptions:
+        - CreateNamespace=true

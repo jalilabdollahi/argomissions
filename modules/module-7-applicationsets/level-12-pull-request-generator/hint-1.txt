@@ -1,0 +1,4 @@
+Start from what the generator is looking for and what Gitea has:
+  kubectl -n argocd get applicationset pulse-previews -o yaml        # generators[0].pullRequest.gitea
+  argocd appset get pulse-previews
+Then open the three pull requests of platform/pulse-web in Gitea (or GET /api/v1/repos/platform/pulse-web/pulls?state=all).

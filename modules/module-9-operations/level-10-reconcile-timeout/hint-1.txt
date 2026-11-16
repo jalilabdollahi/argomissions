@@ -1,0 +1,4 @@
+See how often Argo CD is told to look at Git, and what the components actually run with:
+  kubectl -n argocd get configmap argocd-cm -o yaml
+  kubectl -n argocd get statefulset argocd-application-controller -o yaml | grep -B2 -A6 RECONCILIATION
+  kubectl -n argocd exec argocd-application-controller-0 -- printenv ARGOCD_RECONCILIATION_TIMEOUT

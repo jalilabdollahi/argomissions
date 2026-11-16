@@ -1,0 +1,3 @@
+The Application is Manual: it notices new commits (it reports OutOfSync) but never acts on them.
+The team's rule needs an automated sync policy on the Application itself, not another one-off sync.
+  argocd app set --help | grep -i sync-policy

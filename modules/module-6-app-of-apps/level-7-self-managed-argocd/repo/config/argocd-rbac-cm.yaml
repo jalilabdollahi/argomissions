@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-rbac-cm
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: argocd-rbac-cm
+    app.kubernetes.io/part-of: argocd
+data:
+  policy.csv: |
+    # platform auditors: read applications and their logs, nothing else
+    p, role:auditor, applications, get, */*, allow
+    p, role:auditor, logs, get, */*, allow
+    g, platform-auditors, role:auditor

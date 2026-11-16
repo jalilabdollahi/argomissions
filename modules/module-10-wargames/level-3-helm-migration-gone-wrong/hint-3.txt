@@ -1,0 +1,5 @@
+`argocd app set stockroom-db-v2 --values values/production.yaml`, `--release-name stockroom-db`, and
+`argocd app unset stockroom-db-v2 --parameter message`.
+The chart has `persistence.claimName` (see `chart/templates/_helpers.tpl`): set it to the existing claim, in the
+production values file in Git (or as a Helm parameter). Run `argocd app diff` again: the PVC must show as
+unchanged or updated, never created or pruned. Then sync WITHOUT pruning anything.

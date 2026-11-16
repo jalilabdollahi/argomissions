@@ -1,0 +1,4 @@
+Argo CD applies the resources wave by wave (lowest number first, default 0) and starts the next wave only when
+everything in the current one is Healthy. Here the Deployment (wave 0) needs the ConfigMap, but the ConfigMap
+sits in a later wave, so it is never created: the Deployment cannot become Healthy and the wave never ends.
+A plain re-sync cannot help; look at the annotations in Git.

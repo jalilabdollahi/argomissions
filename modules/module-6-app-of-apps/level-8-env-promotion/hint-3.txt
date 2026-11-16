@@ -1,0 +1,2 @@
+In your clone of meterhub-gitops, change `targetRevision` of `envs/prod/meterhub.yaml` to the release tag (v1.2.0),
+leave staging alone, commit and push. The prod root applies the change; the prod child then redeploys the tag.

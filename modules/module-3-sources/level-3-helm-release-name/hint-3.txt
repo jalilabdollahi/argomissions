@@ -1,0 +1,2 @@
+Give Helm the release name that produces `tracker-api` (try `helm template tracker fleet-tracker/chart`), then
+let Argo CD apply it. `argocd app set --help` lists a flag for the release name. Do not rename the Application.

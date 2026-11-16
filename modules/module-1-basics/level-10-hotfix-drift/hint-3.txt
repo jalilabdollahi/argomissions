@@ -1,0 +1,2 @@
+Change `replicas` to 3 in deploy/deployment.yaml in your clone, commit and push.
+Then sync the Application so it is at the new head: argocd app sync checkout

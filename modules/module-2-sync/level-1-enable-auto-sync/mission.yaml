@@ -1,0 +1,15 @@
+name: "Deploy On Merge"
+description: |
+  The telemetry team's `metrics-gw` gateway is managed by an Argo CD Application of the same name. The team
+  agreed that every merge to `main` of the Gitea repo `platform/metrics-gw` must reach the cluster without
+  anyone touching Argo CD. Yet three releases (v1.1, v1.2 and v1.3) were merged today and the Application
+  just sits there: `argocd app get metrics-gw` says `OutOfSync` and the gateway in namespace `metrics` still
+  answers `metrics-gw v1.0`. A clone of the repo is in your workspace.
+objective: |
+  Application `metrics-gw` deploys new commits of `main` on its own, with no manual sync. It is Synced and
+  Healthy at the current head of `main`, and Service `metrics-gw` in namespace `metrics` answers
+  `metrics-gw v1.3`.
+xp: 100
+difficulty: beginner
+expected_time: 10m
+concepts: [syncPolicy, automated sync, OutOfSync]

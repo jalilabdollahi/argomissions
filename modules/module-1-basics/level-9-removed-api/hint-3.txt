@@ -1,0 +1,3 @@
+Edit deploy/pdb.yaml in your clone of the repo: only the `apiVersion` line has to change (the spec is the same).
+Push the commit, then sync: argocd app sync billing
+Do not delete the file — the objective says the budget has to exist.

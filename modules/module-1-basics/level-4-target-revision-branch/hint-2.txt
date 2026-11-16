@@ -1,0 +1,2 @@
+`targetRevision` names a branch, tag or commit to deploy from. The Application asks for a name that the repo
+does not have any more; look at which branch exists and what the team calls it now.

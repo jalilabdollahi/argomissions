@@ -1,0 +1,4 @@
+See what Argo CD offers today and where actions come from:
+  argocd app actions list ferry-booking --kind Deployment --resource-name ferry-booking
+Built-in actions ship with Argo CD; your own are defined in the argocd-cm ConfigMap (operator manual,
+"Resource Actions", custom resource actions).

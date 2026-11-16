@@ -1,0 +1,4 @@
+The PR that should get a preview carries the label `deploy-preview`; the ApplicationSet filters on another name.
+Make the two agree (fix the ApplicationSet, which is the documented convention) and leave the filter in place:
+without it the open PR that is not labelled would get an environment too. The generator re-reads Gitea every 30 s,
+and immediately after the ApplicationSet changes.

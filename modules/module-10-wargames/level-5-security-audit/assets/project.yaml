@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: custody
+  namespace: argocd
+spec:
+  description: Card custody services
+  sourceRepos:
+  - http://gitea.gitea.svc.cluster.local:3000/platform/custody-api.git
+  - http://gitea.gitea.svc.cluster.local:3000/platform/custody-batch.git
+  destinations:
+  - server: https://kubernetes.default.svc
+    namespace: custody
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'

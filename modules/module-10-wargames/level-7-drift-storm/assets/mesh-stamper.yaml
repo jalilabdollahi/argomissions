@@ -1,0 +1,65 @@
+# The service-mesh team's controller. NOT part of the stormwatch repo, not managed by Argo CD.
+# It stamps an epoch annotation on the live sw-ingest Deployment every few seconds (what a mesh injector does).
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: mesh-stamper
+  namespace: stormwatch-mesh
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: mesh-stamper
+  namespace: stormwatch
+rules:
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["get", "patch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: mesh-stamper
+  namespace: stormwatch
+subjects:
+- {kind: ServiceAccount, name: mesh-stamper, namespace: stormwatch-mesh}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: mesh-stamper
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mesh-stamper
+  namespace: stormwatch-mesh
+  labels: {app: mesh-stamper}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: mesh-stamper}
+  template:
+    metadata:
+      labels: {app: mesh-stamper}
+    spec:
+      serviceAccountName: mesh-stamper
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: stamper
+        image: curlimages/curl:8.10.1
+        imagePullPolicy: IfNotPresent
+        command:
+        - sh
+        - -c
+        - |
+          SA=/var/run/secrets/kubernetes.io/serviceaccount
+          URL=https://kubernetes.default.svc/apis/apps/v1/namespaces/stormwatch/deployments/sw-ingest
+          while true; do
+            curl -s --cacert $SA/ca.crt -H "Authorization: Bearer $(cat $SA/token)" \
+              -X PATCH -H 'Content-Type: application/merge-patch+json' \
+              "$URL?fieldManager=mesh-stamper" \
+              -d "{\"metadata\":{\"annotations\":{\"mesh.argomissions.io/epoch\":\"$(date +%s)\"}}}" >/dev/null
+            sleep 10
+          done
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

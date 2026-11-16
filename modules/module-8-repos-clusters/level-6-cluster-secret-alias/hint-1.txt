@@ -1,0 +1,4 @@
+Look at how Argo CD sees the destination, then at the Secret that defines it:
+  argocd cluster list
+  kubectl -n argocd get secret cluster-staging -o jsonpath='{.data.config}' | base64 -d | jq 'del(.bearerToken)'
+The `config` JSON of a cluster Secret has two parts: who you are, and how to trust the server you talk to.

@@ -1,0 +1,7 @@
+Near-fixes that are NOT enough:
+  * `policy.default: role:readonly`: deploy-bot was only working because of the admin default, and a read-only
+    default also lets the pipeline read clusters and repositories
+  * Secret as base64 `data:` or the same password created by hand: the leaked value is still the password
+  * deleting the repository secrets without adding credentials: Argo CD can no longer read private repos
+  * an empty `clusterResourceWhitelist`: the ClusterRole and ClusterRoleBinding of custody-api are refused
+Policy lines look like `p, role:NAME, applications, sync, custody/*, allow` and `g, ACCOUNT, role:NAME`.

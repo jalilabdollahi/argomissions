@@ -1,0 +1,16 @@
+name: "Works On My Laptop"
+description: |
+  The `orders` service is meant to run from the Gitea repo `platform/orders` (folder `deploy/`, branch `main`)
+  into namespace `orders`. The developer who created the Application cloned the repo on their laptop and
+  pasted that same address into Argo CD. Now `argocd app get orders` shows the Application as `Unknown` with
+  a ComparisonError: `failed to list refs: Get "http://localhost:3300/platform/orders.git/info/refs?service=git-upload-pack":
+  dial tcp [::1]:3300: connect: connection refused`. Yet the URL opens fine in the developer's browser.
+  A clone of the repo is in your workspace. The Argo CD UI is at http://localhost:9080 (admin / argomissions).
+objective: |
+  Application `orders` (namespace `argocd`) reads the `orders` repo through an address Argo CD can reach from
+  inside the cluster. It is Synced and Healthy at the current head of `main`, and Service `orders` in namespace
+  `orders` answers `orders v1.4`.
+xp: 100
+difficulty: beginner
+expected_time: 10m
+concepts: [Application, repoURL, repo-server, in-cluster URL]

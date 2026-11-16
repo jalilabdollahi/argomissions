@@ -1,0 +1,3 @@
+Argo CD does not start wave 1 before every resource of wave 0 is Healthy. tracker-api (wave 0) never becomes
+Ready because its readiness probe targets a port the container does not listen on, so tracker-web (wave 1)
+is never updated. The sync operation will wait on its own.

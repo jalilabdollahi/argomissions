@@ -1,0 +1,4 @@
+`timeout.reconciliation` reaches the application controller and the repo-server as an environment variable
+(from argocd-cm). Environment variables are read when a process starts, so changing the ConfigMap alone
+changes nothing in running pods. Both components use the value: the controller as its polling interval,
+the repo-server as the lifetime of its cached "which commit is main" answers.

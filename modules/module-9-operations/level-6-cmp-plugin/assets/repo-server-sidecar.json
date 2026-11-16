@@ -1,0 +1,30 @@
+{
+  "spec": {
+    "template": {
+      "spec": {
+        "containers": [
+          {
+            "name": "kv-render-cmp",
+            "image": "busybox:1.36",
+            "imagePullPolicy": "IfNotPresent",
+            "command": ["/bin/sh", "-c", "if [ -s /home/argocd/cmp-server/config/plugin.yaml ]; then exec /var/run/argocd/argocd-cmp-server; fi; exec sleep 2147483647"],
+            "securityContext": {
+              "runAsNonRoot": true,
+              "runAsUser": 999
+            },
+            "volumeMounts": [
+              {"name": "var-files", "mountPath": "/var/run/argocd"},
+              {"name": "plugins", "mountPath": "/home/argocd/cmp-server/plugins"},
+              {"name": "kv-render-plugin", "mountPath": "/home/argocd/cmp-server/config"},
+              {"name": "kv-render-tmp", "mountPath": "/tmp"}
+            ]
+          }
+        ],
+        "volumes": [
+          {"name": "kv-render-plugin", "configMap": {"name": "kv-render-plugin", "optional": true}},
+          {"name": "kv-render-tmp", "emptyDir": {}}
+        ]
+      }
+    }
+  }
+}

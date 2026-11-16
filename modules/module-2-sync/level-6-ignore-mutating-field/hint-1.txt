@@ -1,0 +1,4 @@
+See what exactly differs, and watch it change:
+  argocd app diff profile-svc
+  kubectl -n profiles get deploy profile-svc -o jsonpath='{.metadata.labels}' ; sleep 10; kubectl -n profiles get deploy profile-svc -o jsonpath='{.metadata.labels}'
+Syncing makes the diff disappear for a few seconds, then it comes back. Who writes it?

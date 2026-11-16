@@ -1,0 +1,11 @@
+# The "we are deploying" banner: raised before every sync.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: maintenance-flag
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/sync-wave: "-1"
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+data:
+  message: "Booking is read-only while we deploy. Back in a few minutes."

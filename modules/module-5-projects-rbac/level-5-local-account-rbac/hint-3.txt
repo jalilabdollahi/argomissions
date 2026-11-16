@@ -1,0 +1,5 @@
+In argocd-rbac-cm, key `policy.csv`:
+  p, role:shop-deployer, applications, get, shop/*, allow
+  p, role:shop-deployer, applications, sync, shop/*, allow
+  g, ci-bot, role:shop-deployer
+Do not use `role:admin`, an action of `*`, or `*/*` as the object. Then re-run the can-i checks as ci-bot.

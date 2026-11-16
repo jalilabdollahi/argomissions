@@ -1,0 +1,53 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: parcel-api
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+  - merge:
+      mergeKeys:
+      - env
+      generators:
+      # base: every environment with the defaults
+      - list:
+          elements:
+          - env: dev
+            replicas: "1"
+            banner: "parcel-api dev"
+          - env: stage
+            replicas: "1"
+            banner: "parcel-api stage"
+          - env: prod
+            replicas: "1"
+            banner: "parcel-api prod"
+      # overrides: only what differs from the defaults
+      - list:
+          elements:
+          - environment: prod
+            replicas: "3"
+            banner: "parcel-api prod priority-lane"
+  template:
+    metadata:
+      name: 'parcel-api-{{.env}}'
+    spec:
+      project: default
+      source:
+        repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/parcel-api.git
+        targetRevision: main
+        path: chart
+        helm:
+          parameters:
+          - name: replicas
+            value: '{{.replicas}}'
+          - name: banner
+            value: '{{.banner}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: 'parcel-{{.env}}'
+      syncPolicy:
+        automated: {}
+        syncOptions:
+        - CreateNamespace=true

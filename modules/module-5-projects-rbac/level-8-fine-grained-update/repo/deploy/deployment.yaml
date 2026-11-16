@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rewards-engine
+  labels: {app: rewards-engine}
+spec:
+  replicas: 2
+  selector:
+    matchLabels: {app: rewards-engine}
+  template:
+    metadata:
+      labels: {app: rewards-engine}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: api
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=rewards-engine v1", "-listen=:5678"]
+        ports:
+        - containerPort: 5678
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

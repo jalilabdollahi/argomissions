@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ferry-booking
+  labels: {app: ferry-booking}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: ferry-booking}
+  template:
+    metadata:
+      labels: {app: ferry-booking}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: web
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=ferry-booking v5.0", "-listen=:5678"]
+        ports:
+        - containerPort: 5678
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

@@ -1,0 +1,4 @@
+Add an AppProject manifest named `tracing-team` to `apps/` (sourceRepos: the repo, destinations: the two namespaces,
+and a clusterResourceWhitelist for Namespace because the children use CreateNamespace). Give it an earlier sync
+wave than the children (`argocd.argoproj.io/sync-wave: "-1"` on the project; the children use wave 0).
+Push, then refresh the root.

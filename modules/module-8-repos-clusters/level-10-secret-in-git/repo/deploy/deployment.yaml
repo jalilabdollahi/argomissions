@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: smtp-gateway
+  labels: {app: smtp-gateway}
+spec:
+  replicas: 2
+  selector:
+    matchLabels: {app: smtp-gateway}
+  template:
+    metadata:
+      labels: {app: smtp-gateway}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: relay
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=smtp-gateway v1.4", "-listen=:5678"]
+        env:
+        - name: SMTP_USERNAME
+          valueFrom: {secretKeyRef: {name: smtp-credentials, key: username}}
+        - name: SMTP_PASSWORD
+          valueFrom: {secretKeyRef: {name: smtp-credentials, key: password}}
+        ports:
+        - containerPort: 5678
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

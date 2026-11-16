@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: query-service
+  namespace: argocd
+spec:
+  project: search-platform
+  source:
+    repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/query-service.git
+    targetRevision: main
+    path: deploy
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: search
+  syncPolicy:
+    automated: {}

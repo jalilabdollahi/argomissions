@@ -1,0 +1,4 @@
+A green root does not mean it deployed anything. Ask Argo CD what the root renders:
+  argocd app get shopfront-root
+  argocd app manifests shopfront-root
+Then compare the root's source path with the layout of the repo in your workspace (`ls`, `git ls-files`).

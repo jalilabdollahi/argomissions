@@ -1,0 +1,5 @@
+Look at what Argo CD knows about the repositories:
+  argocd repo list
+  argocd repocreds list
+  argocd repocreds add --help
+All five failing apps point at repositories under the same URL prefix.

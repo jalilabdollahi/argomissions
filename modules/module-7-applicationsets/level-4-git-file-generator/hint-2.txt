@@ -1,0 +1,3 @@
+The file generator reads every file matching `tenants/*/config.json` and uses each JSON object as the parameters
+of one Application. With `missingkey=error`, one file without the key the template asks for makes the whole set
+fail, not just that tenant. Compare the three config files, key by key (spelling and capitals count).

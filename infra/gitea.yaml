@@ -1,0 +1,100 @@
+# In-cluster Gitea: the Git server every mission reads from and pushes to.
+#   players:  http://localhost:3300/platform/<repo>.git          (NodePort 30300 → host 3300)
+#   Argo CD:  http://gitea.gitea.svc.cluster.local:3000/platform/<repo>.git
+# Data (sqlite, repos, generated secrets) lives on a PVC, so Gitea survives pod restarts.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: gitea
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: gitea-data
+  namespace: gitea
+spec:
+  accessModes: [ReadWriteOnce]
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gitea
+  namespace: gitea
+  labels: {app: gitea}
+spec:
+  replicas: 1
+  strategy: {type: Recreate}
+  selector:
+    matchLabels: {app: gitea}
+  template:
+    metadata:
+      labels: {app: gitea}
+    spec:
+      securityContext:
+        fsGroup: 1000
+      containers:
+      - name: gitea
+        image: gitea/gitea:28.4.0-rootless
+        imagePullPolicy: IfNotPresent
+        env:
+        - {name: GITEA_APP_INI, value: /var/lib/gitea/custom/conf/app.ini}
+        - {name: GITEA_CUSTOM, value: /var/lib/gitea/custom}
+        - {name: GITEA__security__INSTALL_LOCK, value: "true"}
+        - {name: GITEA__database__DB_TYPE, value: sqlite3}
+        - {name: GITEA__database__PATH, value: /var/lib/gitea/data/gitea.db}
+        - {name: GITEA__server__ROOT_URL, value: "http://localhost:3300/"}
+        - {name: GITEA__server__HTTP_PORT, value: "3000"}
+        - {name: GITEA__server__DOMAIN, value: localhost}
+        - {name: GITEA__server__SSH_DOMAIN, value: localhost}
+        - {name: GITEA__server__SSH_PORT, value: "2223"}
+        - {name: GITEA__server__SSH_LISTEN_PORT, value: "2222"}
+        - {name: GITEA__server__START_SSH_SERVER, value: "true"}
+        - {name: GITEA__server__OFFLINE_MODE, value: "true"}
+        - {name: GITEA__service__DISABLE_REGISTRATION, value: "true"}
+        - {name: GITEA__service__REQUIRE_SIGNIN_VIEW, value: "false"}
+        - {name: GITEA__repository__DEFAULT_BRANCH, value: main}
+        - {name: GITEA__repository__DEFAULT_PRIVATE, value: public}
+        # Gitea 28 denies webhooks to private addresses unless their IP range is listed explicitly ("*" is
+        # rejected). kind's Service and Pod CIDRs, so webhooks can reach argocd-server in the cluster.
+        - {name: GITEA__security__ALLOWED_HOST_LIST, value: "10.96.0.0/12,10.244.0.0/16"}
+        - {name: GITEA__webhook__ALLOWED_HOST_LIST, value: "10.96.0.0/12,10.244.0.0/16"}
+        - {name: GITEA__webhook__SKIP_TLS_VERIFY, value: "true"}
+        - {name: GITEA__log__LEVEL, value: Warn}
+        - {name: GITEA__session__PROVIDER, value: memory}
+        - {name: GITEA__cache__ADAPTER, value: memory}
+        - {name: GITEA__queue__TYPE, value: level}
+        - {name: GITEA__indexer__REPO_INDEXER_ENABLED, value: "false"}
+        - {name: GITEA__actions__ENABLED, value: "false"}
+        - {name: GITEA__packages__ENABLED, value: "false"}
+        - {name: GITEA__metrics__ENABLED, value: "false"}
+        ports:
+        - {name: http, containerPort: 3000}
+        - {name: ssh, containerPort: 2222}
+        readinessProbe:
+          httpGet: {path: /api/healthz, port: 3000}
+          periodSeconds: 3
+          failureThreshold: 40
+        resources:
+          requests: {cpu: 50m, memory: 128Mi}
+          limits: {memory: 512Mi}
+        volumeMounts:
+        - {name: data, mountPath: /var/lib/gitea}
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: gitea-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gitea
+  namespace: gitea
+spec:
+  type: NodePort
+  selector: {app: gitea}
+  ports:
+  - {name: http, port: 3000, targetPort: 3000, nodePort: 30300}
+  - {name: ssh, port: 22, targetPort: 2222, nodePort: 30022}

@@ -1,0 +1,16 @@
+data:
+  service.webhook.chat-hook: |
+    url: http://chat-hook.ops-hooks.svc.cluster.local
+    headers:
+      - name: Content-Type
+        value: application/json
+  template.app-sync-failed: |
+    webhook:
+      chat-hook:
+        method: POST
+        path: /hooks/deploys
+        body: |
+          {"app": "{{.app.metadata.name}}", "phase": "{{.app.status.operationState.phase}}", "revision": "{{.app.status.operationState.syncResult.revision}}"}
+  trigger.on-sync-failed: |
+    - when: app.status.operationState.phase in ['Error', 'Failed']
+      send: [app-sync-failed]

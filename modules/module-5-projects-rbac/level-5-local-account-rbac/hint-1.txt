@@ -1,0 +1,4 @@
+Check what Argo CD says the bot may do, using a separate CLI config so your admin session stays intact
+(see ci-pipeline.md):
+  argocd --config /tmp/ci-bot.config account can-i sync applications 'shop/shop-web'
+Then look at the place where permissions are defined: kubectl -n argocd get cm argocd-rbac-cm -o yaml

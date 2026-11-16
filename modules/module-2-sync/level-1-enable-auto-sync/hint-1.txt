@@ -1,0 +1,4 @@
+Compare what Git has with what Argo CD does about it:
+  argocd app get metrics-gw
+  git -C metrics-gw log --oneline
+Look at the "Sync Policy" line, and at who is supposed to press Sync when a commit arrives.

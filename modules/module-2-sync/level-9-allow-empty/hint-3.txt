@@ -1,0 +1,4 @@
+Either allow an empty target in the sync policy:
+  argocd app set nightly-etl --sync-policy automated --auto-prune --self-heal --allow-empty
+or sync once by hand and let it prune:
+  argocd app sync nightly-etl --prune

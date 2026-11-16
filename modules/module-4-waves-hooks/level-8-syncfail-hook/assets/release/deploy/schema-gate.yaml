@@ -1,0 +1,22 @@
+# Release v5.2 ships a schema change; this gate refuses to deploy until the DBA team signs it off.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: schema-gate
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/sync-wave: "0"
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: gate
+        image: busybox:1.36
+        imagePullPolicy: IfNotPresent
+        command: ["sh", "-c", "echo 'schema gate: bookings.slot_id migration not approved by DBA'; exit 1"]
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

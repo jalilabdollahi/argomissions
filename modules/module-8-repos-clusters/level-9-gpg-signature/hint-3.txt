@@ -1,0 +1,5 @@
+Produce a tip commit that carries the release key's signature, and push it:
+  cd treasury-core
+  git commit --allow-empty -S -m "Sign off v2"      # a signed commit on top - or amend the tip: git commit --amend -S --no-edit
+  git push                                          # (--force-with-lease after an amend)
+Then refresh and sync: argocd app sync treasury-core

@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: stock-sync
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/inventory-gitops.git
+    targetRevision: main
+    path: workloads/sync
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: inventory-sync
+  syncPolicy:
+    automated: {}
+    syncOptions:
+    - CreateNamespace=true

@@ -1,0 +1,18 @@
+name: "Bring Your Own Tool"
+description: |
+  The label printing service is described by a single `key=value` file, `deploy/app.conf`, in the Gitea repo
+  `platform/label-printer`. The platform team wrote a config management plugin, `kv-render`, that turns that
+  file into a Deployment and a Service; it runs as a sidecar of `argocd-repo-server` and its configuration is
+  the ConfigMap `kv-render-plugin` in namespace `argocd`. The Application `label-printer` (automated sync,
+  destination namespace `labels-print`) reports Synced and Healthy, yet `argocd app manifests label-printer`
+  prints nothing and no pod runs. A clone of the repo is in your workspace.
+objective: |
+  Application `label-printer` is Synced and Healthy at the current head of `main`, rendered by a config
+  management plugin (source type Plugin) from `deploy/app.conf`, and its last sync was done by Argo CD.
+  Deployment `label-printer` in namespace `labels-print` has 2 ready pods and the Service of the same name
+  answers `label-printer v2.1`. The repo must still describe the service with `app.conf` only, no hand-written
+  manifests.
+xp: 300
+difficulty: expert
+expected_time: 25m
+concepts: [config management plugin, CMP sidecar, discover, repo-server, plugin.yaml]

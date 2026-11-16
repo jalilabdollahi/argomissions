@@ -1,0 +1,3 @@
+Create a new token for `argo-reader` (read:repository is enough), put it into the `password` field of the repository
+Secret (`argocd repo add URL --username argo-reader --password TOKEN --upsert`, or patch the Secret), then
+hard-refresh the Application.

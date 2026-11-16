@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stockroom-db
+  labels: {app: stockroom-db}
+spec:
+  replicas: 1
+  strategy: {type: Recreate}
+  selector:
+    matchLabels: {app: stockroom-db}
+  template:
+    metadata:
+      labels: {app: stockroom-db}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: db
+        image: busybox:1.36
+        imagePullPolicy: IfNotPresent
+        command: ["sh", "-c", 'mkdir -p /www; echo "$MESSAGE" > /www/index.html; [ -f /data/seq ] || echo "seq=0 fresh-volume" > /data/seq; ln -sf /data/seq /www/seq; exec httpd -f -p 8080 -h /www']
+        env:
+        - {name: MESSAGE, value: "stockroom-db legacy 2.9"}
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - {name: data, mountPath: /data}
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: stockroom-db-data

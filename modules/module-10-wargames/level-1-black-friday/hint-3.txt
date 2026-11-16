@@ -1,0 +1,7 @@
+Windows: `argocd proj windows enable-manual-sync blackfriday <id>` (the id is in `windows list`).
+Destinations: `argocd proj add-destination blackfriday https://kubernetes.default.svc bf-promo`.
+Namespace: `argocd proj allow-cluster-resource blackfriday '' Namespace` (or create the namespace yourself and drop the
+CreateNamespace option).
+Replicas: an `ignoreDifferences` entry for Deployment `/spec/replicas` on bf-cart plus the sync option
+`RespectIgnoreDifferences=true`, so a sync does not push Git's 2 over the autoscaler's 6.
+Do those first, then sync bf-cart and bf-promo from the CLI or the UI.

@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: maintenance-janitor
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: maintenance-janitor
+rules:
+- apiGroups: [""]
+  resources: ["configmaps"]
+  resourceNames: ["maintenance-flag"]
+  verbs: ["get", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: maintenance-janitor
+subjects:
+- kind: ServiceAccount
+  name: maintenance-janitor
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: maintenance-janitor

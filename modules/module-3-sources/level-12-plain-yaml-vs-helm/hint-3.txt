@@ -1,0 +1,3 @@
+Either remove the stray Chart.yaml (and values.yaml) from `deploy/` in Git, or tell the Application explicitly
+that it is a directory source (for example `argocd app set docs-portal --directory-recurse`: setting any
+directory option fixes the type). Removing the files is the cleaner fix because it also helps the next person.

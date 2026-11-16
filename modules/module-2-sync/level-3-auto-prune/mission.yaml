@@ -1,0 +1,15 @@
+name: "Automated, But Not Tidy"
+description: |
+  The photo team retired the old `gallery-classic` Service: its manifest was deleted from `deploy/` in the Gitea
+  repo `platform/gallery-web` (a clone is in your workspace). Application `gallery-web` has automated sync, yet
+  the Service is still answering in namespace `gallery` and the Application is stuck on `OutOfSync`;
+  `argocd app get gallery-web` lists `gallery-classic` as `OutOfSync` and the sync never runs by itself. Security
+  wants the retired endpoint gone, and wants it to stay that way for every manifest the team retires from now on.
+objective: |
+  Application `gallery-web` is Synced and Healthy at the current head of `main`, Service `gallery-classic` no
+  longer exists in namespace `gallery` (and Git still does not contain it), and the Application removes objects
+  that disappear from Git on its own. Service `gallery-web` in `gallery` answers `gallery-web v3.1`.
+xp: 150
+difficulty: beginner
+expected_time: 10m
+concepts: [prune, automated sync, orphan resources]

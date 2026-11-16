@@ -1,0 +1,6 @@
+Mark the Job in Git with a resource hook annotation for the phase that runs before the manifests are applied:
+  metadata:
+    annotations:
+      argocd.argoproj.io/hook: <phase>
+Commit and push, refresh the Application, then sync it and watch: argocd app get payroll-api
+(An earlier sync-wave on the Job also orders it before the Deployment.)

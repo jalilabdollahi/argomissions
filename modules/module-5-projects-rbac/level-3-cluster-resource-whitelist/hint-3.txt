@@ -1,0 +1,3 @@
+  argocd proj allow-cluster-resource radar rbac.authorization.k8s.io ClusterRole
+  argocd proj allow-cluster-resource radar rbac.authorization.k8s.io ClusterRoleBinding
+Do not use `'*' '*'`. A failed sync is not retried by itself: run `argocd app sync radar-agent` once more.

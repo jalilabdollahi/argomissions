@@ -1,0 +1,19 @@
+name: "A Token For The Pipeline"
+description: |
+  The release pipeline of the settlements team runs in namespace `settle-ci` and has to deploy `settle-api`
+  (Application in AppProject `settlements`) after every build. Its Argo CD credential is read from the Secret
+  `argocd-pipeline-token` (key `token`) in that namespace, but the Secret still holds the placeholder from the
+  template, and the first pipeline run died with:
+  `rpc error: code = Unauthenticated desc = invalid session: token is malformed: token contains an invalid number of segments`.
+  Security has been clear: the pipeline must never carry the admin password or an admin session, only
+  a credential that can do what a release needs inside its own project.
+objective: |
+  The Secret `argocd-pipeline-token` (key `token`) in namespace `settle-ci` holds a valid Argo CD token that
+  belongs to the project role `deployer` of AppProject `settlements`. With that token alone Argo CD allows
+  `get` and `sync` on the Applications of project `settlements`, and refuses everything else: deleting them,
+  creating or overriding them, and syncing Applications of any other project. Application `settle-api` stays
+  Synced and Healthy.
+xp: 250
+difficulty: advanced
+expected_time: 20m
+concepts: [AppProject, project roles, JWT tokens, RBAC policy, least privilege, argocd proj role]

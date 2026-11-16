@@ -1,0 +1,5 @@
+The ConfigMap changed, the running pods did not notice. Confirm with:
+  kubectl -n tollbooth get cm tollbooth-rates -o jsonpath='{.data}'
+  kubectl -n tollbooth get pods
+Then look at what Argo CD itself can do to a single resource of an application:
+  argocd app actions --help

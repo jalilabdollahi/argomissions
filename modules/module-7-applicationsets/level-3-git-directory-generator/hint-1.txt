@@ -1,0 +1,4 @@
+Find out where the extra Application comes from:
+  argocd app get studio-shared
+  kubectl -n argocd get applicationset studio -o yaml
+Compare the `directories` pattern of the generator with what the repo contains under `apps/`.

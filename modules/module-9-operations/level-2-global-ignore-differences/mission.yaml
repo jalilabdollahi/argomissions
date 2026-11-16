@@ -1,0 +1,19 @@
+name: "Every App Is OutOfSync"
+description: |
+  Since this morning the whole `tallyline` pipeline is OutOfSync: Applications `tallyline-ingest`,
+  `tallyline-rollup` and `tallyline-gateway` (repo `platform/tallyline`, one folder and one namespace
+  `tallyline-<folder>` each, automated sync, nobody touched them) flip back to OutOfSync seconds after every
+  sync. `argocd app diff` of each one shows the same single line: the label `complyd.argomissions.io/scan` is
+  `pending` in Git and something like `scan-1763300000` on the live Deployment, and the value keeps changing.
+  The security team's scanner `complyd` (namespace `complyd-system`, a stand-in for the compliance and admission
+  controllers real clusters run) stamps that label on every Deployment of the pipeline, and it will do so for
+  every service that is added later too. The security team needs the scanner to keep running.
+objective: |
+  Applications `tallyline-ingest`, `tallyline-rollup` and `tallyline-gateway` are Synced and Healthy at the
+  current head of `main` and stay Synced while `complyd` keeps rewriting the label. The scanner still runs.
+  The Applications themselves carry no `ignoreDifferences` of their own, and the setting must not hide real
+  drift of the Deployments (their spec, for one). Each service answers `tallyline-<folder> v4.2`.
+xp: 200
+difficulty: advanced
+expected_time: 15m
+concepts: [resource.customizations, ignoreDifferences, argocd-cm, global configuration, jsonPointers]

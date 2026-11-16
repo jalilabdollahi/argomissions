@@ -1,0 +1,5 @@
+See what a sync would touch and what it would be allowed to touch:
+  argocd app diff region-configs
+  argocd app get region-configs
+  kubectl -n regions get cm -o custom-columns=N:.metadata.name,RV:.metadata.resourceVersion,C:.data.count
+Only two objects differ from Git. How many does a sync apply?

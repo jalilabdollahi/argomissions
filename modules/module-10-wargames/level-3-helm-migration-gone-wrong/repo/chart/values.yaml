@@ -1,0 +1,6 @@
+# laptop defaults
+message: "stockroom-db dev build"
+persistence:
+  # name of the claim holding the data; empty = "<release>-storage"
+  claimName: ""
+  size: 64Mi

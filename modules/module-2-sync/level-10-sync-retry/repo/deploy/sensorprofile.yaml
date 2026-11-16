@@ -1,0 +1,7 @@
+apiVersion: runtime.argomissions.io/v1
+kind: SensorProfile
+metadata:
+  name: edge-default
+spec:
+  intervalSeconds: 30
+  sites: [berlin, lisbon]

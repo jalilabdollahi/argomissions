@@ -1,0 +1,15 @@
+name: "The Moved Manifests"
+description: |
+  The `catalog` service is deployed by Argo CD from the Gitea repo `platform/catalog` (branch `main`) into
+  namespace `catalog`. Last week a teammate merged a commit called "restructure: move manifests to
+  deploy/catalog". Since then the Application shows `Unknown` with a ComparisonError:
+  `Failed to load target state: failed to generate manifest for source 1 of 1: rpc error: code = Unknown desc = k8s: app path does not exist`.
+  Nothing has been deployed yet. A clone of the repo is in your workspace.
+objective: |
+  Application `catalog` (namespace `argocd`) reads the manifests where they live now, so it is Synced and
+  Healthy at the current head of `main`, and Service `catalog` in namespace `catalog` answers `catalog v2.0`.
+  The restructured layout of the repo stays as it is.
+xp: 100
+difficulty: beginner
+expected_time: 10m
+concepts: [Application, source.path, ComparisonError]

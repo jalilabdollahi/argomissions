@@ -1,0 +1,4 @@
+Read the error and then check the credentials Argo CD is using:
+  argocd app get mailroom
+  argocd repo list          (look at the connection status)
+  kubectl -n argocd get secret repo-mailroom

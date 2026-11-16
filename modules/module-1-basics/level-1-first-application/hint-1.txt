@@ -1,0 +1,4 @@
+Argo CD only deploys what an Application tells it to. Look at what exists:
+  argocd app list
+  argocd app create --help
+Everything an Application needs is in the briefing: repo, path, branch, destination cluster and namespace.

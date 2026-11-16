@@ -1,0 +1,15 @@
+name: "The Parameter That Wins"
+description: |
+  During an incident two weeks ago somebody pinned the `media-gateway` banner to a hotfix build. Since then the
+  release team bumped `release.version` in `chart/values.yaml` of the Gitea repo `platform/media-gateway` to
+  `2.1`, and Argo CD reports the Application `media-gateway` as Synced and Healthy at the new commit.
+  Yet the gateway in namespace `media` still answers `media-gateway 1.9.1-hotfix`, and every further version
+  bump in Git changes nothing. A clone of the repo is in your workspace.
+objective: |
+  Application `media-gateway` is Synced and Healthy at the current head of `main`, carries no override for the
+  release version, and Service `media-gateway` in namespace `media` answers `media-gateway ` followed by the
+  version that `chart/values.yaml` in Git declares.
+xp: 150
+difficulty: intermediate
+expected_time: 15m
+concepts: [Helm, parameters, precedence, values.yaml, argocd app unset]

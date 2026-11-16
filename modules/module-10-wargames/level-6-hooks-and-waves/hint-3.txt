@@ -1,0 +1,7 @@
+Near-fixes that are NOT enough:
+  * deleting the Job by hand lets this sync past fault 1; the next release breaks again
+  * `kubectl apply` of the Role / the CRD works today, but Git still orders them wrongly and rota-crds stays OutOfSync
+  * `ignoreDifferences` on the ShiftPolicy hides the diff, the live object still lacks the field
+  * `|| true` or `exit 0` in the smoke test makes the sync green and the test worthless
+What does a hook need so that its last run is cleaned up? What do RBAC objects need to be (phase and wave) so they
+exist before a hook uses them? What would make rota-crds follow Git without a human?

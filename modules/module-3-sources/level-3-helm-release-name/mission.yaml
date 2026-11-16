@@ -1,0 +1,15 @@
+name: "The Renamed Release"
+description: |
+  The `fleet-tracker` team moved from plain manifests to a Helm chart: the Application `fleet-tracker` now
+  reads `chart/` of the Gitea repo `platform/fleet-tracker` instead of `manifests/`. Argo CD says Synced and
+  Healthy, but every consumer of `http://tracker-api.fleet` now fails with "could not resolve host".
+  `kubectl -n fleet get svc,deploy` shows objects called `fleet-tracker-api`, and the old `tracker-api`
+  Deployment and Service are gone. Other teams cannot change the name they call. A clone of the repo is in your workspace.
+objective: |
+  Application `fleet-tracker` keeps deploying the Helm chart (path `chart`) and is Synced and Healthy at the
+  current head of `main`. Deployment and Service are named `tracker-api` in namespace `fleet` (managed by the
+  Application, nothing named `fleet-tracker-api` left over), and the Service answers `tracker-api v3 (helm chart)`.
+xp: 200
+difficulty: intermediate
+expected_time: 15m
+concepts: [Helm, releaseName, Release.Name, pruning, object names]

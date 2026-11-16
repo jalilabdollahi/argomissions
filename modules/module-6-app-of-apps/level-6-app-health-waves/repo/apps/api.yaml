@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: beacon-api
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/beacon-fleet.git
+    targetRevision: main
+    path: workloads/api
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: beacon-edge
+  syncPolicy:
+    automated: {}
+    syncOptions:
+    - CreateNamespace=true

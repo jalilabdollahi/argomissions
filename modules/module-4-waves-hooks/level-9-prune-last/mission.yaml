@@ -1,0 +1,18 @@
+name: "Remove The Old Last"
+description: |
+  Release v2.0 of `chat-relay` (Gitea repo `platform/chat-relay`, folder `deploy/`, namespace `chat`) renames the
+  Deployment and the Service from `relay` to `relay-gateway`; the old manifests were deleted from Git and the
+  Application is `OutOfSync`, waiting for the release manager's sync with pruning (`argocd app sync chat-relay
+  --prune`). The last rename of this kind caused an outage: the old Service was removed while the new Deployment was
+  still starting. The cut-over runbook is encoded in Job `handover-check` (repo file `deploy/handover-check.yaml`):
+  after the first wave it records whether both the old and the new name still answer. Nothing has been synced
+  yet. A clone of the repo is in your workspace.
+objective: |
+  Application `chat-relay` is Synced and Healthy at the current head of `main`, deployed by a Succeeded sync of that
+  head. The rename is complete: Service and Deployment `relay` are gone, `relay-gateway` answers
+  `chat-relay v2.0`, and Job `handover-check` of that sync recorded that the old Service `relay` and the new
+  Service `relay-gateway` were both answering when it ran (no outage window).
+xp: 200
+difficulty: advanced
+expected_time: 15m
+concepts: [PruneLast, prune, sync waves, hooks, zero-downtime rename]

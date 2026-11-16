@@ -1,0 +1,4 @@
+Read the condition Argo CD sets and what the app still owns:
+  argocd app get nightly-etl
+  kubectl -n etl get deploy,svc,cm
+Git is empty on purpose: do not put the manifests back.

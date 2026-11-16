@@ -1,0 +1,7 @@
+Either write the value in `deploy/statusboard.yaml` (`refresh: 30s`; or remove the empty key), push, and sync,
+or add to the Application:
+  spec.ignoreDifferences:
+    - group: argomissions.io
+      kind: StatusBoard
+      jqPathExpressions: [".spec.panels[].refresh"]
+Do not ignore all of `/spec`: that would hide real changes too.

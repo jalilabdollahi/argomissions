@@ -1,0 +1,3 @@
+The pod never starts: the kubelet cannot pull its image and the Deployment gave up after its
+progress deadline, so Argo CD shows the Deployment as Degraded. Compare the image name in the events with the
+one you expect — character by character.

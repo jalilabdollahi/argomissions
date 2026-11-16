@@ -1,0 +1,17 @@
+name: "CI Cannot Sync"
+description: |
+  The shop's pipeline logs in to Argo CD as the local account `ci-bot` and runs `argocd app sync shop-web`
+  (application `shop-web`, project `shop`). Since this morning every deploy fails with
+  `rpc error: code = PermissionDenied desc = permission denied`. The account exists (`argocd account list`
+  shows `ci-bot  true  apiKey, login`) and its password works, but `argocd-rbac-cm` gives it nothing. The staff
+  portal `hr-portal` lives in another project, `people`, and the pipeline has no business there.
+  Pipeline notes and the bot's credentials are in `ci-pipeline.md` in your workspace.
+objective: |
+  Logged in as `ci-bot`, `argocd account can-i sync applications 'shop/shop-web'` and the same for `get` answer
+  `yes`, while everything else a deploy pipeline does not need is still refused: any action on applications of
+  project `people`, deleting, updating or creating applications, and managing projects, clusters or repositories.
+  The account must stay as it is (`apiKey, login`).
+xp: 250
+difficulty: advanced
+expected_time: 20m
+concepts: [local accounts, argocd-rbac-cm, policy.csv, least privilege, can-i]

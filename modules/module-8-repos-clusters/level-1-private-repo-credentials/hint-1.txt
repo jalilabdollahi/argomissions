@@ -1,0 +1,4 @@
+Read what Argo CD itself says about the Application and about the repository:
+  argocd app get vault-ui
+  argocd repo list
+Is the repository listed there at all?

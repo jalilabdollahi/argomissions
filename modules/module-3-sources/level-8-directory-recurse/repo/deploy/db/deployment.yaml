@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stock-db
+  labels: {app: stock-db}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: stock-db}
+  template:
+    metadata:
+      labels: {app: stock-db}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: db
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=stock-db ready", "-listen=:5678"]
+        ports:
+        - containerPort: 5678
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

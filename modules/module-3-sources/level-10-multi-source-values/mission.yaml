@@ -1,0 +1,17 @@
+name: "Values From Another Repo"
+description: |
+  The pricing team keeps its Helm chart in `platform/pricing-charts` (`charts/pricing`) and the per-environment
+  values in a separate repo, `platform/pricing-env` (`prod/values.yaml`, `staging/values.yaml`). Application
+  `pricing` combines both with two `sources`, but it never deployed: it shows Sync Status Unknown and a
+  ComparisonError, "Failed to load target state: failed to generate manifest for source 1 of 2 ... source
+  referenced "$values", which is not one of the available sources ($env)". Namespace `pricing` is empty.
+  Clones of both repos are in your workspace.
+objective: |
+  Application `pricing` still takes the chart from `pricing-charts` and the values from the `pricing-env` repo
+  (`prod/values.yaml`) through its two sources, with no inline value overrides. It is Synced and Healthy at the
+  current heads of both repos, and Service `pricing-quote` in namespace `pricing` answers `pricing v2.4 prod`
+  from 2 replicas.
+xp: 250
+difficulty: advanced
+expected_time: 20m
+concepts: [multiple sources, ref, valueFiles, "$values", Helm]

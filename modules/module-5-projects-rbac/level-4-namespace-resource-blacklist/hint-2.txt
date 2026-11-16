@@ -1,0 +1,4 @@
+`namespaceResourceBlacklist` lists kinds Argo CD must never apply in this project, and the project's note says Secrets
+come from the platform team, not from Git. Removing the rule would undo a security decision.
+The Deployment only needs a Secret named `relay-credentials` with key `token` to exist in `mailroom`;
+who creates it is a separate question from what is in Git. Replacing it with a ConfigMap does not help either.

@@ -1,0 +1,4 @@
+Set a normal value (the Argo CD default is 180s) and restart both components:
+  kubectl -n argocd patch configmap argocd-cm --type merge -p '{"data":{"timeout.reconciliation":"180s"}}'
+  kubectl -n argocd rollout restart statefulset/argocd-application-controller deploy/argocd-repo-server
+Then refresh the app once so it does not have to wait for the next tick.

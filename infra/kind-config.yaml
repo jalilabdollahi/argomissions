@@ -1,0 +1,12 @@
+# ArgoMissions kind cluster. Host ports are bound to 127.0.0.1 only.
+#   http://localhost:9080   Argo CD UI + API (argocd-server, plain HTTP)
+#   http://localhost:3300   Gitea UI + Git over HTTP
+#   ssh://localhost:2223    Gitea Git over SSH
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+- role: control-plane
+  extraPortMappings:
+  - {containerPort: 30080, hostPort: 9080, listenAddress: "127.0.0.1", protocol: TCP}
+  - {containerPort: 30300, hostPort: 3300, listenAddress: "127.0.0.1", protocol: TCP}
+  - {containerPort: 30022, hostPort: 2223, listenAddress: "127.0.0.1", protocol: TCP}

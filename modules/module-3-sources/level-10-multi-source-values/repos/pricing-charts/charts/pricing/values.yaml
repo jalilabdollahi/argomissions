@@ -1,0 +1,3 @@
+# Defaults only. Real values come from the environment repo.
+replicas: 1
+text: "pricing DEFAULTS (no environment values)"

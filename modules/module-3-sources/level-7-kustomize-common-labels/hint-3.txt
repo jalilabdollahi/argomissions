@@ -1,0 +1,3 @@
+Replace `commonLabels:` with `labels:` (a list of `pairs:`) and set `includeSelectors: false`.
+Pods only get the labels if you also set `includeTemplates: true`. Push, then sync.
+Do not delete the Deployment: that would be a (brief) outage and changes the selector for good.

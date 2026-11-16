@@ -1,0 +1,26 @@
+data:
+  resource.customizations.actions.apps_Deployment: |
+    mergeBuiltinActions: true
+    discovery.lua: |
+      local actions = {}
+      local on = false
+      if obj.metadata.annotations ~= nil and obj.metadata.annotations["ferry.argomissions.io/maintenance"] == "on" then
+        on = true
+      end
+      actions["maintenance-on"] = {["disabled"] = on}
+      actions["maintenance-off"] = {["disabled"] = not on}
+      return actions
+    definitions:
+    - name: maintenance-on
+      action.lua: |
+        if obj.metadata.annotations == nil then
+          obj.metadata.annotations = {}
+        end
+        obj.metadata.annotations["ferry.argomissions.io/maintenance"] = "on"
+        return obj
+    - name: maintenance-off
+      action.lua: |
+        if obj.metadata.annotations ~= nil then
+          obj.metadata.annotations["ferry.argomissions.io/maintenance"] = nil
+        end
+        return obj

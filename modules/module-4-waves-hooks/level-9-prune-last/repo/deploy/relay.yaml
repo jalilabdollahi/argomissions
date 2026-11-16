@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: relay
+  labels: {app: relay}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: relay}
+  template:
+    metadata:
+      labels: {app: relay}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: relay
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=chat-relay v1.9", "-listen=:5678"]
+        ports:
+        - containerPort: 5678
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: relay
+spec:
+  selector: {app: relay}
+  ports:
+  - port: 80
+    targetPort: 5678

@@ -1,0 +1,4 @@
+Which commit of meterhub-service is production actually deployed from?
+  argocd app get meterhub-prod
+  argocd app get meterhub-staging
+Compare the two. Then look at where each child Application is defined: `argocd app get meterhub-env-prod`.

@@ -1,0 +1,3 @@
+The PostSync hook is the failing part: after the manifests were applied and healthy, Argo CD ran the smoke test
+Job, and the Job exited with an error, which fails the whole operation. Look at which host and port the test
+calls and compare them with the Service (kubectl -n booking get svc). The test is wrong, not the application.

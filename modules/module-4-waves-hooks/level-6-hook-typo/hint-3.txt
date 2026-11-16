@@ -1,0 +1,3 @@
+The annotation value is misspelled, so Argo CD does not recognise a phase and skips the Job entirely.
+Correct it in Git and push. Remember that a hook only runs during a sync: after the push, the Application
+may even show Synced, but you still have to start a sync of the new head.

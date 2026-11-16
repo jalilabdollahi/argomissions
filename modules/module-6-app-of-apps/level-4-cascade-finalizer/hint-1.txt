@@ -1,0 +1,4 @@
+Find out who owns what still runs, and what the removed Application looked like:
+  kubectl -n tariff-old get deploy tariff-legacy -o jsonpath='{.metadata.annotations}'
+  git log --stat      (in the repo clone)
+Compare with how `tariff-api` is declared.

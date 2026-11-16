@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: courier-tracking
+spec:
+  selector: {app: courier-tracking}
+  ports:
+  - port: 80
+    targetPort: 5678

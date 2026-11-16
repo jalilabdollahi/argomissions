@@ -1,0 +1,3 @@
+Collect the Git server's host keys (for example `ssh-keyscan gitea.gitea.svc.cluster.local` run from a pod in the
+cluster, such as the repo-server) and register them with `argocd cert add-ssh --batch` (or add the lines to the
+ConfigMap). The repo-server picks up the ConfigMap with a short delay: refresh the app and give it a minute.

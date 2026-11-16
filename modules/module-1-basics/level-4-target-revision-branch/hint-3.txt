@@ -1,0 +1,4 @@
+Point the Application at the branch that exists:
+  argocd app set invoices --revision main
+  argocd app sync invoices
+(`HEAD`, the repo's default branch, would also resolve.)

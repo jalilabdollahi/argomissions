@@ -1,0 +1,18 @@
+name: "Frozen Friday"
+description: |
+  Before the month-end billing run the platform team froze `billing-core` with a deny sync window (every minute,
+  24 hours long, all applications). The freeze is meant to stop routine, automated deployments. Then a rounding
+  bug in `statement-api` was found and fixed in `main` of the Gitea repo `platform/statement-api`, and the
+  fix is approved to go out now. Argo CD shows the Application as OutOfSync, `Sync Policy: Automated` does
+  nothing, and pressing Sync fails with
+  `rpc error: code = PermissionDenied desc = cannot sync: blocked by sync window`.
+  The freeze must stay for everything that is not an approved manual action.
+objective: |
+  The fixed commit at the head of `main` is deployed by an Argo CD sync of Application `statement-api` (project
+  `billing-core`, namespace `statements`): it is Synced and Healthy at the head and the service answers
+  `statement-api v1.4.1`. AppProject `billing-core` still has a deny sync window, and a manual sync of its
+  applications is permitted from now on, so the next urgent fix does not need a change to the freeze.
+xp: 200
+difficulty: intermediate
+expected_time: 15m
+concepts: [AppProject, sync windows, deny window, manualSync, argocd proj windows]

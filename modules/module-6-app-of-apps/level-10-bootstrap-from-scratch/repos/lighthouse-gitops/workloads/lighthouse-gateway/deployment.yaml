@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lighthouse-gateway
+  labels: {app: lighthouse-gateway}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: lighthouse-gateway}
+  template:
+    metadata:
+      labels: {app: lighthouse-gateway}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: web
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=lighthouse-gateway v1.4", "-listen=:5678"]
+        ports:
+        - containerPort: 5678
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

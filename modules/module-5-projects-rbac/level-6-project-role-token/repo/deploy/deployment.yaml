@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: settle-api
+  labels: {app: settle-api}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: settle-api}
+  template:
+    metadata:
+      labels: {app: settle-api}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: api
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=settle-api v1", "-listen=:5678"]
+        ports:
+        - containerPort: 5678
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

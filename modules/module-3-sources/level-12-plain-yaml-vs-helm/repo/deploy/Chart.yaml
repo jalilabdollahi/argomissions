@@ -1,0 +1,7 @@
+# left over from an abandoned "let's use Helm" experiment
+apiVersion: v2
+name: docs-portal
+description: Documentation portal
+type: application
+version: 0.1.0
+appVersion: "1.0"

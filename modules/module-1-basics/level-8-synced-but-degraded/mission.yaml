@@ -1,0 +1,14 @@
+name: "Synced But Sick"
+description: |
+  The messaging team released `notifier v2.0` through Argo CD (repo `platform/notifier`, folder `deploy/`,
+  namespace `messaging`). The sync went through without a single error, and the Application even says
+  `Synced` — yet the push-notification gateway does not answer and `argocd app get notifier` reports
+  `Health Status: Degraded`. The release manager is sure that "green means done". A clone of the repo is in
+  your workspace.
+objective: |
+  Application `notifier` (project `default`) is Synced and Healthy at the current head of `main`, the
+  Deployment `notifier` in namespace `messaging` is available, and Service `notifier` answers `notifier v2.0`.
+xp: 150
+difficulty: beginner
+expected_time: 15m
+concepts: [sync status vs health status, Degraded, progressDeadlineSeconds, ImagePullBackOff]

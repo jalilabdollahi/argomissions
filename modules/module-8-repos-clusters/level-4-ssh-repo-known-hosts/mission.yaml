@@ -1,0 +1,15 @@
+name: "Host Key Verification Failed"
+description: |
+  The `fleet-agent` Application reads its manifests over SSH, as security asked: the repo URL is
+  `ssh://git@gitea.gitea.svc.cluster.local:22/platform/fleet-agent.git` and the repository Secret `repo-fleet-agent` in
+  `argocd` carries a read-only deploy key that Gitea already accepts. Yet the Application never synced and
+  shows `ComparisonError: ... failed to list refs: ssh: handshake failed: knownhosts: key is unknown`.
+  Someone suggested "just tick insecure-ignore-host-key"; security will reject that in review.
+objective: |
+  Application `fleet-agent` (namespace `argocd`) is Synced and Healthy at the current head of `main`, and
+  Service `fleet-agent` in namespace `fleet` answers `fleet-agent v5.0`. Argo CD still reads the repository over SSH
+  with its deploy key, and it verifies the Git server's host key: host key checking is not switched off.
+xp: 250
+difficulty: advanced
+expected_time: 20m
+concepts: [SSH repository, deploy key, known hosts, argocd cert add-ssh, host key verification]

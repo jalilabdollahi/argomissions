@@ -1,0 +1,5 @@
+Read what Argo CD says about the revision, and what the commit really looks like:
+  argocd app get treasury-core
+  git -C treasury-core log --show-signature -2       (set GNUPGHOME or use the repo's gpg.program, see `git config gpg.program`)
+  argocd gpg list ; kubectl -n argocd get appproject treasury -o yaml
+Compare who signed what with what the project demands.

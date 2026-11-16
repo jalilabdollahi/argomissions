@@ -1,0 +1,3 @@
+The root is a directory-source Application: its path has to cover `projects/` and `apps/` (two levels, so the
+source must recurse), but not `workloads/` (those are meant for the children) and not the retired component in
+`_archive/`. Its destination namespace is where Application and AppProject objects live.

@@ -1,0 +1,4 @@
+The Application already has a retry policy, but it gives up after two quick attempts (5s, then 10s).
+The CRD takes minutes. The fix is in the retry policy, not in Git: more attempts and a backoff that grows.
+`argocd app set --help` lists the --sync-retry-* flags. A failed operation is not restarted by changing the policy,
+so a new sync has to be started afterwards.

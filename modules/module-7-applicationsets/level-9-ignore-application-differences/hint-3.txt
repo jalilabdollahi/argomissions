@@ -1,0 +1,6 @@
+Add to the ApplicationSet spec:
+  ignoreApplicationDifferences:
+  - jsonPointers:
+    - /spec/source/targetRevision
+apply it, and only then point `feedhub-prod` at the hotfix branch. (Alternatively give the list elements a
+`revision` parameter and use it in the template.)

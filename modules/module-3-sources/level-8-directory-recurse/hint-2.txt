@@ -1,0 +1,3 @@
+The Application renders zero objects. Its path is `deploy`, and the YAML files sit in subfolders of it.
+By default Argo CD's directory source only reads the files directly inside the path.
+Look at `argocd app set --help` for a directory-related flag.

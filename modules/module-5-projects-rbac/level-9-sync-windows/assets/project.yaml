@@ -1,0 +1,12 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: billing-core
+  namespace: argocd
+spec:
+  description: Billing core services
+  sourceRepos:
+  - http://gitea.gitea.svc.cluster.local:3000/platform/statement-api.git
+  destinations:
+  - server: https://kubernetes.default.svc
+    namespace: statements

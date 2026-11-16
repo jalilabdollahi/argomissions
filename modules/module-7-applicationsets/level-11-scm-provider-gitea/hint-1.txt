@@ -1,0 +1,4 @@
+Ask the ApplicationSet why it generated nothing:
+  kubectl -n argocd get applicationset mesh-fleet -o jsonpath='{.status.conditions}'
+  argocd appset get mesh-fleet
+The controller log has the same message: kubectl -n argocd logs deploy/argocd-applicationset-controller

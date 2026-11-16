@@ -1,0 +1,12 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: settlements
+  namespace: argocd
+spec:
+  description: Settlement services
+  sourceRepos:
+  - http://gitea.gitea.svc.cluster.local:3000/platform/settle-api.git
+  destinations:
+  - server: https://kubernetes.default.svc
+    namespace: settlements

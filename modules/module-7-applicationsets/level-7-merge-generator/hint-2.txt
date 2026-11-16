@@ -1,0 +1,3 @@
+A merge generator takes the first generator as the base and matches the elements of the next generators to it
+using the fields listed in `mergeKeys`. An element that cannot be matched is skipped without any error.
+Look at the field names the base list uses and the field names the override list uses.

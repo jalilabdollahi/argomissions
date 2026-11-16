@@ -1,0 +1,5 @@
+Read the failure and the last commit:
+  argocd app get ledger-api
+  git -C ledger-api log -p -1
+  argocd app manifests ledger-api | grep -B2 -A8 'selector:'
+Compare the rendered Deployment selector with the live one (`kubectl -n ledger get deploy ledger-api -o yaml`).

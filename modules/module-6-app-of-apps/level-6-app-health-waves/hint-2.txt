@@ -1,0 +1,4 @@
+A sync wave only waits for the previous wave's resources to be Healthy. The root's resources are the two child
+Applications, and `argocd app get beacon-root` shows no health for them at all.
+Argo CD can be taught how to compute the health of any resource kind, including its own: look at the
+`resource.customizations.health.<group>_<kind>` keys of ConfigMap argocd-cm in the Argo CD operator manual.

@@ -1,0 +1,65 @@
+# The platform team's autoscaler. It is NOT part of the quote-api repo and not managed by Argo CD.
+# A stand-in for an HPA (the game cluster has no metrics-server): it keeps quote-api at 4 replicas "under load".
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: load-scaler
+  namespace: quotes-scaler
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: load-scaler
+  namespace: quotes
+rules:
+- apiGroups: ["apps"]
+  resources: ["deployments/scale"]
+  verbs: ["get", "patch", "update"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: load-scaler
+  namespace: quotes
+subjects:
+- {kind: ServiceAccount, name: load-scaler, namespace: quotes-scaler}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: load-scaler
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: load-scaler
+  namespace: quotes-scaler
+  labels: {app: load-scaler}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: load-scaler}
+  template:
+    metadata:
+      labels: {app: load-scaler}
+    spec:
+      serviceAccountName: load-scaler
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: scaler
+        image: curlimages/curl:8.10.1
+        imagePullPolicy: IfNotPresent
+        command:
+        - sh
+        - -c
+        - |
+          SA=/var/run/secrets/kubernetes.io/serviceaccount
+          URL=https://kubernetes.default.svc/apis/apps/v1/namespaces/quotes/deployments/quote-api/scale
+          DESIRED=4
+          while true; do
+            curl -s --cacert $SA/ca.crt -H "Authorization: Bearer $(cat $SA/token)" \
+              -X PATCH -H 'Content-Type: application/merge-patch+json' \
+              "$URL?fieldManager=load-scaler" -d "{\"spec\":{\"replicas\":$DESIRED}}" >/dev/null
+            sleep 3
+          done
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

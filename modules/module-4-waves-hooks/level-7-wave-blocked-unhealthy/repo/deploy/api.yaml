@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tracker-api
+  labels: {app: tracker-api}
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  replicas: 1
+  progressDeadlineSeconds: 1800
+  selector:
+    matchLabels: {app: tracker-api}
+  template:
+    metadata:
+      labels: {app: tracker-api}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: api
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=tracker-api v1.3", "-listen=:5678"]
+        ports:
+        - containerPort: 5678
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 5678
+          periodSeconds: 3
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tracker-api
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  selector: {app: tracker-api}
+  ports:
+  - port: 80
+    targetPort: 5678

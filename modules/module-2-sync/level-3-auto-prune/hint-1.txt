@@ -1,0 +1,4 @@
+Look at what Argo CD says about the Service that is no longer in Git:
+  argocd app get gallery-web
+  argocd app diff gallery-web
+Look closely at the status of that one resource and at the Sync Policy line.

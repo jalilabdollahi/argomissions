@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notify
+  labels:
+    {{- include "notify-common.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      {{- include "notify-common.labels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "notify-common.labels" . | nindent 8 }}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: gateway
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text={{ include "notify-common.banner" . }}", "-listen=:5678"]
+        ports:
+        - containerPort: 5678
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

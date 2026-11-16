@@ -1,0 +1,17 @@
+data:
+  resource.customizations.health.vaultline.argomissions.io_Backup: |
+    hs = {}
+    if obj.status ~= nil and obj.status.phase ~= nil then
+      if obj.status.phase == "Done" then
+        hs.status = "Healthy"
+      elseif obj.status.phase == "Failed" then
+        hs.status = "Degraded"
+      else
+        hs.status = "Progressing"
+      end
+      hs.message = obj.status.message
+      return hs
+    end
+    hs.status = "Progressing"
+    hs.message = "Waiting for the vaultline operator"
+    return hs

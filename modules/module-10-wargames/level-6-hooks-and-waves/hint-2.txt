@@ -1,0 +1,7 @@
+There are four independent faults, all in how release v7 is wired:
+  1. the migration Job's delete policy keeps a finished run around, so the next change to the Job is refused
+  2. the migrator's Role is changed in the same release, but it is applied after the migration that needs it
+  3. the ShiftPolicy instance uses a field the CRD in the cluster does not have yet: the CRD lives in another
+     Application that nobody synced (the live object loses the field)
+  4. the PostSync smoke test calls a host that does not exist
+Faults 1 and 2 hide fault 3, and fault 3 hides fault 4: fixing one just shows the next.

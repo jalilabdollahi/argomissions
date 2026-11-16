@@ -1,0 +1,3 @@
+A deny window blocks syncs for every application it matches, manual ones included, unless the window says
+otherwise. Deleting the window would lift the whole freeze and let automated syncs through. Look at the options
+of `argocd proj windows` (add / update / enable-manual-sync ...): one of them is made for exactly this case.

@@ -1,0 +1,3 @@
+By default Argo CD deletes the resources that left Git as part of the very first wave, right next to creating the
+new ones. Look for a sync option that postpones pruning until every other resource of the sync (all waves and
+hooks) has been applied and is Healthy.

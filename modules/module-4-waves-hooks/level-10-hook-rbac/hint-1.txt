@@ -1,0 +1,5 @@
+Read what the failed hook said:
+  argocd app get payroll-engine --show-operation
+  kubectl -n payroll logs job/ledger-migrate
+Then compare with the live permissions:
+  kubectl -n payroll get role migrator -o yaml

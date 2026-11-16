@@ -1,0 +1,16 @@
+name: "The Slow Sync"
+description: |
+  The `region-configs` Application (repo `platform/region-configs`, folder `deploy/`, namespace `regions`) holds eight
+  per-region ConfigMaps, the `edge-banner` Deployment and `visit-counter`, a ConfigMap the analytics controller keeps
+  updating at runtime (the Application ignores differences on `/data/count`, so it never shows as drifted). Every sync so far
+  re-applied all 11 objects: the last release quietly reset `visit-counter` to its Git value `0`, and analytics lost its
+  history. The counter reads 4821 again and release r42 is waiting (the Application is OutOfSync, sync policy manual).
+  A clone of the repo is in your workspace.
+objective: |
+  Release r42 is deployed: `region-configs` is Synced and Healthy at the current head of `main`, its last sync succeeded, Service
+  `edge-banner` answers `edge-banner r42` and ConfigMap `region-eu-west` has `banner-template: spring`. ConfigMap `visit-counter`
+  still holds `4821`, and the Application is configured so that its syncs only apply the objects that are out of sync.
+xp: 150
+difficulty: intermediate
+expected_time: 10m
+concepts: [ApplyOutOfSyncOnly, sync options, ignoreDifferences, resourceVersion]

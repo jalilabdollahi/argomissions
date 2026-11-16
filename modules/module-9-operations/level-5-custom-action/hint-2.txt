@@ -1,0 +1,5 @@
+Key: resource.customizations.actions.<group>_<Kind>, here apps_Deployment. Its value is YAML with
+  discovery.lua   returns a table: action name -> {disabled = true|false}   (obj is the live Deployment)
+  definitions     a list of {name, action.lua}; action.lua modifies obj and returns it
+Remember that annotations may be nil in Lua. Two actions are needed: maintenance-on and maintenance-off, and the
+list must reflect the current state of the Deployment.

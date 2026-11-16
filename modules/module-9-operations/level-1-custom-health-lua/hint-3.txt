@@ -1,0 +1,4 @@
+Key: resource.customizations.health.<group>_<Kind> in argocd-cm, here group vaultline.argomissions.io and
+Kind Backup. Return Healthy for Done, Degraded for Failed and Progressing otherwise.
+Test the script offline: kubectl get backup X -o yaml > b.yaml; argocd admin settings resource-overrides health b.yaml --argocd-cm-path cm.yaml
+Then refresh the application: argocd app get vaultline --refresh. Do not edit the Backups' status or the Git repo.

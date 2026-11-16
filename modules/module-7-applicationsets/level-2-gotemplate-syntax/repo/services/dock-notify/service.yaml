@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dock-notify
+spec:
+  selector: {app: dock-notify}
+  ports:
+  - port: 80
+    targetPort: 5678

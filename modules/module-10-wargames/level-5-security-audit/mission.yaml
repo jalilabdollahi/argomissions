@@ -1,0 +1,23 @@
+name: "Audit Findings"
+description: |
+  The external auditor's report on the custody platform (Gitea repos `platform/custody-api` and
+  `platform/custody-batch`, Applications of the same names in project `custody`, namespace `custody`) lists four
+  findings; everything is "green" today, which is exactly what worries them. Evidence: (1) last week `sam`, a
+  developer, deleted an Application in the UI and nobody could say why he was allowed to; (2) a database password
+  is committed in `custody-api` and the repo is cloned on 40 laptops; (3) Argo CD logs in to Git with the human
+  admin account `player`, one secret per repository; (4) the project `custody` can deploy any cluster-wide kind
+  ("`*/*`"). Yesterday an engineer tried to fix (2) by deleting the Secret with kubectl: Argo CD put it back in
+  seconds. The release pipeline logs in as `deploy-bot`. Notes with the accounts are in `audit-notes.md` in your
+  workspace, clones of both repos are next to it.
+objective: |
+  All four findings are closed and nothing broke: `sam` can only look, `kim` is still an administrator and
+  `deploy-bot` can get and sync the Applications of project `custody` and nothing else; no database password is in
+  the head of `custody-api` and the live Secret `custody-db` holds a different (rotated) password; Argo CD reaches
+  both private repositories through one credential template for the machine user `argo-reader`, never as
+  `player`; project `custody` allows exactly the cluster-wide kinds its repositories contain. Applications
+  `custody-api` and `custody-batch` are Synced and Healthy at the head of `main` and their Services answer
+  `custody-api v3.1` and `custody-batch v1.2`.
+xp: 400
+difficulty: expert
+expected_time: 30m
+concepts: [RBAC default policy, local accounts, secrets in Git, repo-creds, AppProject whitelist, audit]

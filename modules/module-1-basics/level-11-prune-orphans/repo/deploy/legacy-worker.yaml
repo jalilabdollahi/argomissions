@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: legacy-worker
+  labels: {app: legacy-worker}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: legacy-worker}
+  template:
+    metadata:
+      labels: {app: legacy-worker}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: worker
+        image: hashicorp/http-echo:1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-text=legacy-worker v1", "-listen=:5678"]
+        resources:
+          requests: {cpu: 10m, memory: 16Mi}

@@ -1,0 +1,4 @@
+Start by reading the repo, and by asking Argo CD what a root would see:
+  cat lighthouse-gitops/README.md; find lighthouse-gitops -name '*.yaml' | sort
+  argocd app create --help | grep -i directory
+Count the folders between the repo root and the Application files.

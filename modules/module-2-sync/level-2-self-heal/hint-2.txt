@@ -1,0 +1,3 @@
+Automated sync reacts to new commits in Git. It does not react to someone changing the live cluster:
+that is a separate switch inside `syncPolicy.automated`.
+  argocd app set --help | grep -i heal

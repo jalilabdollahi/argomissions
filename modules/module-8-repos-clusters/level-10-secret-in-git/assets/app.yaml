@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: smtp-gateway
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: http://gitea.gitea.svc.cluster.local:3000/platform/smtp-gateway.git
+    targetRevision: main
+    path: deploy
+  destination:
+    name: in-cluster
+    namespace: smtp-gw
+  syncPolicy:
+    automated: {}
+  ignoreDifferences:
+  - group: apps
+    kind: Deployment
+    jqPathExpressions:
+    - .spec.template.metadata.annotations["kubectl.kubernetes.io/restartedAt"]

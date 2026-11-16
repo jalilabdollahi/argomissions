@@ -1,0 +1,23 @@
+name: "Black Friday Freeze"
+description: |
+  PAGER, 06:10 — storefront release train is stuck, doors open at 09:00.
+  Project `blackfriday` runs two Applications from Gitea: `bf-cart` (repo `platform/bf-cart`, namespace `bf-cart`)
+  and the new sale banner `bf-promo` (repo `platform/bf-promo`, namespace `bf-promo`). Timeline: Monday the
+  freeze went in; Tuesday the approved `bf-cart` v9.0 landed on `main`; since then `argocd app get bf-cart` is
+  `OutOfSync` and a manual sync answers `cannot sync: blocked by sync window`. `bf-promo` has never deployed
+  at all: sync status `Unknown` with `InvalidSpecError: application destination server
+  'https://kubernetes.default.svc' and namespace 'bf-promo' do not match any of the allowed destinations in
+  project 'blackfriday'`. Also, the platform team's autoscaler `load-scaler` (namespace `bf-scaler`, not yours,
+  must keep running) has pushed `bf-cart` to 6 replicas under load, while Git says 2.
+  On-call already tried: waiting, retrying the sync from the UI, and a long look at the freeze. Nobody dared
+  to touch the project in the middle of the night. Clones of both repos are in your workspace.
+objective: |
+  Both Applications are Synced and Healthy at the current head of their repos: Service `bf-cart` in `bf-cart`
+  answers `bf-cart v9.0 black-friday` and Service `bf-promo` in `bf-promo` answers `bf-promo v4.0 sale-banner`.
+  Project `blackfriday` keeps a deny sync window (the freeze stays, an approved manual sync must work) and still
+  lists its destinations (no wildcard namespace). `bf-cart` keeps self-heal on and holds the 6 replicas the
+  autoscaler wants without its Deployment spec being rewritten back and forth, and `load-scaler` still runs.
+xp: 400
+difficulty: expert
+expected_time: 30m
+concepts: [sync windows, manualSync, ignoreDifferences, RespectIgnoreDifferences, AppProject destinations, incident triage]

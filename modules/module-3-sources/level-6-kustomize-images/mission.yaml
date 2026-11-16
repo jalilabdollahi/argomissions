@@ -1,0 +1,16 @@
+name: "Promote Without Editing YAML"
+description: |
+  `ticket-desk` is a Kustomize app in the Gitea repo `platform/ticket-desk`: the base refers to the logical image
+  `ticket-desk-web`, and each overlay maps it to a real image. Build 2.0 (`traefik/whoami:v1.10`) was
+  validated in staging, but the production overlay still maps the alias to the old build `nginx:1.27-alpine`, so
+  Application `ticket-desk` keeps serving the old nginx page from namespace `desk`. Production has to run
+  build 2.0 now. The change window is tonight and the release engineer wants it done through the Application
+  itself, with no new commit in the app repo. A clone of the repo is in your workspace.
+objective: |
+  Application `ticket-desk` keeps deploying `kustomize/overlays/prod`, is Synced and Healthy at the current head
+  of `main`, and Deployment `ticket-desk` in namespace `desk` runs the image `traefik/whoami:v1.10` on at least
+  2 ready pods; Service `ticket-desk` answers like build 2.0 (a whoami response).
+xp: 200
+difficulty: intermediate
+expected_time: 15m
+concepts: [Kustomize, images override, kustomize.images, promotion]

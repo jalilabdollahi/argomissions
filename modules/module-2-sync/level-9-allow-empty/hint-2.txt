@@ -1,0 +1,3 @@
+Automated sync refuses to prune an application down to zero resources: that is a safety net against an
+accidental wrong path or an empty render. This time the empty result is intended, so the safety net has to be
+told so. `argocd app set --help` lists the automated-sync switches; a manual sync is subject to different rules.

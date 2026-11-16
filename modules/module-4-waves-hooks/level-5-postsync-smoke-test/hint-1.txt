@@ -1,0 +1,4 @@
+The sync failed, but the application works. Find out which part of the sync failed and read its output:
+  argocd app get booking-web
+  kubectl -n booking get job,pods
+  kubectl -n booking logs job/booking-web-smoke-test

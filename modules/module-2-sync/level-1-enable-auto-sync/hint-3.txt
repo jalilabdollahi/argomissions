@@ -1,0 +1,6 @@
+argocd app set metrics-gw --sync-policy automated
+or, in the Application YAML:
+  spec:
+    syncPolicy:
+      automated: {}
+Then watch it catch up with main by itself: argocd app get metrics-gw

@@ -1,0 +1,14 @@
+name: "Destination Not Permitted"
+description: |
+  The clinic's `rx-dispatch` Application (project `clinic`, repo `rx-dispatch`, folder `deploy/`) must run in
+  namespace `pharmacy`, which already exists. Instead `argocd app get rx-dispatch` shows Sync Status `Unknown`
+  and `InvalidSpecError: application destination server 'https://kubernetes.default.svc' and namespace
+  'pharmacy' do not match any of the allowed destinations in project 'clinic'`. The repository is fine.
+objective: |
+  Application `rx-dispatch` stays in project `clinic`, still targets namespace `pharmacy`, and is Synced and
+  Healthy at the head of `rx-dispatch/main`; Service `rx-dispatch` in `pharmacy` answers `rx-dispatch v4.1`.
+  The project must not become a way to deploy into the cluster's own namespaces such as `kube-system`.
+xp: 150
+difficulty: intermediate
+expected_time: 10m
+concepts: [AppProject, destinations, namespace glob, InvalidSpecError]

@@ -1,0 +1,3 @@
+The Application's `source.path` is a folder inside the repo, resolved at the target revision. Compare the
+path the error names with `git ls-tree -r --name-only HEAD`: the manifests are still in the repo, but not
+in that folder any more.

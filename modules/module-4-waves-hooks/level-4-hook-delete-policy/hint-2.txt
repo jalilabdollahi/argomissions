@@ -1,0 +1,4 @@
+A Job's pod template cannot be edited once the Job exists. Release v1 left its (successful) migration Job in the
+cluster, and the sync of v2 tried to change it in place. Argo CD removes the previous run of a hook before it
+creates a new one, but only when the delete policy says so. Look at the argocd.argoproj.io/hook-delete-policy
+annotation on the Job.

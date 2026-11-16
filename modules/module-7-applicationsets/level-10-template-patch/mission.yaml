@@ -1,0 +1,17 @@
+name: "Only Prod Gets Auto-Sync"
+description: |
+  The ApplicationSet `lumen-gateway` (namespace `argocd`) generates `lumen-dev`, `lumen-stage` and `lumen-prod`
+  from the `platform/lumen-gateway` repo. Release v2 was merged to `main` this morning and nothing happened:
+  all three Applications are `OutOfSync`, production still answers `lumen-gateway v1`, and somebody has to click
+  Sync on prod after every merge. The rules of the house: `dev` and `stage` are regression rigs that QA freezes, so
+  they must stay manual; `prod` must follow `main` by itself (with pruning). The template has no sync policy at all.
+  A copy of the ApplicationSet is in your workspace (`lumen-appset.yaml`).
+objective: |
+  Application `lumen-prod` has an automated sync policy (with prune), is owned by ApplicationSet `lumen-gateway`,
+  Synced and Healthy at the head of `main`, and Service `lumen-gateway` in `lumen-prod` answers `lumen-gateway v2`
+  without anyone pressing Sync. `lumen-dev` and `lumen-stage` have no automated sync policy and still answer
+  `lumen-gateway v1`.
+xp: 250
+difficulty: advanced
+expected_time: 20m
+concepts: [ApplicationSet, templatePatch, goTemplate, syncPolicy.automated, per-element configuration]

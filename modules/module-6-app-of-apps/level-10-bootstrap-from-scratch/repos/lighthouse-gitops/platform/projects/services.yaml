@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: services
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+spec:
+  description: Lighthouse services
+  sourceRepos:
+  - http://gitea.gitea.svc.cluster.local:3000/platform/lighthouse-gitops.git
+  destinations:
+  - server: https://kubernetes.default.svc
+    namespace: lighthouse-*
+  clusterResourceWhitelist:
+  - group: ""
+    kind: Namespace

@@ -1,0 +1,18 @@
+name: "Update Is Not Delete"
+description: |
+  The loyalty on-call engineer `mira` (password `mira-pw-4821`) used to restart the `rewards-engine` Deployment
+  and kick stuck Pods from the Argo CD UI. Since the platform moved to Argo CD 3.x, both fail with
+  `rpc error: code = PermissionDenied desc = permission denied`, although her role `role:loyalty-oncall` in
+  `argocd-rbac-cm` still contains `applications, update, loyalty/*, allow`. She can still edit the Application
+  itself. The team lead wants her on-call powers back, but nothing more: she must not be able to delete the
+  Application, remove anything but Pods, or run arbitrary resource actions.
+objective: |
+  As `mira`, Argo CD accepts the `restart` resource action on Deployments and the deletion of Pods in
+  Applications of project `loyalty` (a request for something that does not exist must be answered with "not
+  found", not "permission denied"). It still refuses to delete other resources (Secrets, Deployments), to run
+  other actions such as `scale`, and to delete the Application. `mira` keeps `get`, `sync` and `update` on the
+  Applications of her project. Application `rewards-engine` is Synced and Healthy.
+xp: 250
+difficulty: advanced
+expected_time: 20m
+concepts: [argocd-rbac-cm, fine-grained RBAC, update/*, delete/*, action/*, Argo CD 3.x]

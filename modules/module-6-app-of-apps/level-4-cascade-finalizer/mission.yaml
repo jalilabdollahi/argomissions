@@ -1,0 +1,16 @@
+name: "Deleting The Child Left Everything"
+description: |
+  The pricing platform team retired the old `tariff-legacy` service the GitOps way: they deleted its Application
+  manifest from `apps/` in `platform/tariff-gitops` and the root `tariff-root` (automated sync with prune) removed the
+  child Application. `argocd app list` no longer shows `tariff-legacy`, the root is `Synced` and `Healthy`. But
+  Deployment and Service `tariff-legacy` still run in namespace `tariff-old` and still answer, and nobody owns them.
+  The remaining child `tariff-api` must not be disturbed. A clone of the repo is in your workspace.
+objective: |
+  Nothing of `tariff-legacy` is left in the cluster (no Application, no Deployment, Service or Pod), and it stays out
+  of Git. So that the next retirement does not leak, every child Application in `apps/` carries the
+  `resources-finalizer.argocd.argoproj.io` finalizer, also on the live `tariff-api`. `tariff-root` and `tariff-api` are
+  Synced and Healthy at the current head of `main`, and Service `tariff-api` in `tariff-live` answers `tariff-api v4.0`.
+xp: 200
+difficulty: intermediate
+expected_time: 15m
+concepts: [app of apps, resources-finalizer, cascade delete, prune, orphaned resources]
